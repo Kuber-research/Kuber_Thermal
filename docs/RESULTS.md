@@ -137,6 +137,8 @@ no external pretraining, and crucially no domain adaptation (UDA).**
 
 ### 7.1 Full-metric table — target (OOD-medium) domain, us vs all published SOTA
 
+![SIMSHIFT heatsink leaderboard — temperature RMSE](../assets/fig_leaderboard.svg)
+
 Every metric, every model, on the OOD/target domain. **Baseline numbers are quoted exactly as
 printed in the SIMSHIFT paper (Table 2).** The parenthetical is the paper's **UDA improvement**
 (Δ vs the same model without UDA) — so the baseline headline numbers **already include UDA** (their
@@ -211,6 +213,8 @@ fields).
 
 ### 7.3 Value-of-our-data experiment — our corpus is a moat (result)
 
+![Value of our data — from scratch vs pretrained on the Kuber corpus](../assets/fig_value_of_data.svg)
+
 Does pretraining on our self-generated corpus add value *on top of* SIMSHIFT's own training set?
 We ran a clean A/B: the **same** model (surface, 14.29 M, reduced "transfer" conditioning —
 `solidTemp` only so weights transfer cleanly — no UDA), once **from scratch** and once **pretrained
@@ -252,7 +256,10 @@ queued as further evidence.)*
 
 **(b) No gradient explosion at edges (numerical stability).** At fin tips and corners the true
 temperature gradient ∇T is steep; a brittle surrogate either **over-smooths** them (ratio ≪ 1) or
-emits **unphysical spikes** (ratio ≫ 1, the "explosion" failure). We measured predicted vs CFD
+emits **unphysical spikes** (ratio ≫ 1, the "explosion" failure).
+
+![Stability proof — edge temperature-gradient fidelity](../assets/fig_stability.svg)
+ We measured predicted vs CFD
 local ∇T magnitude on the OOD test set, in the **edge/near-wall band** (closest 15 % of nodes to the
 heatsink — the tips, corners, walls) and at the **steepest peaks** (99.9th percentile):
 
