@@ -64,6 +64,8 @@ a{color:var(--accent); text-underline-offset:2px}
   border-radius:999px; background:var(--btn); color:var(--ink); text-decoration:none; font-size:.94rem; font-weight:500;
   transition:border-color .15s, color .15s, transform .15s}
 .btn:hover{border-color:var(--accent); color:var(--accent); transform:translateY(-1px)}
+.btn.primary{background:var(--accent); border-color:var(--accent); color:#fff}
+.btn.primary:hover{color:#fff; filter:brightness(1.08)}
 
 /* sections */
 section{margin-top:56px}
@@ -102,6 +104,7 @@ CONTENT = """
     <p class="sub">Geometry-general neural surrogates for coupled fluid&ndash;heat simulation.</p>
     <p class="authors">Shubh Jain &nbsp;&middot;&nbsp; Kuber.ai</p>
     <nav class="links">
+      <a class="btn primary" href="demo.html">Interactive demo &#8599;</a>
       <a class="btn" href="https://github.com/ShubhJain007/Kuber">Code</a>
       <a class="btn" href="https://colab.research.google.com/github/ShubhJain007/Kuber/blob/main/notebooks/quickstart.ipynb">Colab</a>
       <a class="btn" href="https://github.com/ShubhJain007/Kuber/tree/main/results">Results (JSON)</a>
