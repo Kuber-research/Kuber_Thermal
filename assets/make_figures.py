@@ -54,7 +54,7 @@ def write(fname, parts):
 
 # ---------------------------------------------------------------- horizontal bars
 def hbars(fname, title, subtitle, rows, maxval, unit, legend_items,
-          note="lower is better", ref=None, ref_label=None, valcolor=None):
+          note="lower is better", ref=None, ref_label=None, valcolor=None, tickdec=0):
     W, LW, RPAD, TOP, BOT = 860, 288, 96, 92, 44
     rowH, barH = 44, 24
     n = len(rows)
@@ -69,7 +69,7 @@ def hbars(fname, title, subtitle, rows, maxval, unit, legend_items,
     for t in range(ticks + 1):
         gx = x0 + PW * t / ticks
         p.append(f'<line x1="{gx:.1f}" y1="{TOP}" x2="{gx:.1f}" y2="{TOP + n*rowH}" stroke="{GRID}" stroke-width="1"/>')
-        p.append(f'<text x="{gx:.1f}" y="{TOP + n*rowH + 20}" font-size="11" fill="{MUTED}" text-anchor="middle">{num(maxval*t/ticks,0)}</text>')
+        p.append(f'<text x="{gx:.1f}" y="{TOP + n*rowH + 20}" font-size="11" fill="{MUTED}" text-anchor="middle">{num(maxval*t/ticks,tickdec)}</text>')
     if ref is not None:
         rx = x0 + ref * sc
         p.append(f'<line x1="{rx:.1f}" y1="{TOP-6}" x2="{rx:.1f}" y2="{TOP + n*rowH}" stroke="{MUTED}" stroke-width="1.5" stroke-dasharray="5 4"/>')
@@ -127,15 +127,13 @@ def vbars(fname, title, subtitle, groups, series, ymin, ymax, unit,
             fs = 13 if li == 0 else 11
             col = INK if li == 0 else MUTED
             p.append(f'<text x="{cx:.1f}" y="{TOP + plotH + 24 + li*16:.1f}" font-size="{fs}" fill="{col}" text-anchor="middle">{esc(ln)}</text>')
-    if unit:
-        p.append(f'<text x="18" y="{TOP-8}" font-size="11" fill="{MUTED}">{esc(unit)}</text>')
     write(fname, p)
 
 
 # ---------------------------------------------------------------- log h-bars (speed)
 def hbars_log(fname, title, subtitle, rows, vmin, vmax, note):
     import math
-    W, LW, RPAD, TOP, BOT = 860, 250, 150, 88, 48
+    W, LW, RPAD, TOP, BOT = 884, 278, 150, 88, 48
     rowH, barH = 46, 26
     n = len(rows)
     H = TOP + n * rowH + BOT
@@ -167,10 +165,10 @@ def hbars_log(fname, title, subtitle, rows, vmin, vmax, note):
 
 # ---------------------------------------------------------------- stat-tile panel
 def tiles(fname, title, subtitle, cells):
-    W, TOP = 860, 92
+    W, TOP = 900, 92
     cols = 4
     rows = (len(cells) + cols - 1) // cols
-    cw, ch, gap, mx = 196, 92, 14, 26
+    cw, ch, gap, mx = 207, 98, 12, 18
     H = TOP + rows * (ch + gap) + 20
     p = [head(W, H, title)]
     titleblock(p, title, subtitle, W)
@@ -179,8 +177,9 @@ def tiles(fname, title, subtitle, cells):
         x = mx + c * (cw + gap)
         y = TOP + r * (ch + gap)
         p.append(f'<rect x="{x}" y="{y}" width="{cw}" height="{ch}" rx="10" fill="#F8FAFC" stroke="{GRID}" stroke-width="1"/>')
-        p.append(f'<text x="{x+18}" y="{y+46}" font-size="26" font-weight="800" fill="{EMBER}">{esc(big)}</text>')
-        p.append(f'<text x="{x+18}" y="{y+70}" font-size="12.5" fill="{MUTED}">{esc(small)}</text>')
+        p.append(f'<text x="{x+18}" y="{y+44}" font-size="25" font-weight="800" fill="{EMBER}">{esc(big)}</text>')
+        for li, ln in enumerate(str(small).split("\n")):
+            p.append(f'<text x="{x+18}" y="{y+64 + li*16}" font-size="11.5" fill="{MUTED}">{esc(ln)}</text>')
     write(fname, p)
 
 
@@ -227,8 +226,8 @@ hbars("fig_stability.svg",
           ("SDF — out-of-distribution", 0.894, GREEN, ""),
           ("Surface — out-of-distribution", 0.746, GREEN, ""),
       ],
-      maxval=1.15, unit="", legend_items=[("≤ 1.0 = faithful / no explosion", GREEN)],
-      note="explosion fraction = 0 · NaN/Inf = 0", ref=1.0, ref_label="1.0  faithful")
+      maxval=1.2, unit="", legend_items=[("≤ 1.0 = faithful / no explosion", GREEN)],
+      note="explosion fraction = 0 · NaN/Inf = 0", ref=1.0, ref_label="1.0  faithful", tickdec=1)
 
 hbars_log("fig_speed.svg",
           "Speed — surrogate vs. the CFD it learns from",
@@ -252,13 +251,13 @@ vbars("fig_mesh_convergence.svg",
 tiles("fig_corpus.svg",
       "The Kuber corpus at a glance",
       "Self-generated OpenFOAM CHT data — 0 cases from SIMSHIFT or any licensed source.",
-      cells=[("4", "fluids — air / water / oil / glycol"),
-             ("2", "regimes — natural + forced"),
-             ("4+", "shapes — fins / plate / cube / pin-fin"),
-             ("2", "device classes — heatsink + cold plate"),
+      cells=[("4", "fluids\nair · water · oil · glycol"),
+             ("2", "regimes\nnatural + forced"),
+             ("4+", "shapes\nfins·plate·cube·pin-fin"),
+             ("2", "device classes\nheatsink + cold plate"),
              ("1.4 M", "cells per CFD case"),
-             ("16,384", "nodes sampled per case"),
-             ("5", "predicted field channels (U,T,p)"),
-             ("0.1 K", "mesh-convergence tolerance")])
+             ("16,384", "nodes sampled / case"),
+             ("5", "field channels (U, T, p)"),
+             ("0.1 K", "mesh-convergence tol.")])
 
 print("done")
