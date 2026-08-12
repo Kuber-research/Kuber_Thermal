@@ -1,0 +1,52 @@
+{
+  "benchmark": "SIMSHIFT heatsink",
+  "split": "medium",
+  "domain_shift": "train fin counts 5-8 -> test fin counts 10-12 (out-of-distribution)",
+  "model": "Kuber SurfaceGeoTransolver (full-geometry / surface input)",
+  "params_millions": 14.29,
+  "uda": false,
+  "fields": ["U_x", "U_y", "U_z", "T", "p_rgh"],
+  "notes": "Baselines quoted from the SIMSHIFT paper (Table 2); their numbers include UDA. Our numbers use no UDA. Primary model-selection metric is mean nRMSE (averaged over fields). Reproduce: python -m kuber.train_simshift --data <simshift> --splits <splits> --difficulty medium --geom_mode surface ; evaluate with --eval_only <ckpt>.",
+  "ours": {
+    "source_in_distribution": {
+      "T_RMSE_K": 4.29,
+      "velocity_RMSE_mps": 0.025,
+      "p_rgh_RMSE_Pa": 203,
+      "T_nRMSE": 0.179,
+      "mean_nRMSE": 0.287
+    },
+    "target_out_of_distribution": {
+      "T_RMSE_K": 12.14,
+      "velocity_RMSE_mps": 0.044,
+      "p_rgh_RMSE_Pa": 2303,
+      "T_nRMSE": 0.506,
+      "mean_nRMSE": 0.671
+    }
+  },
+  "baselines_target_ood": [
+    {"model": "UPT",        "uda": true, "T_RMSE_K": 12.41, "velocity_RMSE_mps": 0.039, "source": "SIMSHIFT paper Table 2 (prev. published best)"},
+    {"model": "Transolver", "uda": true, "T_RMSE_K": 13.43, "velocity_RMSE_mps": 0.041, "source": "SIMSHIFT paper Table 2"},
+    {"model": "PointNet",   "uda": true, "T_RMSE_K": 17.43, "velocity_RMSE_mps": 0.044, "source": "SIMSHIFT paper Table 2"}
+  ],
+  "value_of_data": {
+    "description": "Same model (surface, reduced 'transfer' conditioning, no UDA), from scratch vs pretrained on the Kuber corpus then fine-tuned on SIMSHIFT. T_RMSE in Kelvin on the target domain unless noted.",
+    "from_scratch":  {"easy": 8.99, "medium": 12.94, "hard": 14.42, "in_distribution": 4.63},
+    "pretrained":    {"easy": 7.28, "medium": 12.38, "hard": 14.43, "in_distribution": 4.09},
+    "mean_nRMSE_from_scratch": {"easy": 0.426, "medium": 0.615, "hard": 0.716},
+    "mean_nRMSE_pretrained":   {"easy": 0.379, "medium": 0.580, "hard": 0.709}
+  },
+  "stability_edge_gradient": {
+    "description": "Predicted / CFD |grad T| near the wall (closest 15% of nodes). 1.0 = faithful; >1 would be gradient explosion. Reproduce: python -m kuber.edge_proof --ckpt <ckpt> --data <simshift> --splits <splits> --difficulty medium.",
+    "in_distribution":     {"edge_band_ratio": 0.969, "steepest_peak_p99_9_ratio": 0.938},
+    "out_of_distribution": {"edge_band_ratio": 0.746, "steepest_peak_p99_9_ratio": 0.725},
+    "explosion_fraction": 0.0,
+    "nan_inf_count": 0,
+    "value_overshoot_fraction": {"in_distribution": 0.0, "out_of_distribution": 0.007}
+  },
+  "speed": {
+    "cfd_solve_seconds": {"low_fin_count": 162, "median_601_cases": 1320, "high_fin_count": 7020, "source": "measured"},
+    "surrogate_inference_seconds": 0.3,
+    "surrogate_note": "estimate pending exact per-GPU timing",
+    "speedup_vs_cfd": "~1000-4000x"
+  }
+}
