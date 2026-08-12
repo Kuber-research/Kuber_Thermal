@@ -93,6 +93,20 @@ At fin tips and corners the true temperature gradient is steep — where brittle
 
 Sub-second inference vs a median 22-minute CFD solve — roughly **1,000–4,000×** faster (inference latency is an estimate pending exact per-GPU timing; CFD times are measured).
 
+### Multi-geometry — one model, heatsinks and cold plates
+
+The same architecture handles two device classes from a single set of weights — **heatsinks** (wall-temperature boundary, buoyancy-driven, air) and **cold plates** (heat-flux boundary, forced liquid) — distinguished only by a device flag and fluid/BC conditioning. Evaluated per class on held-out cases from Kuber's corpus (there is no public cold-plate CHT benchmark):
+
+![Multi-geometry — one model, heatsinks + cold plates](assets/fig_multigeo.svg)
+
+| held-out class | Temp RMSE (K) ↓ | mean nRMSE ↓ |
+|---|:---:|:---:|
+| cold plates | 3.11 | 0.028 |
+| heatsinks | 5.13 | 0.145 |
+| in-distribution (both) | 1.72 | 0.027 |
+
+These numbers are on our self-generated corpus and are **not comparable** to the SIMSHIFT numbers above (different training set and test distribution). The cold-plate result generalizes to held-out cases with almost no degradation (mean nRMSE 0.028 vs 0.027 in-distribution). Cold plates are currently straight-channel; topology diversity is on the roadmap. Machine-readable: [`results/multigeo.json`](results/multigeo.json).
+
 ## Dataset
 
 The Data Engine's output: a self-generated OpenFOAM CHT corpus — **0 cases from SIMSHIFT or any licensed source**.

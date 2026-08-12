@@ -54,7 +54,32 @@ training, so 12.14 K is a zero-shot result. In-distribution temperature error is
 
 ---
 
-## 2. Value of the self-generated corpus
+## 2. Multi-geometry — one model, heatsinks and cold plates
+
+The same architecture handles two device classes from a single set of weights: **heatsinks**
+(wall-temperature BC, buoyancy-driven, air) and **cold plates** (heat-flux BC, forced liquid),
+distinguished only by a device flag plus fluid/BC conditioning. Evaluated per class on held-out cases
+from Kuber's corpus — **there is no public cold-plate CHT benchmark**. These numbers are on our own
+corpus and are **not comparable** to the SIMSHIFT numbers above (different training set and test
+distribution). Machine-readable: [`../results/multigeo.json`](../results/multigeo.json).
+
+![Multi-geometry — one model, heatsinks + cold plates](../assets/fig_multigeo.svg)
+
+| held-out class | T-RMSE (K) | T-nRMSE | velocity nRMSE | mean nRMSE |
+|---|:---:|:---:|:---:|:---:|
+| cold plates | 3.11 | 0.039 | 0.028 | 0.028 |
+| heatsinks | 5.13 | 0.065 | 0.216 | 0.145 |
+| in-distribution (both classes) | 1.72 | 0.022 | 0.034 | 0.027 |
+
+One model spans both physics regimes — a wall-temperature, buoyancy-driven heatsink in air and a
+heat-flux, forced-liquid cold plate. The cold-plate mean nRMSE (0.028) is close to the
+in-distribution number: it generalizes to held-out cold plates with almost no degradation. Cold
+plates are currently straight-channel; topology diversity (serpentine, pin-fin, parallel) is on the
+roadmap.
+
+---
+
+## 3. Value of the self-generated corpus
 
 Does pretraining on Kuber's OpenFOAM corpus add value on top of SIMSHIFT's own training set? A clean
 A/B with the **same** model (surface, reduced "transfer" conditioning — `solidTemp` only so weights
@@ -78,7 +103,7 @@ the corpus.
 
 ---
 
-## 3. Numerical stability — no gradient explosion
+## 4. Numerical stability — no gradient explosion
 
 A deployable surrogate must reproduce steep near-wall gradients without over-smoothing them or
 emitting unphysical spikes. Measured predicted-vs-CFD local temperature-gradient magnitude on the
@@ -104,7 +129,7 @@ Reproduce: `python -m kuber.edge_proof --ckpt <model.pt> --data <simshift> --spl
 
 ---
 
-## 4. Speed
+## 5. Speed
 
 ![Speed — surrogate vs CFD, log scale](../assets/fig_speed.svg)
 
@@ -113,14 +138,14 @@ Reproduce: `python -m kuber.edge_proof --ckpt <model.pt> --data <simshift> --spl
 | OpenFOAM CFD — low fin count | ~2.7 min | measured |
 | OpenFOAM CFD — median (601 cases) | ~22 min | measured (range 161–7051 s) |
 | OpenFOAM CFD — high fin count | ~117 min | measured |
-| **SurrogateGeoTransolver (inference)** | **~0.3 s** | estimate\* |
+| **SurfaceGeoTransolver (inference)** | **~0.3 s** | estimate\* |
 
 ≈ 1,000–4,000× faster than CFD, and inference is geometry-independent (CFD cost grows with mesh size;
 a forward pass does not). \*Inference latency is an estimate pending exact per-GPU timing.
 
 ---
 
-## 5. Data fidelity — mesh convergence
+## 6. Data fidelity — mesh convergence
 
 Same geometry, three meshes. Prism layers recover the near-wall hot spot to within 0.1 K of a fine
 mesh at ~2.7× fewer cells, which is why the production corpus uses snap-level-2 + 3 layers.
@@ -137,7 +162,7 @@ Dataset coverage and the full data contract: [`DATASET.md`](DATASET.md).
 
 ---
 
-## 6. Caveats
+## 7. Caveats
 
 - **Fluid imbalance.** The corpus is air-dominated (oil/glycol are thin, ~30–40 cases each), so the
   model is strongest on air.

@@ -1,0 +1,12 @@
+{
+  "experiment": "multi-geometry — one model, two device classes",
+  "dataset": "Kuber self-generated corpus (there is no public cold-plate CHT benchmark)",
+  "model": "Kuber SurfaceGeoTransolver (full-geometry / surface input) with a device flag + physics conditioning",
+  "params_millions": 14.3,
+  "cond_keys": ["rho", "mu", "Cp", "Pr", "u_in", "envTemp", "solidTemp", "heatFlux", "device"],
+  "checkpoint": "multigeo (best@110)",
+  "notes": "One model trained on both heatsinks (wall-temperature BC, buoyancy-driven, air) and cold plates (heat-flux BC, forced liquid), distinguished by a device flag + fluid/BC conditioning. Cold plates are straight-channel; topology diversity is on the roadmap. Evaluated per device class on held-out cases from the same corpus. Not comparable to the SIMSHIFT numbers (different training set and test distribution).",
+  "in_distribution_shared": {"T_RMSE_K": 1.724, "T_nRMSE": 0.0217, "velocity_nRMSE": 0.0335, "mean_nRMSE": 0.0270},
+  "cold_plates_held_out":   {"T_RMSE_K": 3.112, "T_nRMSE": 0.0392, "velocity_nRMSE": 0.0278, "p_rgh_nRMSE": 0.0177, "mean_nRMSE": 0.0280, "T_roughness_ratio": 0.869, "ood_gap_mean_nRMSE": 0.0010},
+  "heatsinks_held_out":     {"T_RMSE_K": 5.125, "T_nRMSE": 0.0646, "velocity_nRMSE": 0.2158, "mean_nRMSE": 0.1446, "nearwall_T_RMSE_K": 8.563, "T_roughness_ratio": 0.939, "ood_gap_mean_nRMSE": 0.1176}
+}
