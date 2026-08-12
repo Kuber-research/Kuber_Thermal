@@ -2,94 +2,100 @@
 
 # Kuber
 
-**An engineering-AI suite for electronics-cooling thermal simulation.**
+**An open framework for Engineering AI — build, train, and operate physics-simulation surrogates.**
 
-Generate physics data → train geometry-general thermal surrogates → benchmark them honestly → *(on the roadmap)* connect your CAD, quantify uncertainty, and let agents optimize the design.
+The full stack, from physics-data generation to a deployable, geometry-general surrogate. First shipping vertical: **electronics cooling** (heatsinks and cold plates), where Kuber beats the previous published best on the SIMSHIFT heatsink benchmark — with no domain adaptation.
 
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.x-ee4c2c.svg)](https://pytorch.org/)
-[![Built on PhysicsNeMo](https://img.shields.io/badge/built%20on-NVIDIA%20PhysicsNeMo-76b900.svg)](https://github.com/NVIDIA/physicsnemo)
-[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ShubhJain007/Kuber/blob/main/notebooks/quickstart.ipynb)
+[![License: PolyForm NC](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-2E7D5B.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.10%2B-1F4E79.svg)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.x-1F4E79.svg)](https://pytorch.org/)
+[![Built on PhysicsNeMo](https://img.shields.io/badge/built%20on-NVIDIA%20PhysicsNeMo-1F4E79.svg)](https://github.com/NVIDIA/physicsnemo)
 
 </div>
 
 ---
 
-Designing a heatsink or a cold plate means running CFD — minutes to hours per geometry — inside a loop you'd like to run thousands of times. Kuber is a suite for that loop: a **data engine** that generates conjugate-heat-transfer (CHT) physics, a **geometry-general surrogate** that predicts the full thermal-fluid field in a sub-second, and an **honest evaluation harness** that proves the surrogate generalizes to geometries it never saw — with a roadmap toward the pieces that turn a fast predictor into a design tool: CAD connectors, calibrated uncertainty, and agentic geometry optimization.
+Engineering teams that want a fast neural surrogate for simulation keep rebuilding the same stack — physics-data generation, a geometry-general model, an honest evaluation harness — before they can train anything. **Kuber is that stack as a reusable framework:** generate conjugate-heat-transfer physics, train a geometry-general surrogate that predicts the full field in a sub-second, and evaluate it rigorously — with a roadmap toward the pieces that turn a fast predictor into a design tool (CAD connectors, calibrated uncertainty, agentic optimization), so teams don't re-engineer components or stand up an in-house deep-learning group.
 
-Today the surrogate already reaches **state of the art on a public benchmark** (SIMSHIFT heatsink), beating the previous best **with no domain adaptation**.
-
-## What's in the suite
-
-| pillar | status | what it does |
-|---|:---:|---|
-| **Data Engine** — [`datagen/`](datagen) | ✅ shipping | parametric geometry → OpenFOAM `buoyantSimpleFoam` → per-node `.npz`; resumable, convergence-gated, commercial-safe |
-| **Surrogate models** — [`kuber/`](kuber) | ✅ shipping | *SurfaceGeoTransolver* (~14 M params): GeoTransolver core + AB-UPT-style surface encoder; predicts `(Uₓ,U_y,U_z,T,p_rgh)` at any query cloud |
-| **Eval & benchmark harness** — [`docs/`](docs) | ✅ shipping | per-field nRMSE, near-wall fidelity, a no-explosion stability proof, and a public leaderboard |
-| **Connectors** | 🔜 roadmap | bring-your-own CAD (STEP/STL/mesh) + OpenFOAM case ingest; drop the surrogate into existing thermal workflows |
-| **Bayesian uncertainty** | 🔜 roadmap | calibrated per-node predictive uncertainty — know where to trust the surrogate, where to fall back to CFD |
-| **Agentic geometry optimization** | 🔜 roadmap | a closed design loop: agent proposes geometry edits, surrogate scores them in ms, CFD verifies the winner |
+The framework is **instantiated first on electronics cooling** (conjugate heat transfer between a solid conductor and a moving fluid). On that vertical it beats the previous published best on the SIMSHIFT heatsink benchmark (12.14 vs 12.41 K temperature RMSE), with no domain adaptation. The architecture is not specific to heatsinks; other simulation verticals are on the roadmap.
 
 ## Table of contents
 
-- [Results](#results)
-- [Leaderboard](#leaderboard--simshift-heatsink-medium--ood)
+- [The framework](#the-framework)
+- [Results — electronics-cooling vertical](#results--electronics-cooling-vertical)
 - [Dataset](#dataset)
 - [Installation](#installation)
 - [Quickstart](#quickstart)
-- [The surrogate](#the-surrogate)
+- [The model](#the-model)
 - [Roadmap](#roadmap)
 - [Repository layout](#repository-layout)
 - [Reproducing our numbers](#reproducing-our-numbers)
+- [License](#license)
 - [Citing](#citing)
-- [License & acknowledgements](#license--acknowledgements)
+- [Acknowledgements](#acknowledgements)
 
-## Results
+## The framework
 
-All numbers are measured and reproducible with the code here; the honest caveats (data imbalance, single OOD axis, sub-second inference is an estimate) are stated inline and in [`docs/RESULTS.md`](docs/RESULTS.md). We would rather under-claim.
+Kuber is organized as the engineering-AI stack — the same pillars every simulation-surrogate project needs, built once and reused per vertical.
+
+| pillar | status | what it does |
+|---|:---:|---|
+| **Data Engine** — [`datagen/`](datagen) | shipping | parametric geometry → OpenFOAM `buoyantSimpleFoam` → per-node `.npz`; resumable, convergence-gated |
+| **Model** — [`kuber/`](kuber) | shipping | *SurfaceGeoTransolver* (~14 M params): a GeoTransolver core + a surface-geometry encoder; predicts `(Uₓ,U_y,U_z,T,p_rgh)` at any query cloud |
+| **Evaluation harness** — [`docs/`](docs) | shipping | per-field nRMSE, near-wall fidelity, a no-explosion stability proof, and a public leaderboard |
+| **Connectors** | roadmap | bring-your-own CAD (STEP/STL/mesh) + OpenFOAM ingest; drop the surrogate into an existing workflow |
+| **Uncertainty** | roadmap | calibrated, per-node Bayesian uncertainty — know where to trust the surrogate, where to fall back to CFD |
+| **Agentic optimization** | roadmap | a closed design loop: an agent proposes geometry edits, the surrogate scores them in ms, CFD verifies the winner |
+
+The three shipping pillars are general; the sections below report the framework instantiated on the **electronics-cooling** vertical.
+
+## Results — electronics-cooling vertical
+
+All numbers are for **Kuber's production model, SurfaceGeoTransolver** (full-geometry input: a surface point cloud + normals). Alternative geometry encodings (SDF / directional-SDF / conditions-only) remain available in the code as configuration options, but the model below is the one we report. Every number is measured and reproducible with the code here; caveats are stated inline and in [`docs/RESULTS.md`](docs/RESULTS.md). Machine-readable: [`results/simshift_medium.json`](results/simshift_medium.json) and [`results/leaderboard.csv`](results/leaderboard.csv).
 
 ### Leaderboard — SIMSHIFT heatsink (medium / OOD)
 
-On the public [SIMSHIFT](https://github.com/psetinek/simshift) heatsink split (train fin counts 5–8 → test 10–12), the surrogate leads on temperature — the field that matters for thermal design — **without the unsupervised domain adaptation (UDA) every published baseline relies on**.
+On the public [SIMSHIFT](https://github.com/psetinek/simshift) heatsink split (train fin counts 5–8 → test 10–12), the model leads on temperature — the field that matters for thermal design — **without the unsupervised domain adaptation (UDA) that every published baseline relies on.**
 
 ![SIMSHIFT heatsink leaderboard — temperature RMSE](assets/fig_leaderboard.svg)
 
-| # | model | UDA | Temp RMSE (K) ↓ | Velocity RMSE (m/s) ↓ | params |
-|---|---|:---:|:---:|:---:|:---:|
-| 🥇 | **Kuber — SurfaceGeoTransolver** | ✗ | **12.14** | 0.044 | 14.3 M |
-| 🥈 | UPT *(prev. published best)* | ✓ | 12.41 | 0.039 | ~14 M¹ |
-| 🥉 | **Kuber — GeoTransolver + directional-SDF** | ✗ | 13.07 | **0.038** | 14.0 M |
-| 4 | Transolver | ✓ | 13.43 | 0.041 | ~14 M¹ |
-| 5 | PointNet | ✓ | 17.43 | 0.044 | ~14 M¹ |
+| model | UDA | Temp RMSE (K) ↓ | Velocity RMSE (m/s) ↓ | params |
+|---|:---:|:---:|:---:|:---:|
+| **Kuber — SurfaceGeoTransolver** | ✗ | **12.14** | 0.044 | 14.3 M |
+| UPT *(prev. published best)* | ✓ | 12.41 | 0.039 | ~14 M¹ |
+| Transolver | ✓ | 13.43 | 0.041 | ~14 M¹ |
+| PointNet | ✓ | 17.43 | 0.044 | ~14 M¹ |
 
-¹ The SIMSHIFT paper prints no parameter counts; its configs show all three baselines are comparably sized (~10–15 M). **We are not winning by scaling parameters** — the edge is geometry conditioning + training recipe at the same budget. On the paper's *primary averaged-NRMSE* metric the SDF model actually leads overall (0.593); the surface model's win is specifically on **temperature**. Every metric, every caveat: [`docs/RESULTS.md`](docs/RESULTS.md). **Want on the board?** → [How to submit](docs/BENCHMARK.md#submitting-a-result).
+¹ The SIMSHIFT paper prints no parameter counts; its configs show all three baselines are comparably sized (~10–15 M). Kuber does not win by scaling parameters — the edge is the geometry conditioning and training recipe at the same budget, and without the UDA the baselines use. Full per-field metrics (temperature, velocity, pressure, nRMSE) are in [`docs/RESULTS.md`](docs/RESULTS.md). **Want on the board?** → [How to submit](docs/BENCHMARK.md#submitting-a-result).
 
-### Generalization — the SOTA number is zero-shot
+### Generalization — the result is zero-shot
 
-The leaderboard result is an **out-of-distribution** result: fin counts 10–14 never appear in training. The surrogate predicts them zero-shot and still leads.
+The leaderboard number is an **out-of-distribution** result: fin counts 10–14 never appear in training. The model predicts them zero-shot.
 
 ![In-distribution vs out-of-distribution temperature RMSE](assets/fig_indist_vs_ood.svg)
 
-### Our data is a moat — pretraining helps
+### The value of the data engine
 
-Same model, same SIMSHIFT fine-tuning; the only added ingredient is pretraining on our self-generated corpus. It moves the OOD number down — materially at easy shift (−19 %) and in-distribution (−12 %).
+Pretraining on Kuber's self-generated corpus, then fine-tuning on SIMSHIFT, lowers the error further — same model, only the pretraining differs. Materially at easy shift (−19 %) and in-distribution (−12 %).
 
-![Value of our data — from scratch vs pretrained on the Kuber corpus](assets/fig_value_of_data.svg)
+![Value of the corpus — from scratch vs pretrained](assets/fig_value_of_data.svg)
 
-### It doesn't blow up at the edges
+### Numerical stability
 
-At fin tips and corners the true temperature gradient is steep — where brittle surrogates either over-smooth or emit unphysical spikes. Measured predicted-vs-CFD ∇T in the near-wall band: **every ratio ≤ 1.0** (faithful, never exploding), **explosion fraction 0, zero NaN/Inf**, in- and out-of-distribution.
+At fin tips and corners the true temperature gradient is steep — where brittle surrogates over-smooth or emit unphysical spikes. Measured predicted-vs-CFD ∇T near the wall stays **at or below the physical gradient everywhere** (ratio ≤ 1.0), with **explosion fraction 0 and zero NaN/Inf**, in- and out-of-distribution.
 
-![Stability proof — edge temperature-gradient fidelity](assets/fig_stability.svg)
+![Stability — edge temperature-gradient fidelity](assets/fig_stability.svg)
 
-### ~1,000× faster than the CFD it learns from
+### Speed
 
 ![Speed — surrogate vs CFD, log scale](assets/fig_speed.svg)
 
+Sub-second inference vs a median 22-minute CFD solve — roughly **1,000–4,000×** faster (inference latency is an estimate pending exact per-GPU timing; CFD times are measured).
+
 ## Dataset
 
-A self-generated OpenFOAM CHT corpus — **0 cases from SIMSHIFT or any licensed source** — free for research and commercial use.
+The Data Engine's output: a self-generated OpenFOAM CHT corpus — **0 cases from SIMSHIFT or any licensed source**.
 
 ![The Kuber corpus at a glance](assets/fig_corpus.svg)
 
@@ -108,9 +114,11 @@ python -m venv .venv && source .venv/bin/activate     # or use conda
 pip install -r requirements.txt
 ```
 
-The surrogate core is **GeoTransolver** from NVIDIA PhysicsNeMo (`physicsnemo.experimental.models.geotransolver`) — install per its [instructions](https://github.com/NVIDIA/physicsnemo); a CUDA GPU is recommended for training and required for the multiscale ball-query core. **Data generation** additionally needs [OpenFOAM](https://www.openfoam.com/) (v2306+) on your `PATH`; the model, eval, and the data sample work without it.
+The model core is **GeoTransolver** from NVIDIA PhysicsNeMo (`physicsnemo.experimental.models.geotransolver`) — install per its [instructions](https://github.com/NVIDIA/physicsnemo); a CUDA GPU is recommended for training and required for the multiscale ball-query core. **Data generation** additionally needs [OpenFOAM](https://www.openfoam.com/) (v2306+) on your `PATH`; the model, evaluation, and the data sample work without it.
 
 ## Quickstart
+
+**Try it in your browser, no install:** [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ShubhJain007/Kuber/blob/main/notebooks/quickstart.ipynb) — loads a real CHT case and visualizes it on CPU.
 
 ```bash
 # 1. Peek at a sample case (no OpenFOAM, no GPU needed)
@@ -122,29 +130,29 @@ python -m kuber.train_simshift \
     --data <simshift_npz_dir> --splits <splits.json> --difficulty medium \
     --eval_only <model.pt>
 
-# 3. Reproduce the stability / no-explosion proof
+# 3. Reproduce the numerical-stability proof
 python -m kuber.edge_proof \
     --ckpt <model.pt> --data <simshift_npz_dir> --splits <splits.json> --difficulty medium
 
-# 4. Train from scratch (directional-SDF variant, the fastest strong baseline)
+# 4. Train the production model (full-geometry / surface input)
 python -m kuber.train_simshift \
-    --data <npz_dir> --splits <splits.json> --difficulty medium --geom_mode dsdf
+    --data <npz_dir> --splits <splits.json> --difficulty medium --geom_mode surface
 ```
 
-`--geom_mode {none,sdf,dsdf,surface}` selects the geometry representation; `--refine` adds the generative PDE-Refiner head. See `python -m kuber.train_simshift --help`.
+`--geom_mode {none,sdf,dsdf,surface}` selects the geometry representation (`surface` is the reported production model); `--refine` adds the generative PDE-Refiner head. See `python -m kuber.train_simshift --help`.
 
-## The surrogate
+## The model
 
-**SurfaceGeoTransolver** = a GeoTransolver physics-attention core (256 hidden × 12 layers) + an AB-UPT-style surface encoder (surface point cloud + normals → geometry tokens → per-node descriptor via kNN cross-attention). Geometry can also be fed as a scalar SDF, a **directional SDF** (distance + unit gradient), or nothing (conditions only), chosen by `--geom_mode`. An optional **PDE-Refiner** head restores high-frequency content and yields uncertainty — the seed of the Bayesian-UQ pillar on the roadmap. Architecture card: [`docs/MODEL.md`](docs/MODEL.md).
+**SurfaceGeoTransolver** = a GeoTransolver physics-attention core (256 hidden × 12 layers) + a surface-geometry encoder (surface point cloud + normals → geometry tokens → per-node descriptor via kNN cross-attention). The surface input is what makes it **geometry-general** — it works on arbitrary CAD, with no analytic SDF required. An optional **PDE-Refiner** head restores high-frequency content and yields an uncertainty estimate (the seed of the Uncertainty pillar). Architecture card: [`docs/MODEL.md`](docs/MODEL.md).
 
 ## Roadmap
 
-The three shipping pillars (data engine, surrogate, eval harness) are the foundation. The suite becomes a *design tool* with:
+The three shipping pillars are the foundation. Kuber becomes a *design tool* — and a broader Engineering-AI framework — with:
 
-1. **Connectors — bring your own geometry.** Native ingest of STEP / STL / CAD and OpenFOAM cases, plus export back into standard thermal workflows, exposed as a Python API + CLI. The surface-cloud interface already accepts arbitrary meshes; connectors make it turnkey so the surrogate drops into an existing pipeline without hand-conversion.
-2. **Bayesian uncertainty predictor.** Calibrated, per-node predictive uncertainty so an engineer knows *where* to trust the surrogate and where to fall back to CFD. Builds on the existing PDE-Refiner sampling, extended with deep-ensemble / variational / conformal calibration — and it feeds active learning (below).
-3. **Agentic geometry optimization.** A closed design loop: an agent proposes geometry edits (fin pitch/height, channel routing, pin layout), the surrogate scores thermal + pressure-drop objectives in milliseconds, and the agent searches the design space — with CFD-in-the-loop only to verify the winner. This is where a fast predictor becomes a fast *designer*.
-4. **And next:** active learning (uncertainty flags the cases worth simulating → the data engine targets them); more device classes / topologies (serpentine, pin-fin, parallel cold plates; immersion; vapor chambers); leave-one-shape-out / leave-one-fluid-out OOD splits; a hosted leaderboard with a sealed test set; and released checkpoints as GitHub Release assets.
+1. **Connectors — bring your own geometry.** Native ingest of STEP / STL / CAD and OpenFOAM cases, plus export back into standard thermal workflows, exposed as a Python API + CLI. The surface-cloud interface already accepts arbitrary meshes; connectors make it turnkey.
+2. **Bayesian uncertainty predictor.** Calibrated, per-node predictive uncertainty so an engineer knows *where* to trust the surrogate and where to fall back to CFD. Builds on the PDE-Refiner sampling, extended with deep-ensemble / variational / conformal calibration — and it feeds active learning.
+3. **Agentic geometry optimization.** A closed design loop: an agent proposes geometry edits (fin pitch/height, channel routing, pin layout), the surrogate scores thermal + pressure-drop objectives in milliseconds, and the agent searches the design space — with CFD-in-the-loop only to verify the winner.
+4. **More verticals and depth.** Additional device classes and topologies (serpentine, pin-fin, parallel cold plates; immersion; vapor chambers); other simulation verticals beyond electronics cooling; active learning that targets the data engine at high-uncertainty cases; a hosted leaderboard with a sealed test set; and released checkpoints.
 
 Contributions to any of these are welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
@@ -152,7 +160,7 @@ Contributions to any of these are welcome — see [`CONTRIBUTING.md`](CONTRIBUTI
 
 ```
 Kuber/
-├── kuber/                     # the surrogate + harness (Python package)
+├── kuber/                     # the model + harness (Python package)
 │   ├── surface_geotransolver.py   # SurfaceGeoTransolver (surface branch + GeoTransolver core)
 │   ├── surface_model.py           # surface encoder + local cross-attention
 │   ├── surface_geom.py            # analytic surface point cloud + normals from parameters
@@ -161,6 +169,8 @@ Kuber/
 │   └── edge_proof.py              # gradient-fidelity / no-explosion stability harness
 ├── datagen/                   # OpenFOAM buoyantSimpleFoam CHT pipeline (heatsink + cold plate)
 ├── data_sample/              # 6 example cases (.npz) + a sample split
+├── results/                  # machine-readable results (JSON + CSV)
+├── notebooks/                # Colab quickstart (loads a case, no GPU/weights)
 ├── assets/                   # result figures (SVG) + their generator
 ├── checkpoints/             # how to obtain trained weights
 ├── docs/                    # RESULTS, DATASET, MODEL, BENCHMARK
@@ -169,40 +179,41 @@ Kuber/
 
 ## Reproducing our numbers
 
-Every number above is produced by the code here (SIMSHIFT data + splits from the [official repo](https://github.com/psetinek/simshift); our corpus regenerated with `datagen/`):
+Every number above is produced by the code here (SIMSHIFT data + splits from the [official repo](https://github.com/psetinek/simshift); the corpus regenerated with `datagen/`):
 
 ```bash
-# leaderboard (surface + SDF variants)
+# leaderboard (production model)
 python -m kuber.train_simshift --data <simshift> --splits <splits> --difficulty medium --geom_mode surface
-python -m kuber.train_simshift --data <simshift> --splits <splits> --difficulty medium --geom_mode dsdf
-# value-of-data A/B: pretrain on our corpus (reduced "transfer" conditioning), then fine-tune
-python -m kuber.train_simshift --data <our_corpus> --splits <corpus_splits> --difficulty medium \
+# value-of-data: pretrain on the corpus (reduced "transfer" conditioning), then fine-tune
+python -m kuber.train_simshift --data <corpus> --splits <corpus_splits> --difficulty medium \
     --geom_mode surface --drop_geom_scalars --out pretrain/
 python -m kuber.train_simshift --data <simshift> --splits <splits> --difficulty medium \
     --geom_mode surface --drop_geom_scalars --init_from pretrain/<pretrained.pt>
-# stability / no-explosion proof
+# numerical-stability proof
 python -m kuber.edge_proof --ckpt <model.pt> --data <simshift> --splits <splits> --difficulty medium
 ```
 
-Regenerate the figures in this README with `python assets/make_figures.py`.
+Regenerate the figures with `python assets/make_figures.py`.
+
+## License
+
+Kuber is released under the **[PolyForm Noncommercial License 1.0.0](LICENSE)** — free for research, education, evaluation, and any other noncommercial use. **Commercial use requires a separate license** — contact the Kuber.ai team. This mirrors how open Engineering-AI frameworks are typically licensed: open for the community, with a separate commercial track.
 
 ## Citing
 
 ```bibtex
 @software{kuber2026,
-  title  = {Kuber: An Engineering-AI Suite for Electronics-Cooling Thermal Simulation},
+  title  = {Kuber: An Open Framework for Engineering AI},
   author = {Jain, Shubh},
   year   = {2026},
   url    = {https://github.com/ShubhJain007/Kuber}
 }
 ```
 
-Please also cite the works Kuber builds on: **GeoTransolver / PhysicsNeMo** (NVIDIA), **Transolver** (Wu et al., 2024), **AB-UPT** (Alkin et al., 2025), **SIMSHIFT** (Setinek et al.), and **PDE-Refiner** (Lippe et al., NeurIPS 2023). Full references in [`docs/MODEL.md`](docs/MODEL.md).
+## Acknowledgements
 
-## License & acknowledgements
-
-Apache-2.0 — see [`LICENSE`](LICENSE). The GeoTransolver core is from NVIDIA PhysicsNeMo (Apache-2.0). The dataset is self-generated with OpenFOAM and released for research and commercial use.
+Kuber builds on **GeoTransolver / PhysicsNeMo** (NVIDIA, Apache-2.0, used as a dependency), **Transolver** (Wu et al., 2024), **AB-UPT** (Alkin et al., 2025), **SIMSHIFT** (Setinek et al.), and **PDE-Refiner** (Lippe et al., NeurIPS 2023). Full references in [`docs/MODEL.md`](docs/MODEL.md).
 
 <div align="center">
-<sub>Built by the Kuber.ai team — geometry-general thermal surrogates for electronics cooling.</sub>
+<sub>Built by the Kuber.ai team — an open framework for Engineering AI.</sub>
 </div>
