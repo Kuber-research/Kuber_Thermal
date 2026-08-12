@@ -16,7 +16,7 @@ rigor (new baselines, harder splits, better data) or catch over-claims are all w
 ## Ground rules
 
 - **No licensed or scraped data.** Everything must be self-generated or from a source whose license
-  permits redistribution. Our corpus is OpenFOAM-generated and commercial-safe.
+  permits redistribution. Our corpus is OpenFOAM-generated with clean provenance (no licensed/scraped data).
 - **Reproducibility.** A result must come with the exact command and environment that produced it.
 - **Honesty about domain adaptation and pretraining.** State plainly whether a number used UDA or
   any external data. The leaderboard tracks these columns for a reason.

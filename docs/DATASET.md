@@ -2,7 +2,7 @@
 
 A self-generated OpenFOAM conjugate-heat-transfer (CHT) corpus for electronics cooling —
 **0 cases from SIMSHIFT or any licensed/scraped source**. Everything here is produced by the
-pipeline in [`../datagen/`](../datagen) and is free to use for research and commercial work.
+pipeline in [`../datagen/`](../datagen) and is free for research and other noncommercial use.
 
 ## What a case is
 
@@ -88,5 +88,6 @@ print(json.loads(str(d["conditions"])))
 ## License
 
 The corpus is generated with OpenFOAM (GPL solver, but the *output data* is yours) and is released
-under the repository's Apache-2.0 license for research and commercial use. If you extend it, please
-keep the no-licensed-data rule (see [`../CONTRIBUTING.md`](../CONTRIBUTING.md)).
+under the repository's PolyForm Noncommercial License 1.0.0 (noncommercial use; commercial use
+requires a separate license). If you extend it, please keep the no-licensed-data rule
+(see [`../CONTRIBUTING.md`](../CONTRIBUTING.md)).
