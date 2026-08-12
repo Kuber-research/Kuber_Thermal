@@ -2,9 +2,9 @@
 
 # Kuber
 
-**An open framework for Engineering AI — build, train, and operate physics-simulation surrogates.**
+**An open framework for conjugate–heat-transfer AI — build, train, and operate neural surrogates for any coupled fluid–heat problem.**
 
-The full stack, from physics-data generation to a deployable, geometry-general surrogate. First shipping vertical: **electronics cooling** (heatsinks and cold plates), where Kuber beats the previous published best on the SIMSHIFT heatsink benchmark — with no domain adaptation.
+The full stack, from physics-data generation to a deployable, geometry-general surrogate — for **any coupled fluid–heat (conjugate heat transfer) problem**: heatsinks, cold plates, heat exchangers, power electronics, battery packs, HVAC, turbomachinery cooling. First domain with published results: **electronics cooling**, where Kuber beats the previous best on the SIMSHIFT heatsink benchmark with no domain adaptation.
 
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ShubhJain007/Kuber/blob/main/notebooks/quickstart.ipynb)
 [![License: PolyForm NC](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-2E7D5B.svg)](LICENSE)
@@ -18,7 +18,9 @@ The full stack, from physics-data generation to a deployable, geometry-general s
 
 Engineering teams that want a fast neural surrogate for simulation keep rebuilding the same stack — physics-data generation, a geometry-general model, an honest evaluation harness — before they can train anything. **Kuber is that stack as a reusable framework:** generate conjugate-heat-transfer physics, train a geometry-general surrogate that predicts the full field in a sub-second, and evaluate it rigorously — with a roadmap toward the pieces that turn a fast predictor into a design tool (CAD connectors, calibrated uncertainty, agentic optimization), so teams don't re-engineer components or stand up an in-house deep-learning group.
 
-The framework is **instantiated first on electronics cooling** (conjugate heat transfer between a solid conductor and a moving fluid). On that vertical it beats the previous published best on the SIMSHIFT heatsink benchmark (12.14 vs 12.41 K temperature RMSE), with no domain adaptation. The architecture is not specific to heatsinks; other simulation verticals are on the roadmap.
+Conjugate heat transfer — heat conducting through a solid while a moving fluid carries it away — is the shared physics behind heatsinks, cold plates, heat exchangers, power electronics, battery packs, and turbomachinery cooling. Kuber targets that whole class of problems. It is **validated first on electronics cooling**, where it beats the previous published best on the SIMSHIFT heatsink benchmark (12.14 vs 12.41 K temperature RMSE) with no domain adaptation, and already spans two device classes — heatsinks and cold plates — from a single model. Other CHT domains are on the roadmap.
+
+![Coupled fluid–heat fields — heatsink (air, natural convection) and cold plate (liquid, forced), OpenFOAM ground truth](assets/sim/hero.png)
 
 ## Table of contents
 
@@ -37,7 +39,7 @@ The framework is **instantiated first on electronics cooling** (conjugate heat t
 
 ## The framework
 
-Kuber is organized as the engineering-AI stack — the same pillars every simulation-surrogate project needs, built once and reused per vertical.
+Kuber is organized as the engineering-AI stack — the same pillars every conjugate-heat-transfer surrogate needs, built once and reused across domains.
 
 | pillar | status | what it does |
 |---|:---:|---|
@@ -115,6 +117,11 @@ The Data Engine's output: a self-generated OpenFOAM CHT corpus — **0 cases fro
 
 Pipeline ([`datagen/`](datagen)): parametric generator → STL → `blockMesh` + `snappyHexMesh` (+ prism layers) → solve → `.npz`, resumable, gated by convergence + a physics filter. A 6-case sample (3 heatsinks + 3 cold plates) is in [`data_sample/`](data_sample); the full contract is in [`docs/DATASET.md`](docs/DATASET.md).
 
+Example cases — the OpenFOAM ground-truth fields the surrogate learns (temperature + velocity magnitude):
+
+![Heatsink CFD fields](assets/sim/sim_heatsink.png)
+![Cold plate CFD fields](assets/sim/sim_coldplate.png)
+
 **Fidelity is verified, not assumed** — prism layers recover the near-wall hot spot to within 0.1 K of a fine mesh at ~2.7× lower cost:
 
 ![Mesh convergence of the hot spot](assets/fig_mesh_convergence.svg)
@@ -166,7 +173,7 @@ The three shipping pillars are the foundation. Kuber becomes a *design tool* —
 1. **Connectors — bring your own geometry.** Native ingest of STEP / STL / CAD and OpenFOAM cases, plus export back into standard thermal workflows, exposed as a Python API + CLI. The surface-cloud interface already accepts arbitrary meshes; connectors make it turnkey.
 2. **Bayesian uncertainty predictor.** Calibrated, per-node predictive uncertainty so an engineer knows *where* to trust the surrogate and where to fall back to CFD. Builds on the PDE-Refiner sampling, extended with deep-ensemble / variational / conformal calibration — and it feeds active learning.
 3. **Agentic geometry optimization.** A closed design loop: an agent proposes geometry edits (fin pitch/height, channel routing, pin layout), the surrogate scores thermal + pressure-drop objectives in milliseconds, and the agent searches the design space — with CFD-in-the-loop only to verify the winner.
-4. **More verticals and depth.** Additional device classes and topologies (serpentine, pin-fin, parallel cold plates; immersion; vapor chambers); other simulation verticals beyond electronics cooling; active learning that targets the data engine at high-uncertainty cases; a hosted leaderboard with a sealed test set; and released checkpoints.
+4. **More CHT domains and depth.** Additional device classes and topologies (serpentine, pin-fin, parallel cold plates; immersion; vapor chambers); other conjugate-heat-transfer domains beyond electronics cooling (heat exchangers, battery thermal, power modules, turbomachinery cooling); active learning that targets the data engine at high-uncertainty cases; a hosted leaderboard with a sealed test set; and released checkpoints.
 
 Contributions to any of these are welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
@@ -229,5 +236,5 @@ Kuber is released under the **[PolyForm Noncommercial License 1.0.0](LICENSE)** 
 Kuber builds on **GeoTransolver / PhysicsNeMo** (NVIDIA, Apache-2.0, used as a dependency), **Transolver** (Wu et al., 2024), **AB-UPT** (Alkin et al., 2025), **SIMSHIFT** (Setinek et al.), and **PDE-Refiner** (Lippe et al., NeurIPS 2023). Full references in [`docs/MODEL.md`](docs/MODEL.md).
 
 <div align="center">
-<sub>Built by the Kuber.ai team — an open framework for Engineering AI.</sub>
+<sub>Built by the Kuber.ai team — an open framework for conjugate–heat-transfer AI.</sub>
 </div>
