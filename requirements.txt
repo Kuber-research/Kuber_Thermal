@@ -1,16 +1,17 @@
-# Core
-torch>=2.1
-numpy>=1.24
-scipy>=1.10
+# Pinned to the exact versions used to train and evaluate the models in this repo.
+# (Captured from the training environment.)
 
-# Visualization / analysis (optional but used by some scripts)
-matplotlib>=3.7
+torch==2.12.1
+numpy==2.4.6
 
-# Model core — GeoTransolver lives in NVIDIA PhysicsNeMo (experimental module):
-#   physicsnemo.experimental.models.geotransolver
-# Install per https://github.com/NVIDIA/physicsnemo (pip package: nvidia-physicsnemo).
-# Pinned separately because it may require a matching CUDA/torch build:
-# nvidia-physicsnemo
+# GeoTransolver core lives in NVIDIA PhysicsNeMo (experimental module):
+#   physicsnemo.experimental.models.geotransolver.GeoTransolver
+# Install per https://github.com/NVIDIA/physicsnemo (it may need a CUDA/torch-matched build).
+nvidia-physicsnemo==2.1.1
 
+# torch above is the CPU/build-agnostic pin; for a specific CUDA build install torch from the
+# matching PyTorch index, e.g.:  pip install torch==2.12.1 --index-url https://download.pytorch.org/whl/cu130
+#
 # Data generation (datagen/) additionally requires an OpenFOAM install on PATH
 # (buoyantSimpleFoam, blockMesh, snappyHexMesh) — not a pip dependency.
+# The Colab quickstart (notebooks/) installs matplotlib itself; it is not needed for training/eval.
