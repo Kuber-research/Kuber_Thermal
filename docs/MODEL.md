@@ -26,10 +26,10 @@ output :  field       [B,N,5]   (U_x, U_y, U_z, T, p_rgh), per-channel z-normali
 
 | `--geom_mode` | geometry signal | notes |
 |---|---|---|
+| `surface` | surface point cloud + normals → encoder → per-node descriptor | **production model** — no analytic SDF needed, works on arbitrary CAD |
+| `dsdf` | signed distance + unit gradient (4 ch) | encodes wall direction; requires an analytic SDF |
+| `sdf` | scalar signed distance per node | requires an analytic SDF |
 | `none` | conditions only | ablation floor |
-| `sdf` | scalar signed distance per node | cheap, strong when an analytic SDF exists |
-| `dsdf` | signed distance **+ unit gradient** (4 ch) | tells the model *which way the wall is* → windward/leeward points differ; **best accuracy/velocity at our data scale** |
-| `surface` | surface point cloud + normals → encoder → per-node descriptor | no analytic SDF needed → the path to **arbitrary CAD**; **best temperature** |
 
 The surface branch (`geom_wiring="concat"`, the default) runs a shallow permutation-invariant
 **SurfaceGeometryEncoder** over `(surf_pts, surf_normals)` to produce geometry tokens, then a
@@ -53,11 +53,10 @@ see [`pde_refiner.py`](../kuber/pde_refiner.py).
 
 ## Which variant should I use?
 
-- **Parametric / known geometry family** → `dsdf`. An exact analytic SDF is a near-perfect,
-  data-efficient signal; at our current data scale it is the most accurate and the cheapest.
-- **Arbitrary customer CAD** → `surface`. No analytic SDF exists for general meshes, so the surface
-  encoder becomes necessary. It already wins on temperature; more data closes the rest (see
-  [`RESULTS.md` §6](RESULTS.md)).
+`surface` is Kuber's production model and the configuration reported in [`RESULTS.md`](RESULTS.md): it
+takes a surface point cloud + normals, so it works on arbitrary CAD with no analytic SDF required. The
+`sdf` / `dsdf` / `none` modes remain in the code as options for parametric geometry families where an
+analytic SDF is cheaply available, but they are not the reported model.
 
 ## References
 

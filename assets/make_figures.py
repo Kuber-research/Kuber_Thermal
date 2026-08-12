@@ -10,9 +10,11 @@ AND dark. All numbers are from docs/RESULTS.md.
 import html, os
 
 OUT = os.path.dirname(os.path.abspath(__file__))
-EMBER, SKY, SLATE = "#EA580C", "#0EA5E9", "#64748B"
-INK, MUTED, GRID, BG = "#0F172A", "#64748B", "#E2E8F0", "#FFFFFF"
-GREEN = "#16A34A"
+# Restrained, publication-style palette: deep blue = our model, light gray = baselines,
+# muted green = "faithful/safe". No marketing accent.
+EMBER, SKY, SLATE = "#1F4E79", "#7FA8C9", "#AEB8C2"   # names kept; hues now professional
+INK, MUTED, GRID, BG = "#14181F", "#5B6672", "#E6EAEF", "#FFFFFF"
+GREEN = "#2E7D5B"
 FONT = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"
 
 
@@ -190,17 +192,15 @@ BASE = "Published baseline (with UDA)"
 
 hbars("fig_leaderboard.svg",
       "SIMSHIFT heatsink leaderboard — temperature RMSE",
-      "Medium / out-of-distribution split (train fins 5–8 → test 10–12).  Baselines' numbers include UDA; ours use none.",
+      "Medium / out-of-distribution split (train fins 5–8 → test 10–12). Baselines include UDA; Kuber uses none.",
       rows=[
-          ("Kuber — SurfaceGeoTransolver", 12.14, EMBER, "ours"),
-          ("Kuber — pretrained on corpus", 12.38, SKY, "ours"),
-          ("UPT  (prev. published best)", 12.41, SLATE, "+UDA"),
-          ("Kuber — GeoTransolver + dSDF", 13.07, EMBER, "ours"),
-          ("Transolver", 13.43, SLATE, "+UDA"),
-          ("PointNet", 17.43, SLATE, "+UDA"),
+          ("Kuber — SurfaceGeoTransolver", 12.14, EMBER, ""),
+          ("UPT  (prev. published best)", 12.41, SLATE, ""),
+          ("Transolver", 13.43, SLATE, ""),
+          ("PointNet", 17.43, SLATE, ""),
       ],
       maxval=18.5, unit=" K",
-      legend_items=[("Kuber (no UDA)", EMBER), ("Kuber, corpus-pretrained", SKY), ("published (with UDA)", SLATE)])
+      legend_items=[("Kuber (ours, no UDA)", EMBER), ("published baseline (with UDA)", SLATE)])
 
 vbars("fig_value_of_data.svg",
       "Value of our data — pretrain on the Kuber corpus, then fine-tune",
@@ -211,20 +211,21 @@ vbars("fig_value_of_data.svg",
       ymin=0, ymax=16, unit="T-RMSE (K)")
 
 vbars("fig_indist_vs_ood.svg",
-      "Generalization — in-distribution vs. unseen fin counts",
-      "The SOTA number is the zero-shot OOD number. Temperature RMSE (K).",
-      groups=[("SurfaceGeoTransolver", [4.29, 12.14]), ("GeoTransolver + dSDF", [4.71, 13.07])],
-      series=[("in-distribution (src.test)", SKY), ("out-of-distribution (tgt.test)", EMBER)],
-      ymin=0, ymax=14, unit="T-RMSE (K)")
+      "Generalization — the SOTA result is zero-shot",
+      "SurfaceGeoTransolver temperature RMSE (K). Fin counts 10–14 never appear in training.",
+      groups=[("in-distribution\n(trained fin range)", [4.29]),
+              ("out-of-distribution\n(unseen fin counts)", [12.14])],
+      series=[("SurfaceGeoTransolver", EMBER)],
+      ymin=0, ymax=14, unit="")
 
 hbars("fig_stability.svg",
-      "Stability proof — edge temperature-gradient fidelity",
-      "Predicted ÷ CFD |∇T| in the near-wall band (fin tips/corners). 1.0 = faithful; >1 would be 'explosion'.",
+      "Stability — edge temperature-gradient fidelity",
+      "SurfaceGeoTransolver — predicted ÷ CFD |∇T| near the wall (fin tips / corners).",
       rows=[
-          ("Surface — in-distribution", 0.969, GREEN, ""),
-          ("SDF — in-distribution", 0.955, GREEN, ""),
-          ("SDF — out-of-distribution", 0.894, GREEN, ""),
-          ("Surface — out-of-distribution", 0.746, GREEN, ""),
+          ("In-distribution · edge band", 0.969, GREEN, ""),
+          ("In-distribution · steepest peak", 0.938, GREEN, ""),
+          ("Out-of-distribution · edge band", 0.746, GREEN, ""),
+          ("Out-of-distribution · steepest peak", 0.725, GREEN, ""),
       ],
       maxval=1.2, unit="", legend_items=[("≤ 1.0 = faithful / no explosion", GREEN)],
       note="explosion fraction = 0 · NaN/Inf = 0", ref=1.0, ref_label="1.0  faithful", tickdec=1)
