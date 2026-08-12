@@ -1,12 +1,13 @@
 # Paper
 
-**Kuber: Geometry-General Neural Surrogates for Conjugate Heat Transfer** — technical report.
+**Kuber: Geometry-General Neural Surrogates for Conjugate Heat Transfer** — formatted as an
+**IEEE conference (ICRA) paper** (two-column, Times, `IEEEtran`).
 
 | file | what it is |
 |---|---|
 | [`kuber.pdf`](kuber.pdf) | the paper (read this) — renders inline on GitHub |
-| `kuber.tex` | LaTeX source — compiles with `pdflatex` or on [Overleaf](https://overleaf.com) |
-| `kuber.html` | the HTML build used to render the PDF (via `chromium --print-to-pdf`) |
+| `kuber.tex` | LaTeX source, `\documentclass[conference]{IEEEtran}` — compiles with `pdflatex` or on [Overleaf](https://overleaf.com) |
+| `kuber.html` | the IEEE-styled HTML build used to render the PDF (via `chromium --print-to-pdf`) |
 
 Figures are pulled from [`../assets/sim/`](../assets/sim). Every number in the paper is measured and
 reproducible with the code in this repository; see [`../docs/RESULTS.md`](../docs/RESULTS.md) and the
