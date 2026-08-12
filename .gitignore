@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Large artifacts (distribute via GitHub Releases, not git)
+*.pt
+*.ckpt
+outputs/
+runs/
+wandb/
+
+# OpenFOAM run dirs / meshes (regenerate with datagen/)
+datagen/cases/
+datagen/out/
+*.foam
+processor*/
+
+# Data — only the curated sample under data_sample/ is tracked
+data/
+corpus/
+*.vtk
+*.vtu
+
+# OS / editor
+.DS_Store
+.ipynb_checkpoints/
+.idea/
+.vscode/

@@ -1,0 +1,16 @@
+# Core
+torch>=2.1
+numpy>=1.24
+scipy>=1.10
+
+# Visualization / analysis (optional but used by some scripts)
+matplotlib>=3.7
+
+# Model core — GeoTransolver lives in NVIDIA PhysicsNeMo (experimental module):
+#   physicsnemo.experimental.models.geotransolver
+# Install per https://github.com/NVIDIA/physicsnemo (pip package: nvidia-physicsnemo).
+# Pinned separately because it may require a matching CUDA/torch build:
+# nvidia-physicsnemo
+
+# Data generation (datagen/) additionally requires an OpenFOAM install on PATH
+# (buoyantSimpleFoam, blockMesh, snappyHexMesh) — not a pip dependency.

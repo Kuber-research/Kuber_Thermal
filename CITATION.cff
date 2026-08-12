@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "Kuber: An Open Benchmark and Neural-Surrogate Baseline for Conjugate Heat Transfer in Electronics Cooling"
+message: "If you use Kuber, please cite it."
+type: software
+authors:
+  - family-names: Jain
+    given-names: Shubh
+year: 2026
+url: "https://github.com/ShubhJain007/Kuber"
+license: Apache-2.0
+keywords:
+  - conjugate heat transfer
+  - neural surrogate
+  - CFD
+  - electronics cooling
+  - heatsink
+  - cold plate
+  - transformer
+  - operator learning
