@@ -11,7 +11,7 @@ import os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-VENDOR = os.path.join(ROOT.replace("/thermabench", "/cfd_thermal_mvp"), "demo", "static", "vendor")
+VENDOR = os.path.join(HERE, "vendor")   # three.min.js + OrbitControls.js (MIT), vendored in-repo
 SP = sys.argv[2] if len(sys.argv) > 2 else "/tmp"
 DATA_JSON = sys.argv[3] if len(sys.argv) > 3 else os.path.join(SP, "viewer_data.json")
 
