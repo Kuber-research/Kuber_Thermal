@@ -8,6 +8,7 @@ The full stack, from physics-data generation to a deployable, geometry-general s
 
 [![Interactive demo](https://img.shields.io/badge/%F0%9F%A7%8A%20interactive%20demo-live-1F4E79.svg)](https://claude.ai/code/artifact/18bccea0-365d-457d-b545-a6c66d0eee3d)
 [![Project page](https://img.shields.io/badge/%F0%9F%8C%A1%EF%B8%8F%20project%20page-live-2E7D5B.svg)](https://claude.ai/code/artifact/9f868268-56d9-468a-94dd-5b5aa915a18f)
+[![Paper](https://img.shields.io/badge/paper-PDF-B31B1B.svg)](paper/kuber.pdf)
 [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ShubhJain007/Kuber/blob/main/notebooks/quickstart.ipynb)
 [![License: PolyForm NC](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-2E7D5B.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-1F4E79.svg)](https://www.python.org/)
@@ -24,7 +25,7 @@ Conjugate heat transfer — heat conducting through a solid while a moving fluid
 
 ![Coupled fluid–heat fields — heatsink (air, natural convection) and cold plate (liquid, forced), OpenFOAM ground truth](assets/sim/hero.png)
 
-> **Live:** an [interactive ground-truth-vs-prediction viewer](https://claude.ai/code/artifact/18bccea0-365d-457d-b545-a6c66d0eee3d) (3D solid geometry + fluid field, heatsink & cold plate) and a [project page](https://claude.ai/code/artifact/9f868268-56d9-468a-94dd-5b5aa915a18f). A public GitHub Pages site is also configured — enable it once in **Settings → Pages → Source: “GitHub Actions”** to serve `site/` at `https://shubhjain007.github.io/Kuber/`.
+> **Read the [technical report (PDF)](paper/kuber.pdf).** **Live:** an [interactive ground-truth-vs-prediction viewer](https://claude.ai/code/artifact/18bccea0-365d-457d-b545-a6c66d0eee3d) (3D solid geometry + fluid field, heatsink & cold plate) and a [project page](https://claude.ai/code/artifact/9f868268-56d9-468a-94dd-5b5aa915a18f). A public GitHub Pages site is also configured — enable it once in **Settings → Pages → Source: “GitHub Actions”** to serve `site/` at `https://shubhjain007.github.io/Kuber/`.
 
 ## Table of contents
 
