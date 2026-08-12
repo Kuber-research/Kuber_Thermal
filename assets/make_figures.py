@@ -237,9 +237,9 @@ hbars_log("fig_speed.svg",
               ("OpenFOAM CFD — high fin count", 7020, "≈ 117 min", SLATE),
               ("OpenFOAM CFD — median (601 cases)", 1320, "≈ 22 min", SLATE),
               ("OpenFOAM CFD — low fin count", 162, "≈ 2.7 min", SLATE),
-              ("Kuber surrogate (inference)", 0.3, "≈ 0.3 s  →  ~1,000–4,000× faster", EMBER),
+              ("Kuber surrogate (inference)", 0.3, "≈ 0.3 s  →  up to 10,000× faster", EMBER),
           ],
-          vmin=0.1, vmax=10000, note="≈ 1,000–4,000× faster than CFD")
+          vmin=0.1, vmax=10000, note="up to 10,000× faster than CFD")
 
 vbars("fig_mesh_convergence.svg",
       "Data fidelity — mesh convergence of the hot spot",

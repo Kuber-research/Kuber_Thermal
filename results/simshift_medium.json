@@ -47,6 +47,6 @@
     "cfd_solve_seconds": {"low_fin_count": 162, "median_601_cases": 1320, "high_fin_count": 7020, "source": "measured"},
     "surrogate_inference_seconds": 0.3,
     "surrogate_note": "estimate pending exact per-GPU timing",
-    "speedup_vs_cfd": "~1000-4000x"
+    "speedup_vs_cfd": "up to ~10000x"
   }
 }

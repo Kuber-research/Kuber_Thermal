@@ -140,7 +140,7 @@ CONTENT = """
     </div>
     <div class="stats">
       <div class="stat"><div class="num">12.14&thinsp;K</div><div class="lbl">temperature RMSE on SIMSHIFT &mdash; beats the prior best, no domain adaptation</div></div>
-      <div class="stat"><div class="num">~1,000&times;</div><div class="lbl">faster than the CFD it learns from</div></div>
+      <div class="stat"><div class="num">10,000&times;</div><div class="lbl">up to &mdash; faster than the CFD it learns from</div></div>
       <div class="stat"><div class="num">2</div><div class="lbl">device classes &mdash; heatsinks &amp; cold plates &mdash; from one model</div></div>
       <div class="stat"><div class="num">~14&thinsp;M</div><div class="lbl">parameters, geometry-general (arbitrary CAD)</div></div>
     </div>

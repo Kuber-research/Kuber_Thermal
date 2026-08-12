@@ -140,8 +140,9 @@ Reproduce: `python -m kuber.edge_proof --ckpt <model.pt> --data <simshift> --spl
 | OpenFOAM CFD — high fin count | ~117 min | measured |
 | **SurfaceGeoTransolver (inference)** | **~0.3 s** | estimate\* |
 
-≈ 1,000–4,000× faster than CFD, and inference is geometry-independent (CFD cost grows with mesh size;
-a forward pass does not). \*Inference latency is an estimate pending exact per-GPU timing.
+Up to **10,000× faster than CFD** (the slowest high-fin-count cases at ≈0.3 s vs ≈117 min), and
+inference is geometry-independent — CFD cost grows with mesh size; a forward pass does not.
+\*Inference latency is an estimate pending exact per-GPU timing.
 
 ---
 

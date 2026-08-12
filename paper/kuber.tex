@@ -269,8 +269,8 @@ NaN / Inf count & 0 & 0 \\ \bottomrule
 \subsection{Speed and Data Fidelity}
 Inference is a single forward pass whose cost is independent of geometry, unlike CFD whose cost grows
 with mesh size. Against measured OpenFOAM solve times (median 22 minutes, up to 117 for fine
-geometries), a sub-second forward pass is roughly three to four orders of magnitude faster; we report
-the inference figure as an estimate pending exact per-GPU timing. On fidelity, three prism boundary
+geometries), a sub-second forward pass is up to four orders of magnitude ($\approx$10,000$\times$)
+faster; we report the inference figure as an estimate pending exact per-GPU timing. On fidelity, three prism boundary
 layers recover the near-wall hot spot to within 0.1\,K of a fine mesh (378.8 vs.\ 378.9\,K) at
 $\approx$2.7$\times$ fewer cells.
 
