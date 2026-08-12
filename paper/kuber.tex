@@ -122,6 +122,16 @@ regression; results below use the one-shot model. Geometry may alternatively be 
 (directional) signed-distance field for parametric families, but the surface-encoder configuration is
 the one we report because it is the only one applicable to arbitrary CAD.
 
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.96\textwidth]{architecture.png}
+\caption{SurfaceGeoTransolver. Three inputs---the boundary surface point cloud with normals, the query
+points, and the physics conditioning---feed a neural spine (surface encoder $\rightarrow$ local kNN
+cross-attention $\rightarrow$ concatenated per-node embedding $\rightarrow$ GeoTransolver
+physics-attention core) that predicts the five-channel field at every query node.}
+\label{fig:arch}
+\end{figure*}
+
 \subsection{Data Engine}
 We generate CHT data with OpenFOAM's steady buoyant solver (\texttt{buoyantSimpleFoam}) over a single
 fluid region, treating the solid as a heated wall (heatsinks) or heat-flux surface (cold plates). A

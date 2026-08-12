@@ -175,6 +175,8 @@ python -m kuber.train_simshift \
 
 ## The model
 
+![SurfaceGeoTransolver architecture — surface encoder, local kNN cross-attention, concatenated embedding, GeoTransolver core](assets/fig_architecture.svg)
+
 **SurfaceGeoTransolver** = a GeoTransolver physics-attention core (256 hidden × 12 layers) + a surface-geometry encoder (surface point cloud + normals → geometry tokens → per-node descriptor via kNN cross-attention). The surface input is what makes it **geometry-general** — it works on arbitrary CAD, with no analytic SDF required. An optional **PDE-Refiner** head restores high-frequency content and yields an uncertainty estimate (the seed of the Uncertainty pillar). Architecture card: [`docs/MODEL.md`](docs/MODEL.md).
 
 ## Roadmap

@@ -149,6 +149,14 @@ regression; results below use the one-shot model. Geometry may alternatively be 
 (directional) signed-distance field for parametric families, but the surface-encoder configuration is
 the one we report because it is the only one applicable to arbitrary CAD.</p>
 
+<figure class="wide">
+  <img src="../assets/sim/architecture.png" alt="SurfaceGeoTransolver architecture">
+  <figcaption>Fig.&nbsp;2.&ensp;SurfaceGeoTransolver. Three inputs &mdash; the boundary surface point
+  cloud with normals, the query points, and the physics conditioning &mdash; feed a neural spine
+  (surface encoder &rarr; local kNN cross-attention &rarr; concatenated per-node embedding &rarr;
+  GeoTransolver physics-attention core) that predicts the five-channel field at every query node.</figcaption>
+</figure>
+
 <h3>B.&ensp;Data Engine</h3>
 <p>We generate CHT data with OpenFOAM's steady buoyant solver (buoyantSimpleFoam) over a single fluid
 region, treating the solid as a heated wall (heatsinks) or heat-flux surface (cold plates). A
@@ -231,7 +239,7 @@ value. These numbers are on our own corpus and are not comparable to the SIMSHIF
 
 <figure class="wide">
   <img src="../assets/sim/gtvspred.png" alt="Ground truth vs prediction viewer">
-  <figcaption>Fig.&nbsp;2.&ensp;Qualitative comparison from the interactive viewer: solid device
+  <figcaption>Fig.&nbsp;3.&ensp;Qualitative comparison from the interactive viewer: solid device
   geometry with the fluid temperature field, CFD ground truth (left) beside the surrogate prediction
   (right) for a heatsink; peak temperature and per-case <i>T</i>-RMSE are reported live.</figcaption>
 </figure>
