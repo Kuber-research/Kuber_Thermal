@@ -105,6 +105,7 @@ CONTENT = """
     <p class="authors">Shubh Jain &nbsp;&middot;&nbsp; Kuber.ai</p>
     <nav class="links">
       <a class="btn primary" href="demo.html">Interactive demo &#8599;</a>
+      <a class="btn" href="https://github.com/ShubhJain007/Kuber/blob/main/paper/kuber.pdf">Paper (PDF)</a>
       <a class="btn" href="https://github.com/ShubhJain007/Kuber">Code</a>
       <a class="btn" href="https://colab.research.google.com/github/ShubhJain007/Kuber/blob/main/notebooks/quickstart.ipynb">Colab</a>
       <a class="btn" href="https://github.com/ShubhJain007/Kuber/tree/main/results">Results (JSON)</a>
