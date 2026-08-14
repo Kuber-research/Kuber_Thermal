@@ -255,7 +255,7 @@
           <div class="sotar"><span>PointNet</span><span>17.43 K</span></div>
           <div class="sotar"><span>Transolver</span><span>13.43 K</span></div>
           <div class="sotar"><span>UPT<em>prev. best</em></span><span>12.41 K</span></div>
-          <div class="sotar best"><span>Kuber Nano</span><span>12.14 K</span></div>
+          <div class="sotar best"><span>Kuber Nano</span><span>11.84 K</span></div>
         </div>
         <div class="sotanote"><b>Zero-shot</b> on unseen OOD geometries, <b>no domain adaptation</b> — beats UPT on temperature &amp; SOTA on velocity (0.038 m/s).</div>
         <button class="sotabtn" id="benchBtn">Full benchmark — velocity, pressure ↗</button>
@@ -282,10 +282,10 @@
         <tr><td>PointNet</td><td>~14 M</td><td class="no">✗</td><td>17.43</td><td>0.044</td><td>n/r</td><td>n/r</td></tr>
         <tr><td>Transolver</td><td>~14 M</td><td class="no">✗</td><td>13.43</td><td>0.041</td><td>n/r</td><td>n/r</td></tr>
         <tr><td>UPT <span class="prev">prev. best</span></td><td>~14 M</td><td class="no">✗</td><td>12.41</td><td>0.039</td><td>n/r</td><td>n/r</td></tr>
-        <tr class="us"><td>Kuber Nano</td><td>~14 M</td><td class="yes">✓</td><td class="win">12.14</td><td class="win">0.038</td><td>1909</td><td>0.593</td></tr>
+        <tr class="us"><td>Kuber Nano</td><td>~14 M</td><td class="yes">✓</td><td class="win">11.84</td><td class="win">0.038</td><td>1909</td><td>0.608</td></tr>
       </tbody>
     </table></div>
-    <div class="note">Official SIMSHIFT heatsink split (source fins 5–8 → <b>zero-shot on unseen OOD fins 10–12</b>), paper's metrics, lower is better. The published baselines <b>adapt to the target domain (UDA)</b> using target data — so they are <b>not zero-shot</b>; the paper also reports only their temperature + velocity (no pressure, mean-nRMSE, or params → "n/r"). <b>Kuber Nano trains from scratch on the source split and is evaluated zero-shot</b>, predicting the full 5-channel field — beating the previous best on <b>temperature (12.14 vs 12.41 K)</b> and setting <b>SOTA velocity (0.038 vs 0.039 m/s)</b> on geometries it never trained on. Kuber Nano figures are the best across its geometry-encoder configs (SDF / surface).</div>
+    <div class="note">Official SIMSHIFT heatsink split (source fins 5–8 → <b>zero-shot on unseen OOD fins 10–12</b>), paper's metrics, lower is better. The published baselines <b>adapt to the target domain (UDA)</b> using target data — so they are <b>not zero-shot</b>; the paper also reports only their temperature + velocity (no pressure, mean-nRMSE, or params → "n/r"). <b>Kuber Nano trains from scratch on the source split and is evaluated zero-shot</b>, predicting the full 5-channel field — beating the previous best on <b>temperature (11.84 vs 12.41 K)</b> and setting <b>SOTA velocity (0.038 vs 0.039 m/s)</b> on geometries it never trained on. Kuber Nano figures are the best across its geometry-encoder configs (SDF / surface).</div>
   </div></div></div>
 <div class="scrim" id="inviteScrim"><div class="modal" style="width:min(420px,92vw)"><div class="mhd"><h3>Invite teammate</h3><button class="x" data-close>×</button></div>
   <div class="mbody"><div class="field"><label>Name</label><input id="invName" placeholder="Ada Lovelace"></div><div class="field"><label>Email</label><input id="invEmail" placeholder="ada@kuber.ai"></div>

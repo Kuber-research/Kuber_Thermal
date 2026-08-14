@@ -120,9 +120,9 @@ CONTENT = """
     <a href="#how">How it works</a>
     <a href="#results">Results</a>
     <a href="#dataset">Dataset</a>
-    <a href="demo.html">Demo</a>
-    <a href="https://github.com/ShubhJain007/Kuber/blob/main/paper/kuber.pdf">Paper</a>
-    <a class="btn-sm" href="https://github.com/ShubhJain007/Kuber">GitHub</a>
+    <a href="https://huggingface.co/spaces/ShubhOO7/kuber-live" target="_blank" rel="noopener">Demo</a>
+    <a href="https://github.com/Kuber-research/Kuber_Thermal/blob/main/paper/kuber.pdf">Paper</a>
+    <a class="btn-sm" href="https://github.com/Kuber-research/Kuber_Thermal">GitHub</a>
   </nav>
 </div></header>
 
@@ -134,12 +134,12 @@ CONTENT = """
     sub-second &mdash; geometry-general, and state of the art on a public benchmark with no domain
     adaptation.</p>
     <div class="cta">
-      <a class="btn primary" href="demo.html">Interactive demo &rarr;</a>
-      <a class="btn" href="https://github.com/ShubhJain007/Kuber/blob/main/paper/kuber.pdf">Read the paper</a>
-      <a class="btn" href="https://github.com/ShubhJain007/Kuber">GitHub</a>
+      <a class="btn primary" href="https://huggingface.co/spaces/ShubhOO7/kuber-live" target="_blank" rel="noopener">Interactive demo &rarr;</a>
+      <a class="btn" href="https://github.com/Kuber-research/Kuber_Thermal/blob/main/paper/kuber.pdf">Read the paper</a>
+      <a class="btn" href="https://github.com/Kuber-research/Kuber_Thermal">GitHub</a>
     </div>
     <div class="stats">
-      <div class="stat"><div class="num">12.14&thinsp;K</div><div class="lbl">temperature RMSE on SIMSHIFT &mdash; beats the prior best, no domain adaptation</div></div>
+      <div class="stat"><div class="num">11.84&thinsp;K</div><div class="lbl">temperature RMSE on SIMSHIFT &mdash; beats the prior best, no domain adaptation</div></div>
       <div class="stat"><div class="num">10,000&times;</div><div class="lbl">up to &mdash; faster than the CFD it learns from</div></div>
       <div class="stat"><div class="num">2</div><div class="lbl">device classes &mdash; heatsinks &amp; cold plates &mdash; from one model</div></div>
       <div class="stat"><div class="num">~14&thinsp;M</div><div class="lbl">parameters, geometry-general (arbitrary CAD)</div></div>
@@ -153,12 +153,13 @@ CONTENT = """
   <section id="how">
     <div class="eyebrow">How it works</div>
     <h2>One transformer, from geometry to field</h2>
-    <p class="section-lede">SurfaceGeoTransolver ingests raw boundary geometry &mdash; a surface point cloud with
+    <p class="section-lede">KuberNet ingests raw boundary geometry &mdash; a surface point cloud with
     normals &mdash; plus physics conditioning, and predicts <em>(U, T, p)</em> at any query point. No analytic
     signed-distance field is required, so it applies to arbitrary CAD.</p>
     <figure class="fig tight">__ARCH__<figcaption>The surface encoder turns the boundary into geometry tokens;
-    local kNN cross-attention gives every query node a geometry descriptor; concatenated with the physics
-    conditioning it feeds a GeoTransolver physics-attention core (~14&thinsp;M parameters).</figcaption></figure>
+    local <em>anisotropic boundary-layer</em> (ABL) cross-attention &mdash; a learned wall-normal penalty that
+    biases each query to attend along the boundary &mdash; gives every query node a geometry descriptor;
+    concatenated with the physics conditioning it feeds a GeoTransolver physics-attention core (~14&thinsp;M parameters).</figcaption></figure>
   </section>
 
   <section id="results">
@@ -183,7 +184,7 @@ CONTENT = """
     <p class="section-lede">Distinguished only by a device flag and fluid/BC conditioning, a single model spans a
     buoyancy-driven heatsink in air and a forced-liquid cold plate. Held-out cold plates 3.11&thinsp;K, heatsinks
     5.13&thinsp;K on our corpus (not comparable to the SIMSHIFT numbers).</p>
-    <figure class="fig">__MULTIGEO__<figcaption>One SurfaceGeoTransolver, evaluated per device class on held-out cases. Per-device prediction-vs-ground-truth comparisons are at the top; explore the <a href="demo.html">interactive viewer</a>.</figcaption></figure>
+    <figure class="fig">__MULTIGEO__<figcaption>One model, evaluated per device class on held-out cases. Per-device prediction-vs-ground-truth comparisons are at the top; explore the <a href="https://huggingface.co/spaces/ShubhOO7/kuber-live" target="_blank" rel="noopener">interactive viewer</a>.</figcaption></figure>
   </section>
 
   <section id="dataset">
@@ -197,8 +198,8 @@ CONTENT = """
 
 <footer><div class="foot-in">
   <div>Kuber &mdash; an open framework for conjugate&ndash;heat-transfer AI. Built by the Kuber.ai team.</div>
-  <div><a href="https://github.com/ShubhJain007/Kuber">GitHub</a> &middot; <a href="demo.html">Demo</a> &middot;
-  <a href="https://github.com/ShubhJain007/Kuber/blob/main/paper/kuber.pdf">Paper</a> &middot; PolyForm Noncommercial 1.0.0</div>
+  <div><a href="https://github.com/Kuber-research/Kuber_Thermal">GitHub</a> &middot; <a href="https://huggingface.co/spaces/ShubhOO7/kuber-live" target="_blank" rel="noopener">Demo</a> &middot;
+  <a href="https://github.com/Kuber-research/Kuber_Thermal/blob/main/paper/kuber.pdf">Paper</a> &middot; PolyForm Noncommercial 1.0.0</div>
 </div></footer>
 """
 
