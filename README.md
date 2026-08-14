@@ -21,7 +21,7 @@
 
 ## Table of contents
 
-[Highlights](#highlights) · [Installation](#installation) · [Quickstart](#quickstart) · [Recipes](#recipes) · [Dataset & Training](#dataset--training) · [Performance Benchmarks](#performance-benchmarks) · [Roadmap](#roadmap) · [Contributing](#contributing) · [Supported systems](#supported-systems) · [Licensing](#licensing) · [Endorsed by](#endorsed-by) · [Citing](#citing)
+[Highlights](#highlights) · [Installation](#installation) · [Quickstart](#quickstart) · [Recipes](#recipes) · [Dataset & Training](#dataset--training) · [Performance Benchmarks](#performance-benchmarks) · [Roadmap & Milestones](#roadmap--milestones) · [Contributing](#contributing) · [Supported systems](#supported-systems) · [Licensing](#licensing) · [Endorsed by](#endorsed-by) · [Citing](#citing)
 
 ## Highlights
 
@@ -115,15 +115,48 @@ The lead number is **zero-shot** (test fin counts never seen in training); predi
 | heatsinks | 5.13 | 0.145 |
 | in-distribution (both) | 1.72 | 0.027 |
 
-## Roadmap
+## Roadmap & Milestones
 
-An open **suite**, not a finished benchmark - each milestone gated on a verifiable outcome.
+An open **suite**, not a finished benchmark. Three milestones, each gated on a verifiable **outcome** rather than an activity.
 
-- **M1 · Production-ready on real CAD** - generalize beyond parametric families to as-supplied geometry; grow the corpus past its air-dominated mix; measured scaling laws (OOD error vs corpus/params/diversity); a graded, magnitude-measured distribution-shift protocol; released checkpoints + per-GPU timings.
-- **M2 · Trustworthy to design against** - calibrated per-node uncertainty (from the PDE-Refiner ensemble); cold-plate topologies (serpentine, pin-fin); more device classes; active learning.
-- **M3 · From predictor to design tool** - CAD connectors (STEP/IGES/STL), agentic geometry optimization (propose → predict → score → refine), hosted inference + ONNX/TensorRT, a sealed-test leaderboard.
+### Milestone 1 · Production-ready on real customer geometry
 
-Details in the [paper](paper/kuber.pdf).
+*Done when: the model clears a design partner's written acceptance criteria on their own parts.*
+
+- [ ] **Generalize to as-supplied CAD**, beyond parametric families. The surface encoder already accepts arbitrary meshes - this is a data + validation problem, not an architecture one.
+- [ ] **Grow the corpus** past its air-dominated composition - substantially more liquid-cooled cases, working fluids, and regimes.
+- [ ] **Scaling laws for physical AI.** Extend the two-point [value-of-data](docs/RESULTS.md) ablation into measured curves: how OOD error scales with corpus size, model parameters, and - the question specific to physics - *geometry and physics diversity* versus raw case count.
+- [ ] **A graded distribution-shift protocol.** Replace single-axis holdouts with a shift taxonomy scored independently per axis, reported as degradation curves - with **(i)** measured shift magnitude (MMD / Wasserstein in a geometry-physics feature space), **(ii)** a leakage audit (nearest-neighbour over the corpus), and **(iii)** provenance-shift as the ceiling test (a *different* solver + mesher, ultimately experimental data - the only test that separates learned physics from learned numerics).
+
+  | Axis | Weak shift | Strong shift |
+  |---|---|---|
+  | Geometry | parametric extrapolation (current SIMSHIFT split) | topology change → human-authored CAD |
+  | Regime | Ra/Re beyond the training envelope | natural → forced convection |
+  | Fluid | unseen Prandtl number | unseen material class |
+  | Boundary condition | wall-temperature → heat-flux | mixed / conjugate interfaces |
+  | Scale | characteristic length outside range | order-of-magnitude change |
+
+- [ ] **Release trained checkpoints** as tagged GitHub Releases, and replace estimated inference latency with measured per-GPU timings.
+
+### Milestone 2 · Trustworthy enough to design against
+
+*Done when: an engineer can act on a prediction without re-running CFD to check it.*
+
+- [ ] **Calibrated per-node uncertainty** from the PDE-Refiner denoising ensemble - real error bars that say where to trust the surrogate and where to fall back to CFD. This is the gate on adoption; accuracy alone is not sufficient.
+- [ ] **Cold-plate topologies beyond straight-channel** - serpentine, pin-fin, parallel micro-channel.
+- [ ] **Additional device classes** - heat exchangers, power electronics, battery packs - prioritized by what design partners bring us.
+- [ ] **Architecture** - hierarchical multi-resolution surface tokens; per-block geometry cross-attention.
+- [ ] **Active learning driven by the scaling curves** - target the data engine where error falls fastest per case generated.
+
+### Milestone 3 · From predictor to design tool
+
+*Done when: a user goes from CAD file to an optimized geometry without leaving the loop.*
+
+- [ ] **Connectors.** STEP / IGES / STL ingest and native OpenFOAM case import, plus export back into standard thermal workflows, exposed as a Python API and CLI.
+- [ ] **Agentic geometry optimization.** Propose → predict → score → refine against thermal and pressure-drop objectives, with CFD in the loop only to verify the winner.
+- [ ] **Deployment.** Hosted inference API, ONNX / TensorRT export, and a public versioned leaderboard with a sealed test set.
+
+Contributions to any milestone are welcome - see [Contributing](#contributing). Rationale and full method are in the [paper](paper/kuber.pdf).
 
 ## Contributing
 
