@@ -1,7 +1,7 @@
 # Training
 
 How a Kuber surrogate is trained — preprocessing, geometry conditioning, the objective, the
-schedule, and how to reproduce it. The model is **SurfaceGeoTransolver** (~14.3 M parameters); the
+schedule, and how to reproduce it. The model is **KuberNet** (~14.3 M parameters); the
 architecture is in [`MODEL.md`](MODEL.md), the corpus in [`DATASET.md`](DATASET.md).
 
 ## What the model learns
@@ -49,7 +49,7 @@ device               0 = heatsink, 1 = cold plate
 ```
 
 **Geometry is read from the surface cloud, not from scalars.** This is the central design choice: a
-learned, local, orientation-aware surface descriptor (encoder → k-nearest-neighbour cross-attention;
+learned, local, orientation-aware surface descriptor (encoder → anisotropic boundary-layer (ABL) cross-attention;
 see [`MODEL.md`](MODEL.md)) replaces the scalar signed-distance field. Locality is what lets a model
 trained on 5–8 fins generalize to 10–12 — a denser fin array is locally "more of the same" fin-gap
 patches — and it is what lets a *single* model span heatsinks and cold plates, since both are just

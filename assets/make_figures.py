@@ -263,11 +263,11 @@ tiles("fig_corpus.svg",
 
 vbars("fig_multigeo.svg",
       "Multi-geometry — one model, heatsinks + cold plates",
-      "A single SurfaceGeoTransolver on the Kuber corpus. Held-out temperature RMSE (K).",
+      "A single multi-geometry model on the Kuber corpus. Held-out temperature RMSE (K).",
       groups=[("in-distribution\n(both classes)", [1.72]),
               ("cold plates\n(held-out)", [3.11]),
               ("heatsinks\n(held-out)", [5.13])],
-      series=[("SurfaceGeoTransolver", EMBER)],
+      series=[("multi-geometry model", EMBER)],
       ymin=0, ymax=6, unit="")
 
 print("done")

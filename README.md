@@ -28,7 +28,7 @@ The full stack, from physics-data generation to a deployable, geometry-general s
 
 ## Key Features
 
-- **Geometry-general.** SurfaceGeoTransolver ingests raw boundary geometry — a surface point cloud with normals — and predicts the full field `(Uₓ, U_y, U_z, T, p_rgh)` at any query point. No analytic signed-distance field, so it works on arbitrary CAD.
+- **Geometry-general.** KuberNet ingests raw boundary geometry — a surface point cloud with normals — and, via *anisotropic boundary-layer* (ABL) cross-attention, predicts the full field `(Uₓ, U_y, U_z, T, p_rgh)` at any query point. No analytic signed-distance field, so it works on arbitrary CAD.
 - **State of the art, no domain adaptation.** 12.14 K temperature RMSE on the public SIMSHIFT heatsink out-of-distribution split — beating the previous published best (UPT, 12.41 K) — while every baseline relies on unsupervised domain adaptation and Kuber uses none.
 - **One model, many device classes.** Heatsinks (wall-temperature BC, buoyancy-driven, air) and cold plates (heat-flux BC, forced liquid) from a single set of weights, distinguished only by a device flag and physics conditioning.
 - **Reproducible data engine.** Parametric geometry → OpenFOAM `buoyantSimpleFoam` → per-node `.npz`, resumable, convergence-gated, mesh-convergence-verified, and license-clean (0 cases from any external source).
@@ -37,7 +37,7 @@ The full stack, from physics-data generation to a deployable, geometry-general s
 
 *Kuber is an open **suite**, not a finished benchmark — see the [Roadmap](#roadmap) for what's next.*
 
-![SurfaceGeoTransolver architecture — real geometry input, network pipeline, predicted field](assets/sim/architecture.png)
+![KuberNet architecture — surface geometry input, anisotropic boundary-layer (ABL) cross-attention pipeline, predicted field](assets/sim/architecture.png)
 
 ## Table of contents
 
@@ -114,7 +114,7 @@ physics filter. One non-obvious detail makes the whole thing stable: because the
 pressure must be **absolute** (`p_rgh ≈ 1e5` Pa), not gauge-zero. Coverage, the mesh-convergence study,
 and the full format: **[`docs/DATASET.md`](docs/DATASET.md)**.
 
-**Training.** One **SurfaceGeoTransolver** (~14.3 M params) is trained across both device classes with
+**Training.** One **KuberNet** (~14.3 M params) is trained across both device classes with
 geometry read *only* from the surface point cloud (a learned local descriptor, not a scalar SDF) under a
 single unified physics-conditioning vector. Targets are z-scored on the training split only (no leakage);
 optimisation is Adam (`1e-3`) with a **Warmup–Stable–Decay** schedule and best-validation checkpointing;
@@ -123,7 +123,7 @@ optimisation is Adam (`1e-3`) with a **Warmup–Stable–Decay** schedule and be
 
 ## Performance Benchmarks
 
-All numbers are for **SurfaceGeoTransolver** (full-geometry input), measured and reproducible with the code here; caveats are in [`docs/RESULTS.md`](docs/RESULTS.md). Machine-readable: [`results/simshift_medium.json`](results/simshift_medium.json), [`results/leaderboard.csv`](results/leaderboard.csv), [`results/multigeo.json`](results/multigeo.json).
+All numbers are for **KuberNet** (full-geometry input), measured and reproducible with the code here; caveats are in [`docs/RESULTS.md`](docs/RESULTS.md). Machine-readable: [`results/simshift_medium.json`](results/simshift_medium.json), [`results/leaderboard.csv`](results/leaderboard.csv), [`results/multigeo.json`](results/multigeo.json).
 
 > **UDA — Unsupervised Domain Adaptation:** training-time techniques that adapt a model to the *unlabeled* target (test) distribution — e.g. aligning source- and target-domain feature statistics — to shrink the out-of-distribution gap. The SIMSHIFT baselines rely on it; **Kuber uses none** and still leads.
 
@@ -133,7 +133,7 @@ All numbers are for **SurfaceGeoTransolver** (full-geometry input), measured and
 
 | model | UDA | Temp RMSE (K) ↓ | Velocity RMSE (m/s) ↓ | params |
 |---|:---:|:---:|:---:|:---:|
-| **Kuber — SurfaceGeoTransolver** | ✗ | **12.14** | 0.044 | 14.3 M |
+| **Kuber — KuberNet (ABL)** | ✗ | **11.84** | 0.044 | 14.3 M |
 | UPT *(prev. published best)* | ✓ | 12.41 | 0.039 | ~14 M¹ |
 | Transolver | ✓ | 13.43 | 0.041 | ~14 M¹ |
 | PointNet | ✓ | 17.43 | 0.044 | ~14 M¹ |

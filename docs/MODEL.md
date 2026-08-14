@@ -1,4 +1,4 @@
-# SurfaceGeoTransolver — architecture card
+# KuberNet — architecture card
 
 A geometry-conditioned neural operator that predicts the full steady CHT field at an arbitrary query
 point cloud. It pairs a **GeoTransolver** physics-attention core (NVIDIA PhysicsNeMo, Apache-2.0) with
@@ -33,7 +33,7 @@ output :  field       [B,N,5]   (U_x, U_y, U_z, T, p_rgh), per-channel z-normali
 
 The surface branch (`geom_wiring="concat"`, the default) runs a shallow permutation-invariant
 **SurfaceGeometryEncoder** over `(surf_pts, surf_normals)` to produce geometry tokens, then a
-**LocalSurfaceCrossAttention** (kNN, k=16) turns them into a per-query-node geometry descriptor that is
+**LocalSurfaceCrossAttention** (kNN k=16, with an *anisotropic boundary-layer* (ABL) penalty that down-weights wall-normal coupling, −γ|(x−p)·n̂|) turns them into a per-query-node geometry descriptor that is
 concatenated into GeoTransolver's local embedding. A `"deep"` wiring instead feeds the raw surface
 cloud to GeoTransolver's native per-block cross-attention (AB-UPT-style deep conditioning).
 

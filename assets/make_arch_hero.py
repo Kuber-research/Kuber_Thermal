@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render clean input/output panels for the SurfaceGeoTransolver hero architecture figure.
+"""Render clean input/output panels for the KuberNet hero architecture figure.
 
   arch_input.png   surface point cloud + a few outward normals (the model's geometry input)
   arch_output.png  the predicted temperature field (colored point cloud) with a colorbar
