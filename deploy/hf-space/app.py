@@ -1,4 +1,4 @@
-"""Kuber.ai thermal-surrogate demo — FastAPI server (run on vicpc).
+"""Kuber.ai thermal-surrogate demo - FastAPI server (run on vicpc).
 
 Loads the trained surface model once at startup, serves the PhysicsX-style
 frontend and two JSON endpoints:

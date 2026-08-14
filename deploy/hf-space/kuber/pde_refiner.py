@@ -1,7 +1,7 @@
 """PDE-Refiner (Lippe, Perdikaris, Brandstetter, Cranmer et al., NeurIPS 2023),
 faithfully adapted to our steady field-prediction setting.
 
-Instead of one-shot MSE (which is spectrally biased — it drops low-amplitude high-freq
+Instead of one-shot MSE (which is spectrally biased - it drops low-amplitude high-freq
 modes), the field is produced by an initial prediction + K denoising refinement steps at
 exponentially decreasing noise amplitudes, so the network is forced to model all scales.
 

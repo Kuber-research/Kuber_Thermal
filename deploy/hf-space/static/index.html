@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kuber.ai — Physical AI</title>
+<title>Kuber.ai - Physical AI</title>
 <style>
   @font-face{font-family:'Plex Sans';src:url('/static/vendor/fonts/PlexSans-400.woff2') format('woff2');font-weight:400;font-display:swap}
   @font-face{font-family:'Plex Sans';src:url('/static/vendor/fonts/PlexSans-600.woff2') format('woff2');font-weight:600;font-display:swap}
@@ -222,16 +222,16 @@
         <div class="cmpAcc" id="cmpAcc">—</div>
       </div>
       <div class="hud"><div class="id" id="hudId">—</div><div id="hudPts">—</div></div>
-      <div id="heatLbl" style="display:none;position:absolute;top:14px;right:14px;z-index:6;align-items:center;gap:7px;background:rgba(20,10,6,.82);border:1px solid rgba(255,90,44,.55);color:#ffb79c;font-size:11px;font-weight:600;letter-spacing:.02em;padding:6px 10px;border-radius:8px;backdrop-filter:blur(6px)"><span style="width:9px;height:9px;border-radius:50%;background:#ff5a2c;box-shadow:0 0 8px #ff5a2c"></span>Heated base — chip heat source</div>
+      <div id="heatLbl" style="display:none;position:absolute;top:14px;right:14px;z-index:6;align-items:center;gap:7px;background:rgba(20,10,6,.82);border:1px solid rgba(255,90,44,.55);color:#ffb79c;font-size:11px;font-weight:600;letter-spacing:.02em;padding:6px 10px;border-radius:8px;backdrop-filter:blur(6px)"><span style="width:9px;height:9px;border-radius:50%;background:#ff5a2c;box-shadow:0 0 8px #ff5a2c"></span>Heated base - chip heat source</div>
       <div id="cpLegend" style="display:none;position:absolute;left:14px;bottom:66px;z-index:6;max-width:260px;background:rgba(10,16,22,.86);border:1px solid #26313c;border-radius:10px;padding:11px 13px;font-size:11.5px;line-height:1.55;color:#c3ccd5;backdrop-filter:blur(6px)">
-        <div style="font-weight:700;color:#e6edf3;margin-bottom:7px">Liquid cold plate — how it works</div>
-        <div style="display:flex;align-items:center;gap:8px"><span style="width:13px;height:9px;border-radius:2px;background:rgba(75,214,224,.35);border:1px solid #4bd6e0;flex:none"></span>Coolant channel — liquid flows <b>inside</b></div>
-        <div style="display:flex;align-items:center;gap:8px"><span style="width:13px;height:9px;border-radius:2px;background:#ff5a2c;flex:none"></span>Base wall — chip heat source</div>
+        <div style="font-weight:700;color:#e6edf3;margin-bottom:7px">Liquid cold plate - how it works</div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:13px;height:9px;border-radius:2px;background:rgba(75,214,224,.35);border:1px solid #4bd6e0;flex:none"></span>Coolant channel - liquid flows <b>inside</b></div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="width:13px;height:9px;border-radius:2px;background:#ff5a2c;flex:none"></span>Base wall - chip heat source</div>
         <div style="display:flex;align-items:center;gap:8px"><span style="color:#4bd6e0;font-weight:800;width:13px;text-align:center;flex:none">→</span>Flow: inlet (left) → outlet (right)</div>
         <div style="display:flex;align-items:center;gap:8px"><span style="width:13px;height:9px;border-radius:2px;background:rgba(174,184,194,.18);border:1px solid #8b98a5;flex:none"></span>Plate body (metal housing)</div>
         <div style="margin-top:7px;color:#8b98a5">One straight rectangular channel. Serpentine / pin-fin topologies coming soon.</div>
       </div>
-      <div class="xbadge" id="xbadge">⚠ CFD ground truth for this geometry is not available — the field shown is a model prediction with no CFD reference to compare against.</div>
+      <div class="xbadge" id="xbadge">⚠ CFD ground truth for this geometry is not available - the field shown is a model prediction with no CFD reference to compare against.</div>
       <div class="cards" id="cards">
         <div class="mc"><div class="ic" style="background:rgba(47,168,102,.15)"><svg viewBox="0 0 24 24" stroke="#2fa866"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div><div class="lab">Kuber.ai runtime</div><div class="val" id="mcTime">—</div></div></div>
         <div class="mc"><div class="ic" style="background:rgba(92,107,120,.14)"><svg viewBox="0 0 24 24" stroke="#5c6b78"><path d="M6 4h12M6 20h12M8 4v4l4 4-4 4v4M16 4v4l-4 4 4 4v4"/></svg></div><div><div class="lab">CFD solver</div><div class="val" id="mcCfd">—</div></div></div>
@@ -240,8 +240,8 @@
       </div>
       <div class="cbar-wrap"><canvas id="cbar" width="14" height="210"></canvas><div class="cbar-lab"><span id="cbMax">—</span><span class="u" id="cbField">T</span><span id="cbMin">—</span></div></div>
       <div class="hint"><span><b>drag</b> orbit</span><span><b>scroll</b> zoom</span><span><b>drag panels</b> to move</span></div>
-      <div class="cadnote" id="cadnote">Imported CAD — geometry preview. Live field prediction on arbitrary CAD is on our roadmap (surface-encoder model).</div>
-      <div class="cadnote" id="promptBar" style="background:rgba(11,176,194,.1);border-color:rgba(11,176,194,.4);color:#0b7f8c">Geometry loaded — click <b>Predict field</b> to run the simulation.</div>
+      <div class="cadnote" id="cadnote">Imported CAD - geometry preview. Live field prediction on arbitrary CAD is on our roadmap (surface-encoder model).</div>
+      <div class="cadnote" id="promptBar" style="background:rgba(11,176,194,.1);border-color:rgba(11,176,194,.4);color:#0b7f8c">Geometry loaded - click <b>Predict field</b> to run the simulation.</div>
       <div class="overlay" id="overlay"><span><span class="spinner"></span>Loading model…</span></div>
     </div>
     <div class="rail right">
@@ -257,8 +257,8 @@
           <div class="sotar"><span>UPT<em>prev. best</em></span><span>12.41 K</span></div>
           <div class="sotar best"><span>Kuber Nano</span><span>11.84 K</span></div>
         </div>
-        <div class="sotanote"><b>Zero-shot</b> on unseen OOD geometries, <b>no domain adaptation</b> — beats UPT on temperature &amp; SOTA on velocity (0.038 m/s).</div>
-        <button class="sotabtn" id="benchBtn">Full benchmark — velocity, pressure ↗</button>
+        <div class="sotanote"><b>Zero-shot</b> on unseen OOD geometries, <b>no domain adaptation</b> - beats UPT on temperature &amp; SOTA on velocity (0.038 m/s).</div>
+        <button class="sotabtn" id="benchBtn">Full benchmark - velocity, pressure ↗</button>
       </div>
       <div class="sec"><div class="ey">Validation</div><div class="badges">
         <div class="badge"><span class="d"></span>Zero gradient explosions · zero NaN/Inf</div>
@@ -273,8 +273,8 @@
   <div class="mtabs"><button data-tab="lib" class="on">Preset library</button><button data-tab="cad">Import CAD</button></div>
   <div class="mbody"><div id="tabLib"><div class="lib" id="libGrid"></div></div>
     <div id="tabCad" style="display:none"><label class="drop">Drop a heatsink <b>.stl</b> here, or<br><span class="filebtn">Choose file<input type="file" id="stlInput" accept=".stl"></span></label>
-      <div class="note">Heatsink STLs exported from the <b>Preset library</b> (⤓ STL) are recognised on import — they load fully editable with CFD ground truth, so you can predict and compare against the real simulation. Arbitrary third-party CAD renders as a geometry preview (live field prediction on unseen CAD is on our roadmap).</div></div></div></div></div>
-<div class="scrim" id="benchScrim"><div class="modal" style="width:min(720px,95vw)"><div class="mhd"><h3>SIMSHIFT public benchmark — full metrics</h3><button class="x" data-close>×</button></div>
+      <div class="note">Heatsink STLs exported from the <b>Preset library</b> (⤓ STL) are recognised on import - they load fully editable with CFD ground truth, so you can predict and compare against the real simulation. Arbitrary third-party CAD renders as a geometry preview (live field prediction on unseen CAD is on our roadmap).</div></div></div></div></div>
+<div class="scrim" id="benchScrim"><div class="modal" style="width:min(720px,95vw)"><div class="mhd"><h3>SIMSHIFT public benchmark - full metrics</h3><button class="x" data-close>×</button></div>
   <div class="mbody">
     <div class="benchwrap"><table class="bench">
       <thead><tr><th>Model</th><th>Params</th><th>Zero&#8209;shot</th><th>Temp&nbsp;RMSE&nbsp;(K)</th><th>Velocity&nbsp;RMSE&nbsp;(m/s)</th><th>Pressure&nbsp;RMSE&nbsp;(Pa)</th><th>mean&nbsp;nRMSE</th></tr></thead>
@@ -285,7 +285,7 @@
         <tr class="us"><td>Kuber Nano</td><td>~14 M</td><td class="yes">✓</td><td class="win">11.84</td><td class="win">0.038</td><td>1909</td><td>0.608</td></tr>
       </tbody>
     </table></div>
-    <div class="note">Official SIMSHIFT heatsink split (source fins 5–8 → <b>zero-shot on unseen OOD fins 10–12</b>), paper's metrics, lower is better. The published baselines <b>adapt to the target domain (UDA)</b> using target data — so they are <b>not zero-shot</b>; the paper also reports only their temperature + velocity (no pressure, mean-nRMSE, or params → "n/r"). <b>Kuber Nano trains from scratch on the source split and is evaluated zero-shot</b>, predicting the full 5-channel field — beating the previous best on <b>temperature (11.84 vs 12.41 K)</b> and setting <b>SOTA velocity (0.038 vs 0.039 m/s)</b> on geometries it never trained on. Kuber Nano figures are the best across its geometry-encoder configs (SDF / surface).</div>
+    <div class="note">Official SIMSHIFT heatsink split (source fins 5–8 → <b>zero-shot on unseen OOD fins 10–12</b>), paper's metrics, lower is better. The published baselines <b>adapt to the target domain (UDA)</b> using target data - so they are <b>not zero-shot</b>; the paper also reports only their temperature + velocity (no pressure, mean-nRMSE, or params → "n/r"). <b>Kuber Nano trains from scratch on the source split and is evaluated zero-shot</b>, predicting the full 5-channel field - beating the previous best on <b>temperature (11.84 vs 12.41 K)</b> and setting <b>SOTA velocity (0.038 vs 0.039 m/s)</b> on geometries it never trained on. Kuber Nano figures are the best across its geometry-encoder configs (SDF / surface).</div>
   </div></div></div>
 <div class="scrim" id="inviteScrim"><div class="modal" style="width:min(420px,92vw)"><div class="mhd"><h3>Invite teammate</h3><button class="x" data-close>×</button></div>
   <div class="mbody"><div class="field"><label>Name</label><input id="invName" placeholder="Ada Lovelace"></div><div class="field"><label>Email</label><input id="invEmail" placeholder="ada@kuber.ai"></div>
@@ -305,7 +305,7 @@ const LUT={
 function cmap(t,name){const L=LUT[name];t=Math.max(0,Math.min(1,t));const x=t*(L.length-1),i=Math.floor(x),f=x-i,a=L[i],b=L[Math.min(i+1,L.length-1)];return [(a[0]+(b[0]-a[0])*f)/255,(a[1]+(b[1]-a[1])*f)/255,(a[2]+(b[2]-a[2])*f)/255];}
 function cmapFor(field){if(field==='T')return 'thermal';if(field==='velocity')return 'viridis';return 'plasma';}
 const FLAB={T:'T',velocity:'|U|',p_rgh:'p'};
-// Kuber mark — contour (cyclic) integral ∮ : flux through a closed surface, the core of CFD
+// Kuber mark - contour (cyclic) integral ∮ : flux through a closed surface, the core of CFD
 const LOGO_SVG=`<svg viewBox="0 0 40 60" fill="none" role="img" aria-label="Kuber">
  <g stroke="#16202b" fill="none" stroke-linecap="round">
   <circle cx="20" cy="30" r="12.5" stroke-width="2.1"/>
@@ -336,7 +336,7 @@ const gscene=new THREE.Scene(),gcam=new THREE.PerspectiveCamera(50,1,0.1,10);gsc
 let W=1,H=1;
 function resize(){W=canvas.clientWidth;H=canvas.clientHeight;renderer.setSize(W,H,false);camera.aspect=W/H;camera.updateProjectionMatrix();}
 window.addEventListener('resize',resize);
-// ===== state (declared BEFORE the render loop — the loop runs synchronously on first call) =====
+// ===== state (declared BEFORE the render loop - the loop runs synchronously on first call) =====
 let cur=null,field='T',view='pred',rmode='surface',frame=null,cases=[];
 let pointsObj=null,hsGroup=null,hsGroupGT=null,cadObj=null,cf=null,tf_arr=null,trange=[0,1],selCase=null;
 let selPreset=null,pristine=false;   // selPreset=caseIndex when an UNEDITED preset is selected -> real CFD ground truth
@@ -434,7 +434,7 @@ function recolorSurface(){if(!cur||!hsGroup)return;const {vals,mn,mx,name,unit}=
 function fmt(x){return Math.abs(x)>=100?x.toFixed(0):Math.abs(x)>=1?x.toFixed(1):x.toFixed(3);}
 function setCbar(name,mn,mx,label){const cx=document.getElementById('cbar'),g=cx.getContext('2d'),h=cx.height;for(let y=0;y<h;y++){const c=cmap(1-y/h,name);g.fillStyle=`rgb(${c[0]*255|0},${c[1]*255|0},${c[2]*255|0})`;g.fillRect(0,y,14,1);}document.getElementById('cbMin').textContent=fmt(mn);document.getElementById('cbMax').textContent=fmt(mx);document.getElementById('cbField').textContent=label;}
 const CFD_SEC=995;    // measured OpenFOAM buoyantSimpleFoam ExecutionTime (s) per heatsink case (our BSF pipeline, ~1000 iters)
-const CFD_SEC_CP=62;  // measured per cold-plate case (structured blockMesh duct, ~1000 iters — much faster)
+const CFD_SEC_CP=62;  // measured per cold-plate case (structured blockMesh duct, ~1000 iters - much faster)
 function fmtSpeed(x){return x>=1000?(x/1000).toFixed(x>=9500?0:1)+'k':String(Math.round(x));}
 function updateMetrics(){const m=cur.metrics;const sec=cur.infer_ms/1000;const cp=cur.device==='coldplate';const cfd=cp?CFD_SEC_CP:CFD_SEC;
   document.getElementById('mcTime').innerHTML=sec.toFixed(3)+'<small> s · '+(window.DEV||'CPU')+'</small>';
@@ -459,7 +459,7 @@ async function previewGeometry(ci){
   camera.position.set(1.9,-2.4,1.5);controls.target.set(0,0,0.05);controls.update();canvas.style.opacity=1;
   document.getElementById('promptBar').style.display='block';
   document.getElementById('hudId').textContent=geo.case_id.replace('case_','case ')+' · '+(geo.device==='coldplate'?'cold plate':'heatsink');
-  document.getElementById('hudPts').textContent='geometry — not solved';
+  document.getElementById('hudPts').textContent='geometry - not solved';
   ['mRmse','mBC'].forEach(id=>document.getElementById(id).innerHTML='—');cur=null;resetCompare();
 }
 let editDevice='heatsink';
@@ -477,7 +477,7 @@ async function predict(i){
 function applyGTui(){const gt=cur&&cur.hasGT;
   document.querySelectorAll('#viewSeg button').forEach(b=>{if(b.dataset.v!=='pred')b.style.display=gt?'':'none';});
   if(!gt&&view!=='pred'){view='pred';setOn('viewSeg',document.querySelector('#viewSeg button[data-v="pred"]'));}
-  document.getElementById('mRmse').innerHTML=gt?('±'+cur.metrics.T_rmse+'<small>K vs CFD</small>'):'<small>custom — no CFD ref</small>';
+  document.getElementById('mRmse').innerHTML=gt?('±'+cur.metrics.T_rmse+'<small>K vs CFD</small>'):'<small>custom - no CFD ref</small>';
   document.getElementById('mRmse').className='v'+(gt?' ok':'');
   // custom geometry has no CFD solve -> hide CFD-time + speed-up cards (we don't have that data for it)
   document.getElementById('mcCfd').closest('.mc').style.display=gt?'':'none';
@@ -540,7 +540,7 @@ function previewFromBoxes(boxes){clearField();document.getElementById('cards').s
   hsGroup.scale.setScalar(frame.s);hsGroup.position.set(-frame.c[0]*frame.s,-frame.c[1]*frame.s,-frame.c[2]*frame.s);scene.add(hsGroup);
   camera.position.set(1.9,-2.4,1.5);controls.target.set(0,0,0.05);controls.update();canvas.style.opacity=1;
   document.getElementById('promptBar').style.display='block';
-  document.getElementById('hudId').textContent=getParams().fins+' fins · editable';document.getElementById('hudPts').textContent='geometry — not solved';
+  document.getElementById('hudId').textContent=getParams().fins+' fins · editable';document.getElementById('hudPts').textContent='geometry - not solved';
   ['mRmse','mBC'].forEach(id=>document.getElementById(id).innerHTML='—');cur=null;resetCompare();applyClip();}
 // ===== heated-base + flow-direction visualization (so a geometry reads as a cooling problem, not a bare metal block) =====
 function heatedSlab(boxes,device){
@@ -559,7 +559,7 @@ function addFlowArrow(grp,boxes,u_in){const [lo,hi]=boxes[0];const y=(lo[1]+hi[1
   const a=new THREE.ArrowHelper(new THREE.Vector3(1,0,0),new THREE.Vector3(lo[0]-L*0.14,y,z),len,0x4bd6e0,Math.min(len*0.28,L*0.22),Math.min(len*0.16,L*0.12));
   a.userData.flow=true;[a.line,a.cone].forEach(o=>{if(o&&o.material){o.material.transparent=true;o.material.opacity=0.5;o.material.depthWrite=false;}});
   grp.add(a);}
-// metal plate housing around the coolant channel — so the channel reads as a BORE inside a plate, not a floating box
+// metal plate housing around the coolant channel - so the channel reads as a BORE inside a plate, not a floating box
 function addPlateBody(grp,boxes){const [lo,hi]=boxes[0];const H=hi[1]-lo[1],W=hi[2]-lo[2];
   const mb=H*1.4,mt=H*0.7,mz=W*0.8;                                       // base metal below, lid above, side walls
   const p=[[lo[0],lo[1]-mb,lo[2]-mz],[hi[0],hi[1]+mt,hi[2]+mz]];
@@ -615,7 +615,7 @@ function previewFromBoxesCP(boxes){clearField();document.getElementById('cards')
   hsGroup.scale.setScalar(frame.s);hsGroup.position.set(-frame.c[0]*frame.s,-frame.c[1]*frame.s,-frame.c[2]*frame.s);scene.add(hsGroup);
   camera.position.set(2.0,-2.3,1.4);controls.target.set(0,0,0);controls.update();canvas.style.opacity=1;
   document.getElementById('promptBar').style.display='block';document.getElementById('cpLegend').style.display='block';
-  document.getElementById('hudId').textContent='cold plate · coolant channel · editable';document.getElementById('hudPts').textContent='straight rect channel — not solved';
+  document.getElementById('hudId').textContent='cold plate · coolant channel · editable';document.getElementById('hudPts').textContent='straight rect channel - not solved';
   ['mRmse','mBC'].forEach(id=>document.getElementById(id).innerHTML='—');cur=null;resetCompare();applyClip();}
 let previewTC=null;
 function livePreviewCP(){clearTimeout(previewTC);previewTC=setTimeout(()=>previewFromBoxesCP(boxesFromParamsCP(getParamsCP())),50);}
@@ -638,7 +638,7 @@ const AVC=['#ff6b35','#4bd6e0','#5ac47f','#c98af6','#f6c945'];
 let WS=JSON.parse(localStorage.getItem('kuber_ws')||'null');
 function seedWS(){const cp=(cases.find(c=>c.device==='coldplate')||{}).index, hs=(cases.find(c=>c.device==='heatsink')||{}).index;
   const g=[];if(hs!=null)g.push({kind:'preset',caseIndex:hs});if(cp!=null)g.push({kind:'preset',caseIndex:cp});
-  WS={v:3,activeProject:0,projects:[{name:'Electronics Cooling — Multi-geometry',geoms:g,updated:Date.now()},{name:'eVTOL Power Electronics',geoms:[],updated:Date.now()-6*3600e3}],team:[{name:'You',email:'you@kuber.ai',role:'Owner'},{name:'Alex Rivera',email:'alex@kuber.ai',role:'Engineer'}]};saveWS();}
+  WS={v:3,activeProject:0,projects:[{name:'Electronics Cooling - Multi-geometry',geoms:g,updated:Date.now()},{name:'eVTOL Power Electronics',geoms:[],updated:Date.now()-6*3600e3}],team:[{name:'You',email:'you@kuber.ai',role:'Owner'},{name:'Alex Rivera',email:'alex@kuber.ai',role:'Engineer'}]};saveWS();}
 function saveWS(){try{localStorage.setItem('kuber_ws',JSON.stringify(WS,(k,v)=>k==='_buf'?undefined:v));}catch(e){}}
 /* seeded in init() after cases load (needs device info) */
 function proj(){return WS.projects[WS.activeProject];}
@@ -647,11 +647,11 @@ function renderTeam(){document.getElementById('avs').innerHTML=WS.team.map((m,i)
 function geoLabel(g){if(g.kind==='cad')return {nm:g.name,sub:'imported CAD',tag:'CAD'};const c=cases[g.caseIndex];return {nm:c.title,sub:c.sub,tag:c.device==='coldplate'?'COLD PLATE':'HEATSINK'};}
 const FIN_SVG='<svg viewBox="0 0 16 16"><rect x="1" y="10" width="14" height="4"/><line x1="3" y1="10" x2="3" y2="3"/><line x1="6.5" y1="10" x2="6.5" y2="3"/><line x1="10" y1="10" x2="10" y2="3"/><line x1="13" y1="10" x2="13" y2="3"/></svg>';
 let selGeo=0;
-function renderGlist(){const gl=document.getElementById('glist'),gs=proj().geoms;gl.innerHTML=gs.length?'':'<div class="note" style="padding:2px">No geometries yet — click + Add.</div>';
+function renderGlist(){const gl=document.getElementById('glist'),gs=proj().geoms;gl.innerHTML=gs.length?'':'<div class="note" style="padding:2px">No geometries yet - click + Add.</div>';
   gs.forEach((g,i)=>{const L=geoLabel(g),el=document.createElement('div');el.className='geo'+(i===selGeo?' on':'');el.innerHTML=`<div class="ic">${FIN_SVG}</div><div><div class="nm">${L.nm}</div><div class="sub">${L.sub}</div></div><div class="tag">${L.tag}</div>`;el.onclick=()=>selectGeo(i);gl.appendChild(el);});}
 function resetCompare(){if(rmode==='compare'){rmode='surface';setOn('vswitch',document.querySelector('#vswitch button[data-r="surface"]'));}document.getElementById('cmpBtn').disabled=true;document.getElementById('cmpUI').style.display='none';}
-function setPromptPreset(isPreset){document.getElementById('promptBar').innerHTML=isPreset?'Geometry loaded — click <b>Predict field</b> to run the model and compare vs CFD ground truth.':'Geometry loaded — click <b>Predict field</b> to run the simulation.';}
-function renderCondInfo(c){document.getElementById('editor').innerHTML='<div class="note" style="margin-bottom:8px">Cold-plate preset — fixed conditions (parametric editing for cold plates is on the roadmap).</div><div class="spec">'+[['Coolant',c.fluid],['Inlet temp',c.envTemp+' K'],['Heat flux',(c.heatFlux/1000).toFixed(0)+' kW/m²'],['Inlet velocity',c.u_in+' m/s']].map(([k,v])=>`<div class="cond"><span>${k}</span><b>${v}</b></div>`).join('')+'</div>';}
+function setPromptPreset(isPreset){document.getElementById('promptBar').innerHTML=isPreset?'Geometry loaded - click <b>Predict field</b> to run the model and compare vs CFD ground truth.':'Geometry loaded - click <b>Predict field</b> to run the simulation.';}
+function renderCondInfo(c){document.getElementById('editor').innerHTML='<div class="note" style="margin-bottom:8px">Cold-plate preset - fixed conditions (parametric editing for cold plates is on the roadmap).</div><div class="spec">'+[['Coolant',c.fluid],['Inlet temp',c.envTemp+' K'],['Heat flux',(c.heatFlux/1000).toFixed(0)+' kW/m²'],['Inlet velocity',c.u_in+' m/s']].map(([k,v])=>`<div class="cond"><span>${k}</span><b>${v}</b></div>`).join('')+'</div>';}
 function selectGeo(i){selGeo=i;renderGlist();const g=proj().geoms[i];
   if(g.kind==='preset'){selPreset=g.caseIndex;pristine=true;const c=cases[g.caseIndex];
     if(c.device==='coldplate'){setEditDevice('coldplate');renderEditorCP(c);previewFromBoxesCP(boxesFromParamsCP(getParamsCP()));setPromptPreset(true);}
@@ -714,7 +714,7 @@ document.getElementById('pNew').onclick=newProject;
 document.getElementById('wm').onclick=()=>{renderProjects();showPage('projects');};
 document.querySelectorAll('.pn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.pn').forEach(x=>x.classList.remove('on'));b.classList.add('on');pnav=b.dataset.nav;renderProjects();});
 
-// draggable floating panels — during a demo they can be dragged anywhere so nothing stays hidden
+// draggable floating panels - during a demo they can be dragged anywhere so nothing stays hidden
 function makeDraggable(el){el.style.cursor='grab';el.style.touchAction='none';let sx,sy,drag=false;
   el.addEventListener('pointerdown',e=>{if(e.target.closest('button,input,select,a'))return;      // let controls still work
     const r=el.getBoundingClientRect();el.style.position='fixed';el.style.left=r.left+'px';el.style.top=r.top+'px';

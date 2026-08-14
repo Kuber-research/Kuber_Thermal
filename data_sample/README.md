@@ -1,7 +1,7 @@
 # Sample cases
 
-Six ready-to-load cases from the Kuber corpus — **3 heatsinks** (natural-convection air) and
-**3 cold plates** (forced liquid) — plus a sample split file. Enough to inspect the data contract and
+Six ready-to-load cases from the Kuber corpus - **3 heatsinks** (natural-convection air) and
+**3 cold plates** (forced liquid) - plus a sample split file. Enough to inspect the data contract and
 sanity-check a data loader without OpenFOAM or a GPU.
 
 | file prefix | device | notes |

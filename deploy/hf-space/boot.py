@@ -3,7 +3,7 @@
 
 Fetches the model + corpus + splits from a Hugging Face Hub repo (set KUBER_HF_REPO),
 points the app at them, and launches the FastAPI server on the platform port. The
-assets are NOT bundled in the image — they live in your own HF Model/Dataset repo.
+assets are NOT bundled in the image - they live in your own HF Model/Dataset repo.
 
 Your HF assets repo must contain:
   multigeo.pt      the trained checkpoint

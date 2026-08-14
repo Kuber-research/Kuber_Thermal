@@ -1,6 +1,6 @@
 """Assemble a single-region cold-plate coolant-channel case (buoyantSimpleFoam).
 
-The domain IS the coolant (the channel interior) — a rectangular duct. Coolant
+The domain IS the coolant (the channel interior) - a rectangular duct. Coolant
 enters the inlet, leaves the outlet at a reference pressure; the base wall carries
 a chip heat flux (externalWallHeatFluxTemperature, mode flux), the other walls are
 adiabatic. Reuses the stabilized buoyantSimpleFoam recipe from build_bsf

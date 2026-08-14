@@ -2,7 +2,7 @@
 """Render publication-style CFD field images from Kuber sample cases (data_sample/).
 
 Produces temperature + velocity-magnitude point-cloud renders for a heatsink and a cold
-plate — the actual OpenFOAM ground-truth fields the surrogate is trained to predict.
+plate - the actual OpenFOAM ground-truth fields the surrogate is trained to predict.
 Run with a matplotlib+numpy env: python assets/render_sim.py
 """
 import json, os
@@ -76,7 +76,7 @@ def device_figure(prefix, device, elev, azim, fname):
     panel(ax1, coords, T, "inferno", "T [K]", "Temperature", elev, azim)
     ax2 = fig.add_subplot(122, projection="3d")
     panel(ax2, coords, Umag, "viridis", "|U| [m/s]", "Velocity magnitude", elev, azim)
-    fig.suptitle(f"{device.title()} — OpenFOAM CHT ground truth", fontsize=14, fontweight="bold", y=0.99)
+    fig.suptitle(f"{device.title()} - OpenFOAM CHT ground truth", fontsize=14, fontweight="bold", y=0.99)
     fig.text(0.5, 0.02, caption(device, cond), ha="center", fontsize=9.5, color="#555")
     fig.tight_layout(rect=(0, 0.04, 1, 0.96))
     fig.savefig(os.path.join(OUT, fname), dpi=150, facecolor="white")
@@ -92,7 +92,7 @@ def hero(hs, cp):
     panel(a1, hc, hT, "inferno", "T [K]", "Heatsink (air, natural convection)", 22, -58)
     a2 = fig.add_subplot(122, projection="3d")
     panel(a2, cc, cT, "inferno", "T [K]", "Cold plate (liquid, forced)", 20, -68)
-    fig.suptitle("One model, coupled fluid–heat fields across geometries", fontsize=14, fontweight="bold", y=0.99)
+    fig.suptitle("One model, coupled fluid-heat fields across geometries", fontsize=14, fontweight="bold", y=0.99)
     fig.tight_layout(rect=(0, 0.0, 1, 0.96))
     fig.savefig(os.path.join(OUT, "hero.png"), dpi=150, facecolor="white")
     plt.close(fig)

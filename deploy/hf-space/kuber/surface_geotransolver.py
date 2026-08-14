@@ -1,9 +1,9 @@
 """SurfaceGeoTransolver: surface-geometry branch + GeoTransolver core.
 
 Geometry wiring (`geom_wiring`):
-  "concat" — per-point geometry descriptor concatenated into GeoTransolver's local_embedding
+  "concat" - per-point geometry descriptor concatenated into GeoTransolver's local_embedding
              (shallow: geometry enters once at the input).
-  "deep"   — descriptor fed as GeoTransolver's `geometry` input, which the core projects to
+  "deep" - descriptor fed as GeoTransolver's `geometry` input, which the core projects to
              context and cross-attends in EVERY GALE block (AB-UPT-style deep conditioning).
 
 Refiner inputs (`refiner_inputs=True`, used by PDE-Refiner): the model additionally ingests a
@@ -58,7 +58,7 @@ class SurfaceGeoTransolver(nn.Module):
 
         # "concat" builds our own shallow surface encoder + cross-attention (uses normals);
         # "deep" uses GeoTransolver's NATIVE geometry branch on the raw surface point cloud
-        # (per-block cross-attention, AB-UPT-style) — no custom modules needed.
+        # (per-block cross-attention, AB-UPT-style) - no custom modules needed.
         if geom_wiring == "concat":
             self.encoder = SurfaceGeometryEncoder(d=d_surf, n_layers=n_surf_layers, n_head=n_surf_head)
             self.cross = LocalSurfaceCrossAttention(d_tok=d_surf, d_out=d_geo, n_head=geo_head, k=k)

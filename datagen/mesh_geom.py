@@ -4,7 +4,7 @@ This is the "full mesh" geometry representation, richer than a scalar SDF or a
 jittered surface cloud: it gives the actual boundary as vertices + triangles +
 outward per-face normals + areas, with interior faces culled. Area-weighted
 sampling (SDF-filtered) then draws a surface point cloud of any density from the
-true mesh — the geometry the encoder attends to.
+true mesh - the geometry the encoder attends to.
 
 Depends on make_stl.heatsink_boxes for the box list (fins / plate / cube / pinfin).
 """

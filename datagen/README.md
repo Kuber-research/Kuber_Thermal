@@ -1,4 +1,4 @@
-# Data generation — OpenFOAM CHT pipeline
+# Data generation - OpenFOAM CHT pipeline
 
 Generates the Kuber corpus: parametric electronics-cooling geometries solved with OpenFOAM
 `buoyantSimpleFoam`, exported to per-case `.npz`. Fully resumable, gated by convergence + a physics
@@ -39,7 +39,7 @@ aside, not written. See `python run_sweep_bsf.py --help` for all flags.
 ## Notes
 
 - **Validity:** a case is written only after a converged solve; the physics filter rejects unphysical
-  fields (e.g. cold plates exceeding a temperature ceiling — there is no boiling model).
+  fields (e.g. cold plates exceeding a temperature ceiling - there is no boiling model).
 - **Fidelity:** snap-level-2 + 3 prism layers matches a fine mesh's hot spot within 0.1 K at ~2.7×
   lower cost ([`../docs/DATASET.md`](../docs/DATASET.md)).
 - **Determinism:** geometry/condition sampling is seeded; re-running reproduces the same corpus.

@@ -1,4 +1,4 @@
-# Kuber live-inference demo — Hugging Face Docker Space (CPU).
+# Kuber live-inference demo - Hugging Face Docker Space (CPU).
 FROM python:3.11-slim
 
 ENV PYTHONUNBUFFERED=1 \

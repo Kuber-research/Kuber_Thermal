@@ -119,7 +119,7 @@ def _char_len(coords):
 
 def _pi_groups(cond, L):
     """Buckingham-Pi dimensionless similarity groups from operating conditions + characteristic
-    length L. Returns log1p([Re, Ra, Pe]) — the groups that (with Pr, already conditioned) govern
+    length L. Returns log1p([Re, Ra, Pe]) - the groups that (with Pr, already conditioned) govern
     forced + buoyant convective heat transfer, so cross-fluid transfer is framed by DYNAMIC SIMILARITY
     rather than raw (rho, mu, Cp). Approximations: ideal-gas expansion beta~1/T_amb, and a flux-BC
     temperature scale dT ~ q'' L / k_f for cold plates (solidTemp==0)."""
@@ -149,7 +149,7 @@ def load_dataset(data_dir, splits_path, difficulty, cond_keys=None, geom_mode="s
       "none"    -> condition scalars only, no geometry feature.
 
     drop_geom_scalars: keep only the BC scalar `solidTemp` in cond_keys (drop fins/gap/
-      thickness/height) — tests whether global geometry scalars hurt OOD.
+      thickness/height) - tests whether global geometry scalars hurt OOD.
 
     All normalizers are fit on src.train ONLY (no leakage; difficulty-invariant).
     All cases share N=16384; loaded into host RAM.
@@ -189,7 +189,7 @@ def load_dataset(data_dir, splits_path, difficulty, cond_keys=None, geom_mode="s
     else:
         cmean = cstd = np.zeros(0, np.float64)
 
-    # per-case physical bbox extents (log, z-scored over src.train) — restores the aspect
+    # per-case physical bbox extents (log, z-scored over src.train) - restores the aspect
     # ratio / absolute scale that PER-AXIS [0,1] framing erases (critical for thin cold-plate
     # channels where a 36:1 duct would otherwise look identical to a cube). device-agnostic.
     if extent_feats:
@@ -345,7 +345,7 @@ def evaluate(model, split, dev, bs, n_points, ymean, ystd, channels, geom_mode="
     model.eval()
     idx = _subsample_idx(split["coords"].shape[1], n_points, seed=123)
     # near-wall band = closest 15% of points by SDF (percentile is robust to mesh density,
-    # unlike a fixed metric threshold — the CFD mesh clusters near the heatsink)
+    # unlike a fixed metric threshold - the CFD mesh clusters near the heatsink)
     nw_thresh = float(np.percentile(split["sdf"][:, idx], 15)) if fidelity else None
     se_norm = np.zeros(5); se_phys = np.zeros(5); ss_norm = np.zeros(5); count = 0
     se_T_nw = 0.0; cnt_nw = 0                                           # near-wall T (physical)
@@ -715,7 +715,7 @@ def run(a):
         print(f"OOD gap (mean nRMSE, OOD - in-dist) = {gap:+.4f}")
     else:
         gap = 0.0
-        print("OOD      tgt.test : (none — pretrain split, no OOD held out)")
+        print("OOD      tgt.test : (none - pretrain split, no OOD held out)")
     results = {"difficulty": a.difficulty, "multiscale": not a.no_local, "geom_mode": geom_mode,
                "drop_geom_scalars": a.drop_geom_scalars,
                "best_ep": best_ep, "params_M": nparams, "in_dist": mid, "ood": mood, "ood_gap": float(gap)}
@@ -741,16 +741,16 @@ if __name__ == "__main__":
     p.add_argument("--geom_mode", choices=["sdf", "dsdf", "surface", "none"], default="sdf",
                    help="geometry feature: scalar SDF | directional SDF (dist+grad, 4ch) | learned surface branch | none")
     p.add_argument("--drop_geom_scalars", action="store_true",
-                   help="keep only solidTemp in conditions (drop fins/gap/thickness/height) — OOD test")
+                   help="keep only solidTemp in conditions (drop fins/gap/thickness/height) - OOD test")
     p.add_argument("--cond_keys", default=None,
                    help="comma-separated conditioning keys to force (overrides auto-select), "
-                        "e.g. fins,gap,height2,thickness_fins,solidTemp — for pretrain/finetune transfer")
+                        "e.g. fins,gap,height2,thickness_fins,solidTemp - for pretrain/finetune transfer")
     p.add_argument("--extent_feats", action="store_true",
-                   help="append per-case physical bbox extents (log, z-scored) to conditioning — "
+                   help="append per-case physical bbox extents (log, z-scored) to conditioning - "
                         "restores aspect/scale erased by per-axis framing (multi-geometry: thin cold plates)")
     p.add_argument("--pi_features", action="store_true",
                    help="append Buckingham-Pi dimensionless groups (Re, Ra, Pe; log, z-scored) to "
-                        "conditioning — frames cross-fluid transfer (air->water/oil) by dynamic similarity")
+                        "conditioning - frames cross-fluid transfer (air->water/oil) by dynamic similarity")
     p.add_argument("--resume", action="store_true",
                    help="crash recovery: if <out>/resume.pt exists, continue mid-run (model+opt+WSD+epoch). "
                         "Saved every epoch; combine with --init_from for first-launch warm start.")

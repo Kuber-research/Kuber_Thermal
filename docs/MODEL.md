@@ -1,9 +1,9 @@
-# KuberNet — architecture card
+# KuberNet - architecture card
 
 A geometry-conditioned neural operator that predicts the full steady CHT field at an arbitrary query
 point cloud. It pairs a **GeoTransolver** physics-attention core (NVIDIA PhysicsNeMo, Apache-2.0) with
 an **AB-UPT-style surface-geometry encoder**, and can instead take geometry as a signed-distance field
-or nothing at all — selected at the command line by `--geom_mode`.
+or nothing at all - selected at the command line by `--geom_mode`.
 
 Source: [`../kuber/surface_geotransolver.py`](../kuber/surface_geotransolver.py),
 [`surface_model.py`](../kuber/surface_model.py),
@@ -26,7 +26,7 @@ output :  field       [B,N,5]   (U_x, U_y, U_z, T, p_rgh), per-channel z-normali
 
 | `--geom_mode` | geometry signal | notes |
 |---|---|---|
-| `surface` | surface point cloud + normals → encoder → per-node descriptor | **production model** — no analytic SDF needed, works on arbitrary CAD |
+| `surface` | surface point cloud + normals → encoder → per-node descriptor | **production model** - no analytic SDF needed, works on arbitrary CAD |
 | `dsdf` | signed distance + unit gradient (4 ch) | encodes wall direction; requires an analytic SDF |
 | `sdf` | scalar signed distance per node | requires an analytic SDF |
 | `none` | conditions only | ablation floor |
@@ -45,7 +45,7 @@ multiscale local ball-query features (radii 0.05/0.25, 8/32 neighbours). ~14 M p
 
 ## Optional: PDE-Refiner head
 
-One-shot MSE is spectrally biased — it drops low-amplitude high-frequency modes (fin-tip gradients).
+One-shot MSE is spectrally biased - it drops low-amplitude high-frequency modes (fin-tip gradients).
 The optional **PDE-Refiner** (`--refine`) produces the field as an initial prediction + K denoising
 refinement steps at exponentially decreasing noise, forcing the network to model all scales, and
 yields an uncertainty estimate. Faithful adaptation of Lippe et al. (NeurIPS 2023) to steady fields;
@@ -60,8 +60,8 @@ analytic SDF is cheaply available, but they are not the reported model.
 
 ## References
 
-- **GeoTransolver / PhysicsNeMo** — NVIDIA. https://github.com/NVIDIA/physicsnemo
-- **Transolver** — Wu et al., *Transolver: A Fast Transformer Solver for PDEs on General Geometries*, ICML 2024.
-- **AB-UPT** — Alkin et al., *Anchored / Branched Universal Physics Transformers*, 2025. https://github.com/Emmi-AI/anchored-branched-universal-physics-transformers
-- **SIMSHIFT** — Setinek et al., *A Benchmark for Distribution Shift in Simulation*. https://github.com/psetinek/simshift
-- **PDE-Refiner** — Lippe, Perdikaris, Brandstetter, Cranmer et al., NeurIPS 2023.
+- **GeoTransolver / PhysicsNeMo** - NVIDIA. https://github.com/NVIDIA/physicsnemo
+- **Transolver** - Wu et al., *Transolver: A Fast Transformer Solver for PDEs on General Geometries*, ICML 2024.
+- **AB-UPT** - Alkin et al., *Anchored / Branched Universal Physics Transformers*, 2025. https://github.com/Emmi-AI/anchored-branched-universal-physics-transformers
+- **SIMSHIFT** - Setinek et al., *A Benchmark for Distribution Shift in Simulation*. https://github.com/psetinek/simshift
+- **PDE-Refiner** - Lippe, Perdikaris, Brandstetter, Cranmer et al., NeurIPS 2023.

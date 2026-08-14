@@ -113,12 +113,12 @@ def main(a):
     print(f"[sweep] total={len(all_ids)} done={done0} pending={len(pending)} "
           f"jobs={a.jobs} iters={a.iters} out={out}", flush=True)
     if not pending:
-        print("[sweep] nothing to do — dataset complete."); return
+        print("[sweep] nothing to do - dataset complete."); return
 
     stop = {"flag": False}
     def _handler(signum, frame):
         stop["flag"] = True
-        print(f"\n[sweep] signal {signum} — finishing in-flight, no new launches. "
+        print(f"\n[sweep] signal {signum} - finishing in-flight, no new launches. "
               f"Re-run the same command to resume.", flush=True)
     signal.signal(signal.SIGINT, _handler)
     signal.signal(signal.SIGTERM, _handler)

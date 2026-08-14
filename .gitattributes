@@ -1,4 +1,4 @@
-# GitHub Linguist — classify this repository by its Python source, not by
+# GitHub Linguist - classify this repository by its Python source, not by
 # generated HTML / vendored JS / embedded data. These files are build artifacts
 # or third-party libraries, not the project's source code.
 

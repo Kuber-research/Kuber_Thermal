@@ -1,7 +1,7 @@
 """Analytic surface geometry for the SIMSHIFT parametric heatsink.
 
 AB-UPT-style geometry input: a SURFACE point cloud + outward NORMALS (no mesh
-connectivity), generated analytically from the heatsink parameters — so it works at
+connectivity), generated analytically from the heatsink parameters - so it works at
 any resolution with no raw CFD data. Replaces the scalar SDF with an explicit boundary
 representation the model can encode and cross-attend to.
 

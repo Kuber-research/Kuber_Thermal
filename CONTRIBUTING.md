@@ -1,6 +1,6 @@
 # Contributing to Kuber
 
-Thanks for your interest. Kuber is a young, honest benchmark — contributions that add
+Thanks for your interest. Kuber is a young, honest benchmark - contributions that add
 rigor (new baselines, harder splits, better data) or catch over-claims are all welcome.
 
 ## Ways to contribute

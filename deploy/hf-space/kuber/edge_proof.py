@@ -5,8 +5,8 @@ Reuses the trainer's exact model construction / data loading / forward so the
 predictions are identical to the reported eval. Adds a per-node temperature
 gradient-magnitude estimate (k-NN local slope) and compares predicted vs CFD
 ground-truth gradients in three regions:
-  - edge/near-wall band  (closest 15% of nodes by |SDF| — fin tips, corners, walls)
-  - steep-gradient region (top 5% of nodes by TRUE |grad T| — where a blow-up shows)
+  - edge/near-wall band  (closest 15% of nodes by |SDF| - fin tips, corners, walls)
+  - steep-gradient region (top 5% of nodes by TRUE |grad T| - where a blow-up shows)
   - bulk                 (everything else)
 
 Proof of "no gradient explosion":

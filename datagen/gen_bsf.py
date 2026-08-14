@@ -20,7 +20,7 @@ DOMAIN = dict(Lx=0.5, Ly=0.14, Lz=0.14, cx=0.25, cz=0.07,
 
 # sampled ranges  (name: (lo, hi))
 RANGES = dict(
-    N=(5, 14),            # fins (int) — in-dist 5-9, OOD 10-14 (SIMSHIFT split_param)
+    N=(5, 14),            # fins (int) - in-dist 5-9, OOD 10-14 (SIMSHIFT split_param)
     W=(0.06, 0.10),       # base width (fins span this; gap derived)
     L=(0.08, 0.12),       # base length (streamwise)
     t_b=(0.004, 0.008),   # base thickness

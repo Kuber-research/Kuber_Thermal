@@ -9,7 +9,7 @@ pinned: false
 license: other
 ---
 
-# Kuber — live inference demo (Hugging Face Docker Space)
+# Kuber - live inference demo (Hugging Face Docker Space)
 
 Runs the **full interactive workflow live**: the editable-geometry UI (`static/index.html`)
 served by a FastAPI backend that runs **SurfaceGeoTransolver on CPU** (~1.5 s/case) and returns
@@ -19,7 +19,7 @@ the predicted field beside the CFD ground truth. This is the same app as
 ## One-time setup
 
 The image is code-only; the **model + cases** live in your own HF **Dataset** repo (kept out of the
-image so git stays small). The bundle has this layout — assemble it with the helper (copies only the
+image so git stays small). The bundle has this layout - assemble it with the helper (copies only the
 ~2.3k `.npz` the split references, not the full 1.4 GB corpus):
 
 ```
@@ -62,7 +62,7 @@ git add . && git commit -m "kuber live demo" && git push
 
 - **CPU-only.** No GPU needed; the model runs on CPU. `nvidia-physicsnemo` provides the GeoTransolver
   core (Warp falls back to its CPU backend). If the CPU build of `physicsnemo` is troublesome, a
-  scale-to-zero **GPU serverless** host (e.g. Modal) is the robust alternative — same `app.py`.
+  scale-to-zero **GPU serverless** host (e.g. Modal) is the robust alternative - same `app.py`.
 - **First boot** downloads the corpus and fits normalizers (~1–2 min); subsequent requests are fast.
   A future optimization is to ship precomputed normalizers so only the model + a few preset cases are
   needed (drops the corpus download).

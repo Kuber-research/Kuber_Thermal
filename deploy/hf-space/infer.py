@@ -156,7 +156,7 @@ def _boxes_json(boxes):
 
 def _mesh_to_canonical(coords, surf_bb, recon_boxes):
     """Map fluid points from the CFD mesh frame into the CANONICAL, origin-centred reconstruction
-    frame — the same frame the geometry editor/preview and `_boxes_phys` use — so the returned point
+    frame - the same frame the geometry editor/preview and `_boxes_phys` use - so the returned point
     cloud aligns with the canonical geometry boxes and matches what the UI shows *before* Predict (no
     shape jump). The reconstruction is Z-up; the bsf mesh may be Y-up and offset, so we recover the
     axis permutation by matching reconstructed dims to the stored surface dims, then re-centre.
@@ -178,7 +178,7 @@ def _mesh_to_canonical(coords, surf_bb, recon_boxes):
 
 
 def _near_solid_pool(coords, surf_bb, factor=2.5, min_pts=2000):
-    """Indices of fluid points in the near-field around the solid — axis-agnostic (works for any mesh
+    """Indices of fluid points in the near-field around the solid - axis-agnostic (works for any mesh
     orientation, unlike a fixed z-slab). Keeps points within `factor` solid-radii of the solid-bbox
     centre; falls back to all points for cold plates (surf_bb=None) or when the shell is too sparse."""
     n = coords.shape[0]
@@ -194,7 +194,7 @@ def _near_solid_pool(coords, surf_bb, factor=2.5, min_pts=2000):
 def _stl_from_cond(cond, name="heatsink"):
     """ASCII STL of the heatsink solid (axis-aligned boxes -> 12 triangles each).
 
-    `name` becomes the STL `solid <name>` header — for library geometries we embed
+    `name` becomes the STL `solid <name>` header - for library geometries we embed
     the case id (e.g. `kuber_case_0304`) so a re-uploaded STL round-trips back to its
     known in-distribution config (editable + CFD ground truth available)."""
     faces = [(0, 3, 2), (0, 2, 1), (4, 5, 6), (4, 6, 7), (0, 1, 5), (0, 5, 4),
@@ -347,7 +347,7 @@ class Engine:
         return _stl_from_cond(self.conds[i], name=f"kuber_{self.ids[i]}")
 
     def geometry(self, i):
-        """Geometry boxes WITHOUT running the model — UI preview before Predict (physical frame)."""
+        """Geometry boxes WITHOUT running the model - UI preview before Predict (physical frame)."""
         return {"case_id": self.ids[i], "device": "heatsink" if self.devs[i] == 0 else "coldplate",
                 "boxes": self._case_boxes(i)}
 

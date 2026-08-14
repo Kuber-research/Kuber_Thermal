@@ -19,7 +19,7 @@ datagen/out/
 *.foam
 processor*/
 
-# Data — only the curated sample under data_sample/ is tracked
+# Data - only the curated sample under data_sample/ is tracked
 data/
 corpus/
 *.vtk

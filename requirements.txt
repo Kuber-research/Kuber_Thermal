@@ -13,5 +13,5 @@ nvidia-physicsnemo==2.1.1
 # matching PyTorch index, e.g.:  pip install torch==2.12.1 --index-url https://download.pytorch.org/whl/cu130
 #
 # Data generation (datagen/) additionally requires an OpenFOAM install on PATH
-# (buoyantSimpleFoam, blockMesh, snappyHexMesh) — not a pip dependency.
+# (buoyantSimpleFoam, blockMesh, snappyHexMesh) - not a pip dependency.
 # The Colab quickstart (notebooks/) installs matplotlib itself; it is not needed for training/eval.

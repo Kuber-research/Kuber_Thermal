@@ -22,7 +22,7 @@ from mesh_geom import sample_mesh                    # full triangulated-mesh su
 
 # geometry + BC condition columns
 GEOM_KEYS = ["N", "g", "t_f", "h_f", "t_b", "L", "W", "T_wall", "T_amb", "u_in"]
-# fluid thermophysical properties for conditioning (Pr, rho, Cp, mu) — lets ONE model
+# fluid thermophysical properties for conditioning (Pr, rho, Cp, mu) - lets ONE model
 # span air/water/oil/glycol (same geometry, very different physics)
 FLUID_PROPS = {  # Pr,     rho,    Cp,     mu
     "air":    (0.705,  1.18,   1004.4, 1.831e-5),

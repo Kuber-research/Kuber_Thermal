@@ -52,8 +52,8 @@ i, em { font-style: italic; }
 
 <div class="cols">
 
-<p class="abstract"><span class="lead">Abstract&mdash;</span>Conjugate heat transfer (CHT) &mdash; the
-coupled transport of heat through a solid conductor and a surrounding moving fluid &mdash; governs the
+<p class="abstract"><span class="lead">Abstract - </span>Conjugate heat transfer (CHT) - the
+coupled transport of heat through a solid conductor and a surrounding moving fluid - governs the
 thermal design of heatsinks, cold plates, heat exchangers, power electronics, and battery packs.
 High-fidelity computational fluid dynamics (CFD) resolves these fields but costs minutes to hours per geometry, prohibitive inside a
 design loop. We present Kuber, an open framework for building neural surrogates of CHT, and
@@ -62,25 +62,25 @@ an arbitrary query point cloud in a sub-second. The model couples a physics-atte
 with a surface-geometry encoder, so it ingests raw boundary geometry (a surface point cloud with
 normals) and requires no analytic signed-distance field, and it is conditioned on the full set of
 physical scalars plus a device-class flag. Its surface cross-attention adds a learned
-wall-normal penalty &mdash; <i>anisotropic boundary-layer</i> (ABL) attention &mdash; that biases each query to attend along the boundary rather than across it,
+wall-normal penalty - <i>anisotropic boundary-layer</i> (ABL) attention - that biases each query to attend along the boundary rather than across it,
 mirroring the structure of a thermal boundary layer. On the public SIMSHIFT heatsink benchmark it attains
 11.84&thinsp;K temperature RMSE on the medium out-of-distribution split, improving on the best previously
 published result (12.41&thinsp;K) while using no unsupervised domain adaptation, which every reported
 baseline relies on. A single set of weights spans two physically distinct device classes
-&mdash; buoyancy-driven heatsinks in air and forced-convection liquid cold plates &mdash; and
+ - buoyancy-driven heatsinks in air and forced-convection liquid cold plates - and
 pretraining on a self-generated OpenFOAM corpus lowers out-of-distribution error further. We
 additionally verify numerical soundness: the predicted temperature gradient never exceeds the physical
 gradient at fin tips and corners (explosion fraction zero, no NaN/Inf). All results are reproducible
 with the released code and data.</p>
 
-<p class="idxterms"><span class="lead">Index Terms&mdash;</span>conjugate heat transfer, neural
+<p class="idxterms"><span class="lead">Index Terms - </span>conjugate heat transfer, neural
 operators, surrogate modeling, transformers, physics-informed machine learning, out-of-distribution
 generalization.</p>
 
 <h2>I.&ensp;Introduction</h2>
-<p>Thermal design is an inner loop. An engineer proposes a geometry &mdash; a fin array, a cold-plate
-channel layout &mdash; and must know the resulting temperature and flow field before iterating. The
-field is produced by solving the coupled Navier&ndash;Stokes and energy equations across a solid and a
+<p>Thermal design is an inner loop. An engineer proposes a geometry - a fin array, a cold-plate
+channel layout - and must know the resulting temperature and flow field before iterating. The
+field is produced by solving the coupled Navier-Stokes and energy equations across a solid and a
 fluid region: <i>conjugate heat transfer</i> (CHT). Finite-volume CFD solves this accurately but
 slowly; in our measurements a single steady case takes a median of 22 minutes and up to nearly two
 hours for fine geometries. Sweeping thousands of designs, or closing an optimization loop, is
@@ -98,8 +98,8 @@ wall-normal coupling; it predicts the full five-channel CHT field at any query p
 geometry and physical conditioning, reaching state of the art on a public benchmark without domain adaptation. (ii)
 A reproducible data engine generating a self-labeled OpenFOAM CHT corpus across fluids, regimes,
 shapes, and two device classes, with a convergence gate and a verified mesh-convergence protocol. (iii)
-An honest evaluation harness &mdash; per-field normalized error, near-wall fidelity, a numerical
-no-explosion proof, and a value-of-data ablation &mdash; with released code, data, machine-readable
+An honest evaluation harness - per-field normalized error, near-wall fidelity, a numerical
+no-explosion proof, and a value-of-data ablation - with released code, data, machine-readable
 results, and an interactive viewer.</p>
 
 <figure class="wide">
@@ -173,9 +173,9 @@ positions <i>r<sub>ji</sub></i>&thinsp;=&thinsp;<i>x<sub>j</sub></i>&minus;<i>p<
 <i>anisotropic boundary-layer</i> (ABL) attention: it down-weights the <i>wall-normal</i> component of the
 query-to-node displacement (learned <i>&gamma;</i>&thinsp;=&thinsp;softplus(&middot;)&thinsp;&ge;&thinsp;0, with
 <i>&gamma;</i>&thinsp;=&thinsp;0 recovering isotropic kNN), so a query inside a thin thermal boundary layer
-attends <i>along</i> the wall rather than across it &mdash; the anisotropy that plain Euclidean distance
+attends <i>along</i> the wall rather than across it - the anisotropy that plain Euclidean distance
 ignores, and (Sec.&nbsp;VI-F) our largest single accuracy gain. Locality and relative positions make
-<i>g<sub>j</sub></i> compositional &mdash; a
+<i>g<sub>j</sub></i> compositional - a
 10-fin heatsink is locally &ldquo;more of the same&rdquo; fin-gap patches seen at 5&ndash;8 fins. The per-node
 embedding <i>e<sub>j</sub></i>&thinsp;=&thinsp;[<i>g<sub>j</sub></i>;&thinsp;<i>c</i>] is lifted,
 <i>u<sub>j</sub></i><sup>0</sup>&thinsp;=&thinsp;MLP([<i>e<sub>j</sub></i>;&thinsp;<i>x<sub>j</sub></i>]), and passed through
@@ -203,15 +203,15 @@ parameters. Every MLP is two-layer with a GELU activation.</p>
 
 <figure class="wide">
   <img src="../assets/sim/architecture.png" alt="KuberNet architecture">
-  <figcaption>Fig.&nbsp;2.&ensp;KuberNet. Three inputs &mdash; the boundary surface point
-  cloud with normals, the query points, and the physics conditioning &mdash; feed a neural spine
+  <figcaption>Fig.&nbsp;2.&ensp;KuberNet. Three inputs - the boundary surface point
+  cloud with normals, the query points, and the physics conditioning - feed a neural spine
   (surface encoder &rarr; local anisotropic boundary-layer (ABL) cross-attention &rarr; concatenated per-node embedding &rarr;
   GeoTransolver physics-attention core) that predicts the five-channel field at every query node.</figcaption>
 </figure>
 
 <h3>B.&ensp;PDE-Refiner Head</h3>
 <p><i>Why we use it.</i> One-shot regression under a mean-squared-error loss is <i>spectrally biased</i>:
-low-amplitude high-frequency modes &mdash; sharp fin-tip gradients, thin thermal boundary layers &mdash;
+low-amplitude high-frequency modes - sharp fin-tip gradients, thin thermal boundary layers - 
 contribute little to the squared error, so a single forward pass tends to over-smooth them. PDE-Refiner
 [9] removes this bias by casting field prediction as an iterative <i>denoising</i> process, whose
 training objective forces the network to represent structure at every spatial frequency; as a
@@ -268,11 +268,11 @@ at <i>medium</i> difficulty: train on fin counts 5&ndash;8, test on the shifted,
 normalizers are fit on the source training split only. <i>Metrics.</i> We report per-field root-mean-square error (RMSE) in
 physical units and normalized RMSE (nRMSE); the benchmark's primary selector is mean nRMSE across the
 five fields. We additionally report near-wall <i>T</i>-RMSE and edge gradient ratios (Sec.&nbsp;VI-D).
-No baseline uses <i>unsupervised domain adaptation</i> (UDA) &mdash; training-time adaptation to the
+No baseline uses <i>unsupervised domain adaptation</i> (UDA) - training-time adaptation to the
 <i>unlabeled</i> target (test) distribution, e.g. aligning source- and target-domain feature statistics
-to shrink the out-of-distribution gap &mdash; in our runs; the published baselines do, which is their
+to shrink the out-of-distribution gap - in our runs; the published baselines do, which is their
 best case. <i>Training.</i> Adam [11] at learning rate 10<sup>&minus;3</sup>, batch size 4 cases (16,384 query nodes each),
-with a warmup&ndash;stable&ndash;decay schedule: a 5-epoch linear warmup, a stable phase held until the validation
+with a warmup-stable-decay schedule: a 5-epoch linear warmup, a stable phase held until the validation
 mean nRMSE plateaus (patience 25 epochs), then a 30-epoch cosine decay to 10<sup>&minus;6</sup>; the best-validation
 checkpoint is kept. Targets are <i>z</i>-scored per channel and coordinates mapped to a per-case unit frame. The
 encoder uses <i>d<sub>s</sub></i>=128 (2 layers, 4 heads); the descriptor <i>d<sub>g</sub></i>=64 with <i>k</i>=16;
@@ -281,7 +281,7 @@ neighbors (&asymp;14.3&thinsp;M parameters). Baseline numbers are quoted from th
 
 <h2>VI.&ensp;Results</h2>
 <h3>A.&ensp;SIMSHIFT Heatsink Benchmark</h3>
-<p>On temperature &mdash; the design-critical field &mdash; KuberNet improves on the best
+<p>On temperature - the design-critical field - KuberNet improves on the best
 previously published result while using no UDA (Table&nbsp;II). The paper reports only temperature and
 velocity RMSE on the target domain; baseline parameter counts are not published but their released
 configurations are comparably sized (~10&ndash;15&thinsp;M), so the improvement is not from scale.</p>
@@ -291,20 +291,20 @@ configurations are comparably sized (~10&ndash;15&thinsp;M), so the improvement 
   <thead><tr><th class="l">Model</th><th>UDA</th><th>Temp&nbsp;RMSE&nbsp;(K)&thinsp;&darr;</th><th>mean&nbsp;nRMSE&thinsp;&darr;</th></tr></thead>
   <tbody>
     <tr><td class="l"><b>KuberNet</b> (ours)</td><td>&#10007;</td><td><b>11.84</b></td><td><b>0.608</b></td></tr>
-    <tr><td class="l">UPT (prev. best) [4]</td><td>&#10003;</td><td>12.41</td><td>&mdash;</td></tr>
-    <tr><td class="l">Transolver [3]</td><td>&#10003;</td><td>13.43</td><td>&mdash;</td></tr>
-    <tr><td class="l">PointNet [1]</td><td>&#10003;</td><td>17.43</td><td>&mdash;</td></tr>
+    <tr><td class="l">UPT (prev. best) [4]</td><td>&#10003;</td><td>12.41</td><td> - </td></tr>
+    <tr><td class="l">Transolver [3]</td><td>&#10003;</td><td>13.43</td><td> - </td></tr>
+    <tr><td class="l">PointNet [1]</td><td>&#10003;</td><td>17.43</td><td> - </td></tr>
   </tbody>
 </table>
 
 <p>KuberNet attains <b>11.84&thinsp;K</b> temperature RMSE and <b>0.608</b> mean nRMSE (our primary
 selector) on the medium out-of-distribution split, beating the previously published best (UPT,
 12.41&thinsp;K) with no domain adaptation. The gain is driven by its <i>anisotropic boundary-layer</i>
-attention (Sec.&nbsp;IV-A): ablating it to isotropic kNN raises error to 12.14&thinsp;K / 0.671 &mdash; a 10%
+attention (Sec.&nbsp;IV-A): ablating it to isotropic kNN raises error to 12.14&thinsp;K / 0.671 - a 10%
 larger mean nRMSE at equal parameter count (Sec.&nbsp;VI-F). The comparison to prior work is like-for-like: the
 SIMSHIFT baselines are also conditioned on geometry and operating scalars (they report temperature only, so
 mean nRMSE is dashed) and additionally use UDA, which we do not. These are single-run numbers; multi-seed
-replicates are in progress. The benchmark number is itself out of distribution &mdash;
+replicates are in progress. The benchmark number is itself out of distribution - 
 Table&nbsp;III separates in-distribution accuracy (3.96&thinsp;K) from the shifted target.</p>
 
 <table>
@@ -320,11 +320,11 @@ Table&nbsp;III separates in-distribution accuracy (3.96&thinsp;K) from the shift
 <p>KuberNet's anisotropic boundary-layer attention (Sec.&nbsp;IV-A) drives the SIMSHIFT result, but the
 surface-conditioned backbone it builds on is itself geometry-general: a single set of weights, distinguished
 only by a device flag and fluid/BC conditioning, spans a wall-temperature, buoyancy-driven heatsink in air
-and a heat-flux, forced-liquid cold plate. One multi-geometry model &mdash; trained on our corpus with full
-geometry and physics conditioning &mdash; reaches the per-class errors in Table&nbsp;IV when evaluated on
+and a heat-flux, forced-liquid cold plate. One multi-geometry model - trained on our corpus with full
+geometry and physics conditioning - reaches the per-class errors in Table&nbsp;IV when evaluated on
 held-out cases (there is no public cold-plate CHT benchmark); the cold-plate mean nRMSE (0.028) is close to
 the in-distribution value. These numbers are on our own corpus and are not comparable to the SIMSHIFT
-numbers, and this multi-geometry checkpoint predates the ABL refinement &mdash; folding ABL into it
+numbers, and this multi-geometry checkpoint predates the ABL refinement - folding ABL into it
 end-to-end is a direct extension we are pursuing.</p>
 
 <table>
@@ -345,11 +345,11 @@ end-to-end is a direct extension we are pursuing.</p>
 </figure>
 
 <h3>C.&ensp;Pretraining and Reduced Conditioning</h3>
-<p>The headline results (Tables&nbsp;II&ndash;III) condition on the same 12 geometry/physics scalars
+<p>The headline results (Tables&nbsp;II-III) condition on the same 12 geometry/physics scalars
 that Transolver and the other baselines receive, for a like-for-like comparison. We now isolate two
 orthogonal levers that trade explicit scalars for learned priors: <i>pretraining</i> on the self-generated
-corpus, and <i>reduced conditioning</i> &mdash; dropping the geometry scalars and keeping only the wall
-temperature &mdash; which together point toward a geometry-and-physics foundation model. First, does
+corpus, and <i>reduced conditioning</i> - dropping the geometry scalars and keeping only the wall
+temperature - which together point toward a geometry-and-physics foundation model. First, does
 pretraining help beyond the benchmark's own training set? We run a controlled A/B with the same model and SIMSHIFT
 fine-tuning, changing only the initialization (Table&nbsp;V). Pretraining helps materially at the easy shift
 (&minus;19%) and in-distribution (&minus;12%), modestly at medium, and is neutral at the hardest shift,
@@ -366,9 +366,9 @@ which the corpus does not yet cover. The only changed ingredient is the corpus.<
   </tbody>
 </table>
 
-<p><b>Why it helps &mdash; and why it is not leakage.</b> With only a few hundred fine-tuning cases,
-initialization matters: pretraining on the broader OpenFOAM corpus supplies a physics prior &mdash; the
-coupling of temperature and flow, near-wall behavior, and boundary-layer structure &mdash; that is hard
+<p><b>Why it helps - and why it is not leakage.</b> With only a few hundred fine-tuning cases,
+initialization matters: pretraining on the broader OpenFOAM corpus supplies a physics prior - the
+coupling of temperature and flow, near-wall behavior, and boundary-layer structure - that is hard
 to learn from the small target set alone, which is why the gain is largest at the easy shift and
 in-distribution and tapers at the hardest shift the corpus does not cover. Critically, <b>no held-out
 evaluation data is ever seen during pretraining or fine-tuning</b>: the pretraining corpus is our own
@@ -378,8 +378,8 @@ per-device cases are excluded from training. The gains therefore reflect transfe
 exposure to the test distribution.</p>
 
 <p><b>Toward a reduced-conditioning foundation model.</b> The two levers compose. Dropping the geometry
-scalars alone raises medium-shift error from 12.14 to 12.94&thinsp;K (Table&nbsp;VII) &mdash; the model must
-now read fin count and gap from the point cloud rather than from a scalar &mdash; but corpus pretraining
+scalars alone raises medium-shift error from 12.14 to 12.94&thinsp;K (Table&nbsp;VII) - the model must
+now read fin count and gap from the point cloud rather than from a scalar - but corpus pretraining
 recovers most of that gap (12.94&thinsp;&rarr;&thinsp;12.38&thinsp;K), so a model told almost nothing about the
 geometry beyond its shape nearly matches the fully conditioned one. To make the little conditioning it does
 keep transferable across working fluids, we replace raw fluid properties with Buckingham-&Pi; dimensionless
@@ -387,15 +387,15 @@ groups (Re,&thinsp;Ra,&thinsp;Pe, appended in log-space; Pr is already a channel
 to a common similarity space rather than disjoint property ranges. Pretraining this &Pi;-conditioned,
 geometry-scalar-free model on the full multi-geometry corpus and fine-tuning on SIMSHIFT is the
 foundation-model arm; that run is in progress and its numbers will be reported in the camera-ready. The
-direction matters because a surrogate that infers behavior from shape and dimensionless physics &mdash; not
-from a fixed scalar template &mdash; is the one that generalizes to geometries and fluids outside any
+direction matters because a surrogate that infers behavior from shape and dimensionless physics - not
+from a fixed scalar template - is the one that generalizes to geometries and fluids outside any
 benchmark's schema.</p>
 
 <h3>D.&ensp;Numerical Stability</h3>
 <p>A deployable surrogate must reproduce steep near-wall gradients without over-smoothing or emitting
 unphysical spikes. We measure the ratio of predicted to CFD temperature-gradient magnitude in the edge
 band and at the steepest peaks (Table&nbsp;VI). Every ratio is at or below unity, in and out of
-distribution &mdash; the surrogate never produces a steeper-than-physical gradient &mdash; with an
+distribution - the surrogate never produces a steeper-than-physical gradient - with an
 explosion fraction of exactly zero and no NaN/Inf. It is not merely over-smoothing: the
 in-distribution edge ratio (0.97&thinsp;&asymp;&thinsp;1.0) reproduces the true edge structure, while
 out of distribution it errs slightly conservatively, the safe direction.</p>
@@ -424,13 +424,13 @@ at &asymp;2.7&times; fewer cells.</p>
 one factor and holds the rest of the 14.3M-parameter backbone fixed</b>, so the gap between the <i>base</i>
 column (the reference that ablation was measured against) and the <i>result</i> column is that factor's
 isolated effect. The attention and output-head rows are measured against the full KuberNet reference
-(11.84&thinsp;K); the geometry, conditioning, and pretraining rows &mdash; established before ABL was added
-&mdash; are measured against the isotropic-kNN configuration (12.14&thinsp;K, i.e. the &ldquo;remove ABL&rdquo;
+(11.84&thinsp;K); the geometry, conditioning, and pretraining rows - established before ABL was added
+ - are measured against the isotropic-kNN configuration (12.14&thinsp;K, i.e. the &ldquo;remove ABL&rdquo;
 row), and pretraining against its from-scratch reduced-conditioning baseline (12.94&thinsp;K). Reading the
-effects: <b>anisotropic boundary-layer attention is KuberNet's largest single design win</b> &mdash; removing
+effects: <b>anisotropic boundary-layer attention is KuberNet's largest single design win</b> - removing
 it costs 0.30&thinsp;K (11.84&rarr;12.14, mean nRMSE 0.608&rarr;0.671) at equal parameter count. Adding a
-PDE-Refiner head is fine in-distribution (4.15&thinsp;K) but degrades OOD to 16.52&thinsp;K &mdash; its
-iterative refinement amplifies error under distribution shift &mdash; which is why we report the one-shot
+PDE-Refiner head is fine in-distribution (4.15&thinsp;K) but degrades OOD to 16.52&thinsp;K - its
+iterative refinement amplifies error under distribution shift - which is why we report the one-shot
 model. The surface encoder, unlike the analytic SDF, applies to arbitrary CAD; the SDF variant is
 data-efficient (lower averaged nRMSE, 0.593, and velocity, 0.038&thinsp;m/s) but presupposes an analytic
 shape. Full 12-scalar conditioning improves temperature by 0.8&thinsp;K over wall-temperature-only, confirming
@@ -443,7 +443,7 @@ generalized better than AB-UPT-style per-block cross-attention on the raw surfac
   <caption><span class="tnum">Table VII</span><span class="ttl">KuberNet ablations on SIMSHIFT Medium (OOD). Each row changes one factor from a fixed reference; &ldquo;base&rdquo; is that reference's error, &ldquo;result&rdquo; the ablated model's. Temperature RMSE (K), lower is better.</span></caption>
   <thead><tr><th class="l">Factor</th><th class="l">One change from the reference</th><th>base</th><th>result</th></tr></thead>
   <tbody>
-    <tr><td class="l">reference</td><td class="l"><b>KuberNet</b>: ABL &middot; surface encoder &middot; 12 scalars &middot; one-shot head</td><td>&mdash;</td><td><b>11.84</b></td></tr>
+    <tr><td class="l">reference</td><td class="l"><b>KuberNet</b>: ABL &middot; surface encoder &middot; 12 scalars &middot; one-shot head</td><td> - </td><td><b>11.84</b></td></tr>
     <tr><td class="l">attention</td><td class="l">remove ABL &rarr; isotropic kNN</td><td>11.84</td><td>12.14</td></tr>
     <tr><td class="l">output head</td><td class="l">add PDE-Refiner</td><td>11.84</td><td>16.52</td></tr>
     <tr><td class="l">geometry input</td><td class="l">surface encoder &rarr; analytic SDF</td><td>12.14</td><td>13.07</td></tr>
@@ -467,22 +467,22 @@ be filled in as runs complete. <b>(i)&ensp;Leave-One-Fluid-Out (LOFO):</b> train
 high-viscosity oil (Pr&thinsp;&asymp;&thinsp;292), a stronger out-of-distribution axis than fin count.
 <b>(ii)&ensp;Interface flux-balanced loss:</b> a soft residual enforcing conjugate energy conservation,
 <i>k<sub>s</sub></i>(&nabla;<i>T<sub>s</sub></i>&middot;<i>n</i>)&thinsp;=&thinsp;<i>k<sub>f</sub></i>(&nabla;<i>T<sub>f</sub></i>&middot;<i>n</i>),
-at solid&ndash;fluid interfaces; this requires two-region (conjugate) training data that our current
+at solid-fluid interfaces; this requires two-region (conjugate) training data that our current
 single-region corpus does not provide, so it is paired with a data-engine extension.
 <b>(iii)&ensp;Physics-masked pretraining:</b> a self-supervised objective reconstructing masked spatial
 regions and physical channels (e.g. predicting <i>T</i> from <i>U</i> and geometry), forcing the backbone
 to internalize conservation and improving data efficiency. Alongside these, scaling model and corpus (the
 value-of-data trend favors both), hierarchical surface tokens, calibrated uncertainty from the refinement
 head, further cold-plate topologies, and ONNX/TensorRT deployment within an agentic
-propose&ndash;predict&ndash;score&ndash;refine optimization loop with CAD connectors (STEP/STL/mesh)
+propose-predict-score-refine optimization loop with CAD connectors (STEP/STL/mesh)
 remain on the roadmap.</p>
 
 <h2>VIII.&ensp;Conclusion</h2>
-<p>Kuber packages the full stack needed to build a CHT surrogate &mdash; a reproducible data engine, an
+<p>Kuber packages the full stack needed to build a CHT surrogate - a reproducible data engine, an
 honest evaluation harness, and <b>KuberNet</b>, a geometry-general surface-conditioned transformer whose
 anisotropic boundary-layer attention reaches state of the art (11.84&thinsp;K temperature RMSE) on a public
 benchmark without domain adaptation and spans two device classes from one set of weights. The same interfaces target the broader
-class of coupled fluid&ndash;heat problems. Calibrated uncertainty, CAD connectors, and agentic
+class of coupled fluid-heat problems. Calibrated uncertainty, CAD connectors, and agentic
 geometry optimization are natural next steps; code, data, and an interactive viewer are released to
 support them.</p>
 

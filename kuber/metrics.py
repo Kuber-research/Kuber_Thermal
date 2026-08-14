@@ -41,5 +41,5 @@ def rmse_physical(pred, gt, ystd):
 
 
 def mean_nrmse(pred, gt):
-    """Scalar mean nRMSE across channels — the headline number reported in the paper."""
+    """Scalar mean nRMSE across channels - the headline number reported in the paper."""
     return float(per_channel_nrmse(pred, gt).mean())

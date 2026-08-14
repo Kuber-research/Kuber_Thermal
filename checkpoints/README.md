@@ -2,7 +2,7 @@
 
 Trained weights are distributed as **GitHub Release assets** (not committed to git, to keep the repo
 lean). Each checkpoint is a single `.pt` bundling `{"model": state_dict, "meta": {...}}`, where
-`meta` records the geometry mode, conditioning keys, and normalizers — so evaluation is fully
+`meta` records the geometry mode, conditioning keys, and normalizers - so evaluation is fully
 self-describing:
 
 ```bash
@@ -23,6 +23,6 @@ python -m kuber.train_simshift \
 > a few GPU-hours with the commands in the top-level README. The eval/harness code here runs against
 > any checkpoint produced by `kuber.train_simshift`.
 
-The `meta` block inside each checkpoint is the source of truth for how it was trained — `eval_only`
+The `meta` block inside each checkpoint is the source of truth for how it was trained - `eval_only`
 reads `geom_mode`, `cond_keys`, and `extent_feats` straight from it, so you never have to remember
 the flags a checkpoint was trained with.

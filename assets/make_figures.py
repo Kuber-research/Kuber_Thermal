@@ -191,10 +191,10 @@ OURSP = "Kuber pretrained on our corpus (no UDA)"
 BASE = "Published baseline (with UDA)"
 
 hbars("fig_leaderboard.svg",
-      "SIMSHIFT heatsink leaderboard — temperature RMSE",
+      "SIMSHIFT heatsink leaderboard - temperature RMSE",
       "Medium / out-of-distribution split (train fins 5–8 → test 10–12). Baselines include UDA; Kuber uses none.",
       rows=[
-          ("Kuber — KuberNet (ABL)", 11.84, EMBER, ""),
+          ("Kuber - KuberNet (ABL)", 11.84, EMBER, ""),
           ("UPT  (prev. published best)", 12.41, SLATE, ""),
           ("Transolver", 13.43, SLATE, ""),
           ("PointNet", 17.43, SLATE, ""),
@@ -203,7 +203,7 @@ hbars("fig_leaderboard.svg",
       legend_items=[("Kuber (ours, no UDA)", EMBER), ("published baseline (with UDA)", SLATE)])
 
 vbars("fig_value_of_data.svg",
-      "Value of our data — pretrain on the Kuber corpus, then fine-tune",
+      "Value of our data - pretrain on the Kuber corpus, then fine-tune",
       "Same model, only pretraining differs. Temperature RMSE (K), target domain unless noted.",
       groups=[("easy", [8.99, 7.28]), ("medium", [12.94, 12.38]),
               ("hard", [14.42, 14.43]), ("in-dist", [4.63, 4.09])],
@@ -211,7 +211,7 @@ vbars("fig_value_of_data.svg",
       ymin=0, ymax=16, unit="T-RMSE (K)")
 
 vbars("fig_indist_vs_ood.svg",
-      "Generalization — the SOTA result is zero-shot",
+      "Generalization - the SOTA result is zero-shot",
       "KuberNet temperature RMSE (K). Fin counts 10–14 never appear in training.",
       groups=[("in-distribution\n(trained fin range)", [3.96]),
               ("out-of-distribution\n(unseen fin counts)", [11.84])],
@@ -219,8 +219,8 @@ vbars("fig_indist_vs_ood.svg",
       ymin=0, ymax=14, unit="")
 
 hbars("fig_stability.svg",
-      "Stability — edge temperature-gradient fidelity",
-      "KuberNet — predicted ÷ CFD |∇T| near the wall (fin tips / corners).",
+      "Stability - edge temperature-gradient fidelity",
+      "KuberNet - predicted ÷ CFD |∇T| near the wall (fin tips / corners).",
       rows=[
           ("In-distribution · edge band", 0.969, GREEN, ""),
           ("In-distribution · steepest peak", 0.938, GREEN, ""),
@@ -231,18 +231,18 @@ hbars("fig_stability.svg",
       note="explosion fraction = 0 · NaN/Inf = 0", ref=1.0, ref_label="1.0  faithful", tickdec=1)
 
 hbars_log("fig_speed.svg",
-          "Speed — surrogate vs. the CFD it learns from",
+          "Speed - surrogate vs. the CFD it learns from",
           "Per-case wall-clock (log scale). Surrogate inference is a sub-second estimate; CFD times are measured.",
           rows=[
-              ("OpenFOAM CFD — high fin count", 7020, "≈ 117 min", SLATE),
-              ("OpenFOAM CFD — median (601 cases)", 1320, "≈ 22 min", SLATE),
-              ("OpenFOAM CFD — low fin count", 162, "≈ 2.7 min", SLATE),
+              ("OpenFOAM CFD - high fin count", 7020, "≈ 117 min", SLATE),
+              ("OpenFOAM CFD - median (601 cases)", 1320, "≈ 22 min", SLATE),
+              ("OpenFOAM CFD - low fin count", 162, "≈ 2.7 min", SLATE),
               ("Kuber surrogate (inference)", 0.3, "≈ 0.3 s  →  up to 10,000× faster", EMBER),
           ],
           vmin=0.1, vmax=10000, note="up to 10,000× faster than CFD")
 
 vbars("fig_mesh_convergence.svg",
-      "Data fidelity — mesh convergence of the hot spot",
+      "Data fidelity - mesh convergence of the hot spot",
       "Same geometry, three meshes. Prism layers recover the near-wall peak at ~2.7× fewer cells.",
       groups=[("snap2\n(124k cells)", [359.5]), ("snap2 + 3 layers\n(142k cells)", [378.8]),
               ("snap3 fine\n(382k cells)", [378.9])],
@@ -251,7 +251,7 @@ vbars("fig_mesh_convergence.svg",
 
 tiles("fig_corpus.svg",
       "The Kuber corpus at a glance",
-      "Self-generated OpenFOAM CHT data — 0 cases from SIMSHIFT or any licensed source.",
+      "Self-generated OpenFOAM CHT data - 0 cases from SIMSHIFT or any licensed source.",
       cells=[("4", "fluids\nair · water · oil · glycol"),
              ("2", "regimes\nnatural + forced"),
              ("4+", "shapes\nfins·plate·cube·pin-fin"),
@@ -262,7 +262,7 @@ tiles("fig_corpus.svg",
              ("0.1 K", "mesh-convergence tol.")])
 
 vbars("fig_multigeo.svg",
-      "Multi-geometry — one model, heatsinks + cold plates",
+      "Multi-geometry - one model, heatsinks + cold plates",
       "A single multi-geometry model on the Kuber corpus. Held-out temperature RMSE (K).",
       groups=[("in-distribution\n(both classes)", [1.72]),
               ("cold plates\n(held-out)", [3.11]),

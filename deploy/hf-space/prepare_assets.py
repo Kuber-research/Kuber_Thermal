@@ -2,7 +2,7 @@
 """Assemble the asset bundle for the Kuber live Space and (optionally) push it to HF Hub.
 
 Copies the trained checkpoint, the splits file, and ONLY the ``.npz`` cases referenced
-by the split into ``<out>/`` — the layout ``boot.py`` expects:
+by the split into ``<out>/`` - the layout ``boot.py`` expects:
 
     <out>/multigeo.pt
     <out>/splits.json
@@ -10,7 +10,7 @@ by the split into ``<out>/`` — the layout ``boot.py`` expects:
 
 The referenced medium split is ~2.3k cases (~1 GB); the full corpus (3.4k files, 1.4 GB)
 is not needed. The engine fits its normalizers on the training split, so those cases must
-be present — this copies exactly the set the split names, nothing more.
+be present - this copies exactly the set the split names, nothing more.
 
 Examples
 --------

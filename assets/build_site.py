@@ -92,7 +92,7 @@ h2{font-size:clamp(1.6rem,3vw,2.1rem); font-weight:780; letter-spacing:-.028em; 
 .section-lede{font-size:1.08rem; color:var(--ink2); max-width:66ch; margin:0 0 8px}
 p{margin:0 0 1em; max-width:70ch; color:var(--ink2)}
 
-/* figures — always-light cards */
+/* figures - always-light cards */
 figure.fig{margin:22px 0 0; background:var(--card); border:1px solid #E6EAEF; border-radius:16px;
   padding:16px 16px 6px; box-shadow:0 1px 3px rgba(16,24,40,.06)}
 figure.fig.tight{padding:12px}
@@ -129,9 +129,9 @@ CONTENT = """
 <main class="wrap">
   <section class="hero" id="top">
     <div class="eyebrow">Open framework &middot; Conjugate heat transfer</div>
-    <h1>Neural surrogates for coupled fluid&ndash;heat simulation</h1>
+    <h1>Neural surrogates for coupled fluid-heat simulation</h1>
     <p class="lede">Kuber predicts the full temperature and flow field of a heatsink or cold plate in a
-    sub-second &mdash; geometry-general, and state of the art on a public benchmark with no domain
+    sub-second - geometry-general, and state of the art on a public benchmark with no domain
     adaptation.</p>
     <div class="cta">
       <a class="btn primary" href="https://shubhoo7-kuber-live.hf.space/" target="_blank" rel="noopener">Interactive demo &rarr;</a>
@@ -139,26 +139,26 @@ CONTENT = """
       <a class="btn" href="https://github.com/Kuber-research/Kuber_Thermal">GitHub</a>
     </div>
     <div class="stats">
-      <div class="stat"><div class="num">11.84&thinsp;K</div><div class="lbl">temperature RMSE on SIMSHIFT &mdash; beats the prior best, no domain adaptation</div></div>
-      <div class="stat"><div class="num">10,000&times;</div><div class="lbl">up to &mdash; faster than the CFD it learns from</div></div>
-      <div class="stat"><div class="num">2</div><div class="lbl">device classes &mdash; heatsinks &amp; cold plates &mdash; from one model</div></div>
+      <div class="stat"><div class="num">11.84&thinsp;K</div><div class="lbl">temperature RMSE on SIMSHIFT - beats the prior best, no domain adaptation</div></div>
+      <div class="stat"><div class="num">10,000&times;</div><div class="lbl">up to - faster than the CFD it learns from</div></div>
+      <div class="stat"><div class="num">2</div><div class="lbl">device classes - heatsinks &amp; cold plates - from one model</div></div>
       <div class="stat"><div class="num">~14&thinsp;M</div><div class="lbl">parameters, geometry-general (arbitrary CAD)</div></div>
     </div>
     <div class="grid2">
-      <figure class="fig">__CMPHS__<figcaption><b>Heatsink simulation</b> &mdash; Kuber prediction vs. CFD ground truth: &plusmn;2.11&thinsp;K temperature agreement, <b>7,000&times; faster</b> than CFD.</figcaption></figure>
-      <figure class="fig">__CMPCP__<figcaption><b>Cold plate simulation</b> &mdash; Kuber prediction vs. CFD ground truth: &plusmn;1.33&thinsp;K temperature agreement, <b>445&times; faster</b> than CFD.</figcaption></figure>
+      <figure class="fig">__CMPHS__<figcaption><b>Heatsink simulation</b> - Kuber prediction vs. CFD ground truth: &plusmn;2.11&thinsp;K temperature agreement, <b>7,000&times; faster</b> than CFD.</figcaption></figure>
+      <figure class="fig">__CMPCP__<figcaption><b>Cold plate simulation</b> - Kuber prediction vs. CFD ground truth: &plusmn;1.33&thinsp;K temperature agreement, <b>445&times; faster</b> than CFD.</figcaption></figure>
     </div>
   </section>
 
   <section id="how">
     <div class="eyebrow">How it works</div>
     <h2>One transformer, from geometry to field</h2>
-    <p class="section-lede">KuberNet ingests raw boundary geometry &mdash; a surface point cloud with
-    normals &mdash; plus physics conditioning, and predicts <em>(U, T, p)</em> at any query point. No analytic
+    <p class="section-lede">KuberNet ingests raw boundary geometry - a surface point cloud with
+    normals - plus physics conditioning, and predicts <em>(U, T, p)</em> at any query point. No analytic
     signed-distance field is required, so it applies to arbitrary CAD.</p>
     <figure class="fig tight">__ARCH__<figcaption>The surface encoder turns the boundary into geometry tokens;
-    local <em>anisotropic boundary-layer</em> (ABL) cross-attention &mdash; a learned wall-normal penalty that
-    biases each query to attend along the boundary &mdash; gives every query node a geometry descriptor;
+    local <em>anisotropic boundary-layer</em> (ABL) cross-attention - a learned wall-normal penalty that
+    biases each query to attend along the boundary - gives every query node a geometry descriptor;
     concatenated with the physics conditioning it feeds a GeoTransolver physics-attention core (~14&thinsp;M parameters).</figcaption></figure>
   </section>
 
@@ -166,13 +166,13 @@ CONTENT = """
     <div class="eyebrow">Results</div>
     <h2>State of the art, without domain adaptation</h2>
     <p class="section-lede">On the public SIMSHIFT heatsink split (train fin counts 5&ndash;8 &rarr; test 10&ndash;12),
-    Kuber leads on temperature &mdash; with none of the unsupervised domain adaptation every published baseline uses.
+    Kuber leads on temperature - with none of the unsupervised domain adaptation every published baseline uses.
     Every number is measured and reproducible.</p>
     <figure class="fig">__LEADERBOARD__<figcaption>SIMSHIFT heatsink leaderboard (medium / out-of-distribution).
     Baselines include UDA; Kuber uses none. Lower is better.</figcaption></figure>
     <div class="grid2">
       <figure class="fig">__INDIST__<figcaption>The leading number is zero-shot: the test fin counts never appear in training.</figcaption></figure>
-      <figure class="fig">__STABILITY__<figcaption>Predicted &nabla;T at fin tips/corners stays at or below physical &mdash; no gradient explosion.</figcaption></figure>
+      <figure class="fig">__STABILITY__<figcaption>Predicted &nabla;T at fin tips/corners stays at or below physical - no gradient explosion.</figcaption></figure>
       <figure class="fig">__VALUE__<figcaption>Pretraining on the self-generated corpus lowers error further.</figcaption></figure>
       <figure class="fig">__SPEED__<figcaption>Sub-second inference vs. a median 22-minute CFD solve (log scale).</figcaption></figure>
     </div>
@@ -192,20 +192,20 @@ CONTENT = """
     <h2>A self-generated OpenFOAM corpus</h2>
     <p class="section-lede">Parametric geometry &rarr; OpenFOAM <code>buoyantSimpleFoam</code> &rarr; per-node fields,
     resumable and convergence-gated. Zero cases from SIMSHIFT or any licensed source.</p>
-    <figure class="fig">__CORPUS__<figcaption>Corpus coverage &mdash; fluids, regimes, shapes, device classes.</figcaption></figure>
+    <figure class="fig">__CORPUS__<figcaption>Corpus coverage - fluids, regimes, shapes, device classes.</figcaption></figure>
   </section>
 </main>
 
 <footer><div class="foot-in">
-  <div>Kuber &mdash; an open framework for conjugate&ndash;heat-transfer AI. Built by the Kuber.ai team.</div>
+  <div>Kuber - an open framework for conjugate-heat-transfer AI. Built by the Kuber.ai team.</div>
   <div><a href="https://github.com/Kuber-research/Kuber_Thermal">GitHub</a> &middot; <a href="https://shubhoo7-kuber-live.hf.space/" target="_blank" rel="noopener">Demo</a> &middot;
   <a href="https://github.com/Kuber-research/Kuber_Thermal/blob/main/paper/kuber.pdf">Paper</a> &middot; PolyForm Noncommercial 1.0.0</div>
 </div></footer>
 """
 
 CONTENT = (CONTENT
-           .replace("__CMPHS__", '<img src="' + png_uri("heat-sink-comparison.png") + '" alt="Heatsink — Kuber prediction vs CFD ground truth">')
-           .replace("__CMPCP__", '<img src="' + png_uri("cold-plate-comparison.png") + '" alt="Cold plate — Kuber prediction vs CFD ground truth">')
+           .replace("__CMPHS__", '<img src="' + png_uri("heat-sink-comparison.png") + '" alt="Heatsink - Kuber prediction vs CFD ground truth">')
+           .replace("__CMPCP__", '<img src="' + png_uri("cold-plate-comparison.png") + '" alt="Cold plate - Kuber prediction vs CFD ground truth">')
            .replace("__ARCH__", '<img src="' + png_uri("architecture.png") + '" alt="KuberNet architecture">')
            .replace("__LEADERBOARD__", svg_inline("fig_leaderboard.svg"))
            .replace("__INDIST__", svg_inline("fig_indist_vs_ood.svg"))

@@ -57,7 +57,7 @@ body{background:#fff;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helve
 HTML = """<meta charset="utf-8"><style>__CSS__</style>
 <div class="fig">
   <div class="hd"><h1>KuberNet</h1>
-  <p>Geometry-general conjugate-heat-transfer surrogate with anisotropic boundary-layer (ABL) attention &mdash; internal layers shown</p></div>
+  <p>Geometry-general conjugate-heat-transfer surrogate with anisotropic boundary-layer (ABL) attention - internal layers shown</p></div>
   <div class="row">
 
     <div class="card">
