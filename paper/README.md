@@ -33,6 +33,6 @@ chromium --headless --no-pdf-header-footer --print-to-pdf=kuber.pdf paper/kuber.
   author = {Jain, Shubh},
   year   = {2026},
   institution = {Kuber.ai},
-  url    = {https://github.com/ShubhJain007/Kuber}
+  url    = {https://github.com/Kuber-research/Kuber_Thermal}
 }
 ```
