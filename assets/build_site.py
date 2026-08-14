@@ -120,7 +120,7 @@ CONTENT = """
     <a href="#how">How it works</a>
     <a href="#results">Results</a>
     <a href="#dataset">Dataset</a>
-    <a href="https://huggingface.co/spaces/ShubhOO7/kuber-live" target="_blank" rel="noopener">Demo</a>
+    <a href="https://shubhoo7-kuber-live.hf.space/" target="_blank" rel="noopener">Demo</a>
     <a href="https://github.com/Kuber-research/Kuber_Thermal/blob/main/paper/kuber.pdf">Paper</a>
     <a class="btn-sm" href="https://github.com/Kuber-research/Kuber_Thermal">GitHub</a>
   </nav>
@@ -134,7 +134,7 @@ CONTENT = """
     sub-second &mdash; geometry-general, and state of the art on a public benchmark with no domain
     adaptation.</p>
     <div class="cta">
-      <a class="btn primary" href="https://huggingface.co/spaces/ShubhOO7/kuber-live" target="_blank" rel="noopener">Interactive demo &rarr;</a>
+      <a class="btn primary" href="https://shubhoo7-kuber-live.hf.space/" target="_blank" rel="noopener">Interactive demo &rarr;</a>
       <a class="btn" href="https://github.com/Kuber-research/Kuber_Thermal/blob/main/paper/kuber.pdf">Read the paper</a>
       <a class="btn" href="https://github.com/Kuber-research/Kuber_Thermal">GitHub</a>
     </div>
@@ -184,7 +184,7 @@ CONTENT = """
     <p class="section-lede">Distinguished only by a device flag and fluid/BC conditioning, a single model spans a
     buoyancy-driven heatsink in air and a forced-liquid cold plate. Held-out cold plates 3.11&thinsp;K, heatsinks
     5.13&thinsp;K on our corpus (not comparable to the SIMSHIFT numbers).</p>
-    <figure class="fig">__MULTIGEO__<figcaption>One model, evaluated per device class on held-out cases. Per-device prediction-vs-ground-truth comparisons are at the top; explore the <a href="https://huggingface.co/spaces/ShubhOO7/kuber-live" target="_blank" rel="noopener">interactive viewer</a>.</figcaption></figure>
+    <figure class="fig">__MULTIGEO__<figcaption>One model, evaluated per device class on held-out cases. Per-device prediction-vs-ground-truth comparisons are at the top; explore the <a href="https://shubhoo7-kuber-live.hf.space/" target="_blank" rel="noopener">interactive viewer</a>.</figcaption></figure>
   </section>
 
   <section id="dataset">
@@ -198,7 +198,7 @@ CONTENT = """
 
 <footer><div class="foot-in">
   <div>Kuber &mdash; an open framework for conjugate&ndash;heat-transfer AI. Built by the Kuber.ai team.</div>
-  <div><a href="https://github.com/Kuber-research/Kuber_Thermal">GitHub</a> &middot; <a href="https://huggingface.co/spaces/ShubhOO7/kuber-live" target="_blank" rel="noopener">Demo</a> &middot;
+  <div><a href="https://github.com/Kuber-research/Kuber_Thermal">GitHub</a> &middot; <a href="https://shubhoo7-kuber-live.hf.space/" target="_blank" rel="noopener">Demo</a> &middot;
   <a href="https://github.com/Kuber-research/Kuber_Thermal/blob/main/paper/kuber.pdf">Paper</a> &middot; PolyForm Noncommercial 1.0.0</div>
 </div></footer>
 """
