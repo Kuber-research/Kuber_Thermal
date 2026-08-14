@@ -289,12 +289,15 @@ target (OOD) & 11.84 & 11.35 & 2305 & 0.608 \\ \bottomrule
 \end{table}
 
 \subsection{One Model, Two Device Classes}
-A single set of weights, distinguished only by the device flag and fluid/BC conditioning, spans a
-wall-temperature, buoyancy-driven heatsink in air and a heat-flux, forced-liquid cold plate. Evaluated
-per class on held-out cases from our corpus (there is no public cold-plate CHT benchmark), the model
-reaches the errors in Table~\ref{tab:multi}. The cold-plate mean nRMSE (0.028) is close to the
-in-distribution value. These numbers are on our own corpus and are not comparable to the SIMSHIFT
-numbers.
+KuberNet's anisotropic boundary-layer attention (Sec.~\ref{sec:kubernet}) drives the SIMSHIFT result, but
+the surface-conditioned backbone it builds on is itself geometry-general: a single set of weights,
+distinguished only by a device flag and fluid/BC conditioning, spans a wall-temperature, buoyancy-driven
+heatsink in air and a heat-flux, forced-liquid cold plate. One multi-geometry model---trained on our corpus
+with full geometry and physics conditioning---reaches the per-class errors in Table~\ref{tab:multi} when
+evaluated on held-out cases (there is no public cold-plate CHT benchmark); the cold-plate mean nRMSE (0.028)
+is close to the in-distribution value. These numbers are on our own corpus and are not comparable to the
+SIMSHIFT numbers, and this multi-geometry checkpoint predates the ABL refinement---folding ABL into it
+end-to-end is a direct extension we are pursuing.
 
 \begin{table}[t]\renewcommand{\arraystretch}{1.2}
 \caption{Multi-Geometry Model, Held Out per Device Class (Our Corpus)}
