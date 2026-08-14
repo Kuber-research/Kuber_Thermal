@@ -102,7 +102,7 @@ One **KuberNet** (~14.3 M params) trains across both classes with geometry read 
 
 | model | UDA | Temp RMSE (K) ↓ | Velocity RMSE (m/s) ↓ | params |
 |---|:---:|:---:|:---:|:---:|
-| **Kuber - KuberNet (ABL)** | ✗ | **11.84** | 0.044 | 14.3 M |
+| **Kuber - KuberNet (ABL)** | ✗ | **11.84** | 0.040 | 14.3 M |
 | UPT *(prev. best)* | ✓ | 12.41 | 0.039 | ~14 M |
 | Transolver | ✓ | 13.43 | 0.041 | ~14 M |
 | PointNet | ✓ | 17.43 | 0.044 | ~14 M |
