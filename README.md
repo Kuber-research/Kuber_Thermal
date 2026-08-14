@@ -2,7 +2,7 @@
 
 <img src="assets/Kuber_logo.png" alt="Kuber logo" width="130">
 
-# Kuber
+# Kuber-Thermal
 
 **An open framework for conjugate-heat-transfer AI** - build, train, and operate geometry-general neural surrogates for coupled fluid-heat problems (datacenters, CPUs/GPUs, heatsinks, cold plates, heat exchangers, power electronics, battery packs). First results: **electronics cooling**, where Kuber beats the previous best on the SIMSHIFT heatsink benchmark with **no domain adaptation**.
 
