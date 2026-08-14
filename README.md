@@ -241,7 +241,7 @@ A full technical report is in [`paper/kuber.pdf`](paper/kuber.pdf) (IEEE confere
 ```bibtex
 @techreport{kuber2026,
   title       = {Kuber: Geometry-General Neural Surrogates for Conjugate Heat Transfer},
-  author      = {Jain, Shubh},
+  author      = {Jain, Shubh},{Agarwal, Hardik}
   institution = {Kuber.ai},
   year        = {2026},
   url         = {https://github.com/ShubhJain007/Kuber}
