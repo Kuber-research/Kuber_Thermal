@@ -8,8 +8,8 @@ The full stack, from physics-data generation to a deployable, geometry-general s
 
 [![Interactive demo](https://img.shields.io/badge/%F0%9F%A7%8A%20interactive%20demo-live-1F4E79.svg)](https://shubhoo7-kuber-live.hf.space/)
 [![Paper](https://img.shields.io/badge/paper-PDF-B31B1B.svg)](paper/kuber.pdf)
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ShubhJain007/Kuber/blob/main/notebooks/quickstart.ipynb)
-[![tests](https://github.com/ShubhJain007/Kuber/actions/workflows/tests.yml/badge.svg)](https://github.com/ShubhJain007/Kuber/actions/workflows/tests.yml)
+[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Kuber-research/Kuber_Thermal/blob/main/notebooks/quickstart.ipynb)
+[![tests](https://github.com/Kuber-research/Kuber_Thermal/actions/workflows/tests.yml/badge.svg)](https://github.com/Kuber-research/Kuber_Thermal/actions/workflows/tests.yml)
 [![License: PolyForm NC](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-2E7D5B.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-1F4E79.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.x-1F4E79.svg)](https://pytorch.org/)
@@ -24,12 +24,12 @@ The full stack, from physics-data generation to a deployable, geometry-general s
 | ![Heatsink simulation — Kuber vs CFD](assets/sim/heat-sink-comparison.png) | ![Cold plate simulation — Kuber vs CFD](assets/sim/cold-plate-comparison.png) |
 | **Heatsink simulation** — ±2.11 K temperature agreement, **7,000× faster** than CFD | **Cold plate simulation** — ±1.33 K temperature agreement, **445× faster** than CFD |
 
-> **Read the [technical report (PDF)](paper/kuber.pdf).** The [project page](https://shubhjain007.github.io/Kuber/) (3D solid geometry + fluid field, heatsink & cold plate) are served from **GitHub Pages**.
+> **Read the [technical report (PDF)](paper/kuber.pdf).** The [project page](https://kuber-research.github.io/Kuber_Thermal/) (3D solid geometry + fluid field, heatsink & cold plate) is served from **GitHub Pages**, and an [interactive live-inference demo](https://shubhoo7-kuber-live.hf.space/) runs on **Hugging Face**.
 
 ## Key Features
 
 - **Geometry-general.** KuberNet ingests raw boundary geometry — a surface point cloud with normals — and, via *anisotropic boundary-layer* (ABL) cross-attention, predicts the full field `(Uₓ, U_y, U_z, T, p_rgh)` at any query point. No analytic signed-distance field, so it works on arbitrary CAD.
-- **State of the art, no domain adaptation.** 12.14 K temperature RMSE on the public SIMSHIFT heatsink out-of-distribution split — beating the previous published best (UPT, 12.41 K) — while every baseline relies on unsupervised domain adaptation and Kuber uses none.
+- **State of the art, no domain adaptation.** 11.84 K temperature RMSE on the public SIMSHIFT heatsink out-of-distribution split — beating the previous published best (UPT, 12.41 K) — while every baseline relies on unsupervised domain adaptation and Kuber uses none.
 - **One model, many device classes.** Heatsinks (wall-temperature BC, buoyancy-driven, air) and cold plates (heat-flux BC, forced liquid) from a single set of weights, distinguished only by a device flag and physics conditioning.
 - **Reproducible data engine.** Parametric geometry → OpenFOAM `buoyantSimpleFoam` → per-node `.npz`, resumable, convergence-gated, mesh-convergence-verified, and license-clean (0 cases from any external source).
 - **Honest evaluation harness.** Per-field normalized RMSE, near-wall fidelity, a numerical no-explosion stability proof, and a value-of-data ablation — with machine-readable results.
@@ -57,7 +57,7 @@ The full stack, from physics-data generation to a deployable, geometry-general s
 ## Installation
 
 ```bash
-git clone https://github.com/ShubhJain007/Kuber.git
+git clone https://github.com/Kuber-research/Kuber_Thermal.git
 cd Kuber
 python -m venv .venv && source .venv/bin/activate     # or use conda
 pip install -r requirements.txt
@@ -67,7 +67,7 @@ The model core is **GeoTransolver** from NVIDIA PhysicsNeMo (`physicsnemo.experi
 
 ## Quickstart
 
-**Try it in your browser, no install:** [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ShubhJain007/Kuber/blob/main/notebooks/quickstart.ipynb) — loads a real CHT case and visualizes it on CPU.
+**Try it in your browser, no install:** [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Kuber-research/Kuber_Thermal/blob/main/notebooks/quickstart.ipynb) — loads a real CHT case and visualizes it on CPU.
 
 ```bash
 # 1. Peek at a sample case (no OpenFOAM, no GPU needed)
@@ -164,7 +164,7 @@ All numbers are for **KuberNet** (full-geometry input), measured and reproducibl
 
 ![Multi-geometry — one model, heatsinks + cold plates](assets/fig_multigeo.svg)
 
-**Ground truth vs. prediction** — see the heatsink and cold-plate comparisons at the top (Kuber vs CFD, ±2.11 K and ±1.33 K), or [**open the interactive 3D viewer →**](https://shubhjain007.github.io/Kuber/demo.html).
+**Ground truth vs. prediction** — see the heatsink and cold-plate comparisons at the top (Kuber vs CFD, ±2.11 K and ±1.33 K), or [**open the interactive 3D viewer →**](https://shubhoo7-kuber-live.hf.space/).
 
 **Dataset.** A self-generated OpenFOAM CHT corpus — 0 cases from SIMSHIFT or any licensed source. A 6-case sample is in [`data_sample/`](data_sample); the contract is in [`docs/DATASET.md`](docs/DATASET.md). Fidelity is verified: prism layers recover the near-wall hot spot to within 0.1 K of a fine mesh at ~2.7× lower cost.
 
@@ -244,7 +244,7 @@ A full technical report is in [`paper/kuber.pdf`](paper/kuber.pdf) (IEEE confere
   author      = {Jain, Shubh},{Agarwal, Hardik}
   institution = {Kuber.ai},
   year        = {2026},
-  url         = {https://github.com/ShubhJain007/Kuber}
+  url         = {https://github.com/Kuber-research/Kuber_Thermal}
 }
 ```
 
