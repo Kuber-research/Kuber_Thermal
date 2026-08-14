@@ -15,7 +15,7 @@ python -m kuber.train_simshift \
 
 | name | geom mode | trained on | headline | size |
 |---|---|---|---|---|
-| `surface_simshift.pt` | surface | SIMSHIFT (222 cases) | 12.14 K temp RMSE, medium/OOD | ~165 MB |
+| `surface_simshift.pt` | surface | SIMSHIFT (222 cases) | 11.84 K temp RMSE, medium/OOD | ~165 MB |
 | `surface_pretrained.pt` | surface (transfer cond) | our corpus → SIMSHIFT | 12.38 K, value-of-data A/B | ~165 MB |
 | `multigeo.pt` | surface | heatsinks + cold plates | one model, both device classes | ~165 MB |
 

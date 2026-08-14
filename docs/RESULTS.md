@@ -1,6 +1,6 @@
-# Results - Kuber SurfaceGeoTransolver
+# Results - Kuber KuberNet
 
-All results are for **SurfaceGeoTransolver**, Kuber's production model (full-geometry input: a surface
+All results are for **KuberNet**, Kuber's production model (full-geometry input: a surface
 point cloud + normals + physics conditioning; ~14.3 M parameters). Alternative geometry encodings
 (scalar SDF, directional SDF, conditions-only) are available in the code as `--geom_mode` options but
 are not the reported model. Every number here is measured; machine-readable copies are in
@@ -15,14 +15,14 @@ Predicted field: `(U_x, U_y, U_z, T, p_rgh)` per query node. Metric definitions:
 
 Official split, **medium** difficulty: train on fin counts 5–8, test on the shifted target domain
 (fin counts 10–12). Baseline numbers are quoted from the SIMSHIFT paper (Table 2); **those numbers
-include unsupervised domain adaptation (UDA)** - their best case. SurfaceGeoTransolver uses **no UDA**
+include unsupervised domain adaptation (UDA)** - their best case. KuberNet uses **no UDA**
 and is trained from scratch on SIMSHIFT's 222 training cases.
 
 ![SIMSHIFT heatsink leaderboard - temperature RMSE](../assets/fig_leaderboard.svg)
 
 | model | UDA | Temp RMSE (K) ↓ | Velocity RMSE (m/s) ↓ | params |
 |---|:---:|:---:|:---:|:---:|
-| **Kuber - SurfaceGeoTransolver** | ✗ | **12.14** | 0.044 | 14.3 M |
+| **Kuber - KuberNet (ABL)** | ✗ | **11.84** | 0.040 | 14.3 M |
 | UPT (prev. published best) | ✓ | 12.41 | 0.039 | ~14 M¹ |
 | Transolver | ✓ | 13.43 | 0.041 | ~14 M¹ |
 | PointNet | ✓ | 17.43 | 0.044 | ~14 M¹ |
@@ -31,9 +31,9 @@ and is trained from scratch on SIMSHIFT's 222 training cases.
 comparably sized (~10–15 M). The advantage is the geometry conditioning and training recipe at the
 same parameter budget, without the UDA the baselines use.
 
-On temperature - the engineering-critical field - SurfaceGeoTransolver at 12.14 K is below the
+On temperature - the engineering-critical field - KuberNet at 11.84 K is below the
 previous published best (UPT, 12.41 K), which itself includes UDA (its no-UDA result is ~13.03 K).
-Velocity (0.044 m/s) is competitive but not the lowest; the model trades a little velocity accuracy
+Velocity (0.040 m/s) is competitive but not the lowest; the model trades a little velocity accuracy
 for its temperature lead. The SIMSHIFT paper publishes only temperature and velocity RMSE on the
 target domain, so those are the only two head-to-head columns possible.
 
@@ -44,11 +44,11 @@ over all five fields) is the paper's primary model-selection metric.
 
 | domain | T-RMSE (K) | Velocity RMSE (m/s) | p_rgh RMSE (Pa) | T-nRMSE | mean nRMSE |
 |---|:---:|:---:|:---:|:---:|:---:|
-| source (in-distribution) | 4.29 | 0.025 | 203 | 0.179 | 0.287 |
-| target (out-of-distribution) | 12.14 | 0.044 | 2303 | 0.506 | 0.671 |
+| source (in-distribution) | 3.96 | 0.024 | 202 | 0.165 | 0.274 |
+| target (out-of-distribution) | 11.84 | 0.040 | 2305 | 0.493 | 0.608 |
 
 The leaderboard number **is** the out-of-distribution number: the target fin counts never appear in
-training, so 12.14 K is a zero-shot result. In-distribution temperature error is 4.29 K.
+training, so 11.84 K is a zero-shot result. In-distribution temperature error is 3.96 K.
 
 ![In-distribution vs out-of-distribution temperature RMSE](../assets/fig_indist_vs_ood.svg)
 
@@ -148,7 +148,7 @@ Reproduce: `python -m kuber.edge_proof --ckpt <model.pt> --data <simshift> --spl
 | OpenFOAM CFD - low fin count | ~2.7 min | measured |
 | OpenFOAM CFD - median (601 cases) | ~22 min | measured (range 161–7051 s) |
 | OpenFOAM CFD - high fin count | ~117 min | measured |
-| **SurfaceGeoTransolver (inference)** | **~0.3 s** | estimate\* |
+| **KuberNet (inference)** | **~0.3 s** | estimate\* |
 
 Up to **10,000× faster than CFD** (the slowest high-fin-count cases at ≈0.3 s vs ≈117 min), and
 inference is geometry-independent - CFD cost grows with mesh size; a forward pass does not.
