@@ -1,0 +1,18 @@
+# GitHub Linguist — classify this repository by its Python source, not by
+# generated HTML / vendored JS / embedded data. These files are build artifacts
+# or third-party libraries, not the project's source code.
+
+# Generated single-file pages (base64-embedded assets; emitted by assets/build_site.py)
+site/index.html                    linguist-generated=true
+deploy/hf-space/static/index.html  linguist-generated=true
+
+# The paper is documentation, not source
+paper/kuber.html                   linguist-documentation=true
+
+# Generated figures and viewer data
+assets/*.svg                       linguist-generated=true
+assets/viewer_data.json            linguist-generated=true
+
+# Vendored third-party libraries (three.js, etc.)
+**/vendor/**                       linguist-vendored=true
+*.min.js                           linguist-vendored=true
