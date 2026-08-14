@@ -19,6 +19,10 @@
 
 **[Read the paper (PDF)](paper/kuber.pdf)** · [Project page](https://kuber-research.github.io/Kuber_Thermal/) · [Live demo](https://shubhoo7-kuber-live.hf.space/)
 
+## Table of contents
+
+[Highlights](#highlights) · [Installation](#installation) · [Quickstart](#quickstart) · [Recipes](#recipes) · [Dataset & Training](#dataset--training) · [Performance Benchmarks](#performance-benchmarks) · [Roadmap](#roadmap) · [Contributing](#contributing) · [Supported systems](#supported-systems) · [Licensing](#licensing) · [Endorsed by](#endorsed-by) · [Citing](#citing)
+
 ## Highlights
 
 - **Geometry-general.** KuberNet reads raw boundary geometry (surface point cloud + normals) and predicts the full field `(Uₓ, U_y, U_z, T, p_rgh)` at any query point - no analytic SDF, works on arbitrary CAD. Its *anisotropic boundary-layer* (ABL) cross-attention biases attention along the wall.
@@ -29,19 +33,34 @@
 
 ![KuberNet architecture](assets/sim/architecture_updated.png)
 
-## Install
+## Installation
+
+### Prerequisites
+
+- Git, **Python 3.10+**, and (recommended) a CUDA GPU for training.
+- The model core is **GeoTransolver** from [NVIDIA PhysicsNeMo](https://github.com/NVIDIA/physicsnemo).
+- **Optional** (data generation only): [OpenFOAM](https://www.openfoam.com/) v2306+ on `PATH`.
+
+### From source
+
+No PyPI release yet - install from source:
 
 ```bash
 git clone https://github.com/Kuber-research/Kuber_Thermal.git && cd Kuber_Thermal
-python -m venv .venv && source .venv/bin/activate
+python -m venv .venv && source .venv/bin/activate      # or conda
 pip install -r requirements.txt
 ```
 
-The model core is **GeoTransolver** from [NVIDIA PhysicsNeMo](https://github.com/NVIDIA/physicsnemo). Data generation additionally needs [OpenFOAM](https://www.openfoam.com/) v2306+ on `PATH` (the model, eval, and data sample work without it). Tested versions in [`requirements.txt`](requirements.txt); details in [Supported systems](#supported-systems).
+### Fresh install
+
+```bash
+deactivate 2>/dev/null; rm -rf .venv
+python -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+```
 
 ## Quickstart
 
-**No install:** [Colab notebook](https://colab.research.google.com/github/Kuber-research/Kuber_Thermal/blob/main/notebooks/quickstart.ipynb) loads a real CHT case on CPU.
+**No install:** the [Colab notebook](https://colab.research.google.com/github/Kuber-research/Kuber_Thermal/blob/main/notebooks/quickstart.ipynb) loads a real CHT case on CPU.
 
 ```bash
 # Peek at a sample case (no OpenFOAM/GPU needed)
@@ -69,11 +88,11 @@ python -m kuber.train_simshift --data <npz_dir> --splits <splits.json> --difficu
 
 ## Dataset & Training
 
-A **self-generated OpenFOAM CHT corpus** for electronics cooling - **0 cases from SIMSHIFT or any licensed source**. Each case: one steady field sampled to a 16,384-node fluid cloud + 2,048-point surface cloud, across two device classes (heatsinks, cold plates), four fluids (air/water/oil/glycol), natural and forced convection. Built by a parametric generator → mesh (`snappyHexMesh`/`blockMesh` + prism layers) → `buoyantSimpleFoam` → `.npz`, resumable and convergence-gated. Format, coverage, and the mesh-convergence study: **[`docs/DATASET.md`](docs/DATASET.md)**.
+A **self-generated OpenFOAM CHT corpus** for electronics cooling - **0 cases from SIMSHIFT or any licensed source**. Each case: one steady field sampled to a 16,384-node fluid cloud + 2,048-point surface cloud, across two device classes (heatsinks, cold plates), four fluids (air/water/oil/glycol), natural and forced convection. Built by a parametric generator → mesh (`snappyHexMesh`/`blockMesh` + prism layers) → `buoyantSimpleFoam` → `.npz`, resumable and convergence-gated. Format, coverage, mesh-convergence study: **[`docs/DATASET.md`](docs/DATASET.md)**.
 
 One **KuberNet** (~14.3 M params) trains across both classes with geometry read *only* from the surface cloud, under a unified physics-conditioning vector; targets z-scored on the training split (no leakage); Adam + Warmup-Stable-Decay; **no UDA**. Full recipe: **[`docs/TRAINING.md`](docs/TRAINING.md)**.
 
-## Benchmarks
+## Performance Benchmarks
 
 **SIMSHIFT heatsink, medium / OOD split** (train fins 5–8 → test 10–12). Baselines include UDA; Kuber uses none. Lower is better. Full metrics + caveats: [`docs/RESULTS.md`](docs/RESULTS.md).
 
@@ -104,11 +123,34 @@ An open **suite**, not a finished benchmark - each milestone gated on a verifiab
 - **M2 · Trustworthy to design against** - calibrated per-node uncertainty (from the PDE-Refiner ensemble); cold-plate topologies (serpentine, pin-fin); more device classes; active learning.
 - **M3 · From predictor to design tool** - CAD connectors (STEP/IGES/STL), agentic geometry optimization (propose → predict → score → refine), hosted inference + ONNX/TensorRT, a sealed-test leaderboard.
 
-Details in the [paper](paper/kuber.pdf). Contributions welcome.
+Details in the [paper](paper/kuber.pdf).
 
 ## Contributing
 
-Rigor is welcome - new baselines, harder splits, better data, or caught over-claims. Ground rules: no licensed/scraped data, full reproducibility (exact command + environment), honest disclosure of UDA and external pretraining. See [`CONTRIBUTING.md`](CONTRIBUTING.md).
+Rigor is welcome - new baselines, harder splits, better data, or caught over-claims.
+
+### Guidelines
+
+- **No licensed or scraped data** - self-generated or redistribution-permitted only.
+- **Reproducibility** - every result ships with its exact command and environment.
+- **Honesty** - state plainly whether a number used UDA or external pretraining.
+
+Full details, including how to submit a leaderboard row, in [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`docs/BENCHMARK.md`](docs/BENCHMARK.md#submitting-a-result).
+
+### Checks before a PR
+
+```bash
+python -m py_compile kuber/*.py     # syntax
+pip install pytest && pytest -q     # test suite (tests/); CI runs the same
+```
+
+### Reporting issues
+
+Open a [GitHub issue](https://github.com/Kuber-research/Kuber_Thermal/issues) for bugs or over-claims - we would rather fix a number than defend it.
+
+### IDE setup
+
+VS Code and PyCharm work out of the box; point the interpreter at `.venv`. No repo-specific config required.
 
 ## Supported systems
 
@@ -120,7 +162,11 @@ Rigor is welcome - new baselines, harder splits, better data, or caught over-cla
 
 **[PolyForm Noncommercial 1.0.0](LICENSE)** - free for research, education, and evaluation. Commercial use requires a separate license (contact the Kuber.ai team). The GeoTransolver core is a dependency from NVIDIA PhysicsNeMo (Apache-2.0).
 
-## Acknowledgements & citing
+## Endorsed by
+
+Kuber is a new open framework. Using it in research or evaluating it for production? Reach out via a [GitHub issue](https://github.com/Kuber-research/Kuber_Thermal/issues) - research partners and pilots will be listed here.
+
+## Citing
 
 Builds on **GeoTransolver / PhysicsNeMo** (NVIDIA); draws on **Transolver**, **AB-UPT**, **SIMSHIFT**, **PDE-Refiner**, and **OpenFOAM**. Full references in [`docs/MODEL.md`](docs/MODEL.md) and the [paper](paper/kuber.pdf).
 
