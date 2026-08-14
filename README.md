@@ -37,7 +37,7 @@ The full stack, from physics-data generation to a deployable, geometry-general s
 
 *Kuber is an open **suite**, not a finished benchmark - see the [Roadmap](#roadmap) for what's next.*
 
-![KuberNet architecture - surface geometry input, anisotropic boundary-layer (ABL) cross-attention pipeline, predicted field](assets/sim/architecture.png)
+![KuberNet architecture - surface geometry input, anisotropic boundary-layer (ABL) cross-attention pipeline, predicted field](assets/sim/architecture_updated.png)
 
 ## Table of contents
 
