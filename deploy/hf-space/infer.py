@@ -531,8 +531,8 @@ class Engine:
 if __name__ == "__main__":     # smoke test
     import sys
     eng = Engine(ckpt="outputs/geot_medium_surface.pt",
-                 data="/home/shubhj/simshift/npz",
-                 splits="/home/shubhj/simshift/npz/splits.json")
+                 data="data/simshift/npz",
+                 splits="data/simshift/npz/splits.json")
     print(f"[engine] device={eng.dev} geom_mode={eng.geom_mode} cases={len(eng.ids)}", flush=True)
     r = eng.predict(0)
     print(f"[predict] case={r['case_id']} fins={r['fins']} pts={r['n_points']} "

@@ -31,10 +31,10 @@ cases/<id>.npz   # only the cases the split names (train cases fit the normalize
 ```bash
 # assemble locally, then upload to your dataset repo (needs: huggingface-cli login)
 python prepare_assets.py \
-    --ckpt   ~/cfd_thermal_mvp/outputs/multigeo.pt \
-    --corpus ~/cfd_thermal_mvp/demo_data/multigeo_corpus \
-    --splits ~/cfd_thermal_mvp/demo_data/multigeo_splits_demo.json \
-    --out    ~/kuber-assets \
+    --ckpt   <path/to/multigeo.pt> \
+    --corpus <path/to/multigeo_corpus> \
+    --splits <path/to/multigeo_splits_demo.json> \
+    --out    <path/to/kuber-assets> \
     --push   <you>/kuber-assets
 ```
 

@@ -1,4 +1,4 @@
-"""Kuber.ai thermal-surrogate demo - FastAPI server (run on vicpc).
+"""Kuber.ai thermal-surrogate demo - FastAPI server.
 
 Loads the trained surface model once at startup, serves the PhysicsX-style
 frontend and two JSON endpoints:
@@ -21,8 +21,8 @@ from infer import Engine
 
 HERE = Path(__file__).resolve().parent
 CKPT = os.environ.get("KUBER_CKPT", "outputs/geot_medium_surface.pt")
-DATA = os.environ.get("KUBER_DATA", "/home/shubhj/simshift/npz")
-SPLITS = os.environ.get("KUBER_SPLITS", "/home/shubhj/simshift/npz/splits.json")
+DATA = os.environ.get("KUBER_DATA", "data/simshift/npz")
+SPLITS = os.environ.get("KUBER_SPLITS", "data/simshift/npz/splits.json")
 ENG: dict = {}
 
 

@@ -16,10 +16,10 @@ Examples
 --------
   # 1) assemble the bundle locally
   python prepare_assets.py \
-      --ckpt   ~/cfd_thermal_mvp/outputs/multigeo.pt \
-      --corpus ~/cfd_thermal_mvp/demo_data/multigeo_corpus \
-      --splits ~/cfd_thermal_mvp/demo_data/multigeo_splits_demo.json \
-      --out    ~/kuber-assets
+      --ckpt   <path/to/multigeo.pt> \
+      --corpus <path/to/multigeo_corpus> \
+      --splits <path/to/multigeo_splits_demo.json> \
+      --out    <path/to/kuber-assets>
 
   # 2) assemble AND upload to your HF *dataset* repo (needs `huggingface-cli login`)
   python prepare_assets.py ... --out ~/kuber-assets --push <you>/kuber-assets
