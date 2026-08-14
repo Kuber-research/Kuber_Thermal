@@ -9,9 +9,8 @@ deploy/hf-space/static/index.html  linguist-generated=true
 # The paper is documentation, not source
 paper/kuber.html                   linguist-documentation=true
 
-# Generated figures and viewer data
+# Generated figures
 assets/*.svg                       linguist-generated=true
-assets/viewer_data.json            linguist-generated=true
 
 # Vendored third-party libraries (three.js, etc.)
 **/vendor/**                       linguist-vendored=true
