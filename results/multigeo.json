@@ -1,7 +1,7 @@
 {
   "experiment": "multi-geometry - one model, two device classes",
   "dataset": "Kuber self-generated corpus (there is no public cold-plate CHT benchmark)",
-  "model": "Kuber SurfaceGeoTransolver (full-geometry / surface input) with a device flag + physics conditioning",
+  "model": "Kuber KuberNet (multi-geometry; full-geometry / surface input) with a device flag + physics conditioning",
   "params_millions": 14.3,
   "cond_keys": ["rho", "mu", "Cp", "Pr", "u_in", "envTemp", "solidTemp", "heatFlux", "device"],
   "checkpoint": "multigeo (best@110)",

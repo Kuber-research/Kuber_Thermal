@@ -2,25 +2,27 @@
   "benchmark": "SIMSHIFT heatsink",
   "split": "medium",
   "domain_shift": "train fin counts 5-8 -> test fin counts 10-12 (out-of-distribution)",
-  "model": "Kuber SurfaceGeoTransolver (full-geometry / surface input)",
+  "model": "Kuber KuberNet (ABL; full-geometry / surface input)",
   "params_millions": 14.29,
   "uda": false,
   "fields": ["U_x", "U_y", "U_z", "T", "p_rgh"],
   "notes": "Baselines quoted from the SIMSHIFT paper (Table 2); their numbers include UDA. Our numbers use no UDA. Primary model-selection metric is mean nRMSE (averaged over fields). Reproduce: python -m kuber.train_simshift --data <simshift> --splits <splits> --difficulty medium --geom_mode surface ; evaluate with --eval_only <ckpt>.",
   "ours": {
     "source_in_distribution": {
-      "T_RMSE_K": 4.29,
-      "velocity_RMSE_mps": 0.025,
-      "p_rgh_RMSE_Pa": 203,
-      "T_nRMSE": 0.179,
-      "mean_nRMSE": 0.287
+      "T_RMSE_K": 3.96,
+      "T_RMSE_nearwall_K": 2.80,
+      "velocity_RMSE_mps": 0.024,
+      "p_rgh_RMSE_Pa": 202,
+      "T_nRMSE": 0.165,
+      "mean_nRMSE": 0.274
     },
     "target_out_of_distribution": {
-      "T_RMSE_K": 12.14,
-      "velocity_RMSE_mps": 0.044,
-      "p_rgh_RMSE_Pa": 2303,
-      "T_nRMSE": 0.506,
-      "mean_nRMSE": 0.671
+      "T_RMSE_K": 11.84,
+      "T_RMSE_nearwall_K": 11.35,
+      "velocity_RMSE_mps": 0.040,
+      "p_rgh_RMSE_Pa": 2305,
+      "T_nRMSE": 0.493,
+      "mean_nRMSE": 0.608
     }
   },
   "baselines_target_ood": [

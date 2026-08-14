@@ -1,5 +1,5 @@
 model,uda,temp_rmse_K,velocity_rmse_mps,params_millions,source
-Kuber SurfaceGeoTransolver,no,12.14,0.044,14.29,this repo (no UDA)
+Kuber KuberNet (ABL),no,11.84,0.040,14.29,this repo (no UDA)
 UPT,yes,12.41,0.039,~14,SIMSHIFT paper Table 2 (prev. published best)
 Transolver,yes,13.43,0.041,~14,SIMSHIFT paper Table 2
 PointNet,yes,17.43,0.044,~14,SIMSHIFT paper Table 2
