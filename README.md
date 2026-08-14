@@ -24,7 +24,7 @@ The full stack, from physics-data generation to a deployable, geometry-general s
 | ![Heatsink simulation — Kuber vs CFD](assets/sim/heat-sink-comparison.png) | ![Cold plate simulation — Kuber vs CFD](assets/sim/cold-plate-comparison.png) |
 | **Heatsink simulation** — ±2.11 K temperature agreement, **7,000× faster** than CFD | **Cold plate simulation** — ±1.33 K temperature agreement, **445× faster** than CFD |
 
-> **Read the [technical report (PDF)](paper/kuber.pdf).** The [project page](https://shubhjain007.github.io/Kuber/) and an [interactive ground-truth-vs-prediction viewer](https://shubhjain007.github.io/Kuber/demo.html) (3D solid geometry + fluid field, heatsink & cold plate) are served from **GitHub Pages**.
+> **Read the [technical report (PDF)](paper/kuber.pdf).** The [project page](https://shubhjain007.github.io/Kuber/) (3D solid geometry + fluid field, heatsink & cold plate) are served from **GitHub Pages**.
 
 ## Key Features
 
