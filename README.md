@@ -96,6 +96,8 @@ One **KuberNet** (~14.3 M params) trains across both classes with geometry read 
 
 **SIMSHIFT heatsink, medium / OOD split** (train fins 5–8 → test 10–12). Baselines include UDA; Kuber uses none. Lower is better. Full metrics + caveats: [`docs/RESULTS.md`](docs/RESULTS.md).
 
+> **UDA** (*unsupervised domain adaptation*) adapts a model to the unlabeled **test** distribution at training time - so a UDA result is **not zero-shot**. Every baseline below uses it; Kuber uses none and is evaluated fully zero-shot.
+
 | model | UDA | Temp RMSE (K) ↓ | Velocity RMSE (m/s) ↓ | params |
 |---|:---:|:---:|:---:|:---:|
 | **Kuber - KuberNet (ABL)** | ✗ | **11.84** | 0.044 | 14.3 M |
