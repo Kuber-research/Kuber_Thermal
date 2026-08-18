@@ -119,6 +119,10 @@ The lead number is **zero-shot** (test fin counts never seen in training); predi
 | heatsinks | 5.13 | 0.145 |
 | in-distribution (both) | 1.72 | 0.027 |
 
+**Scaling laws (CHT corpus).** More data monotonically lowers OOD error; scaling the model at fixed data overfits - this regime is **data-limited**, so the leverage is corpus size, not network size. Full tables + caveats: [`docs/SCALING.md`](docs/SCALING.md).
+
+![CHT scaling laws](assets/fig_scaling.svg)
+
 ## Roadmap & Milestones
 
 An open **suite**, not a finished benchmark. Three milestones, each gated on a verifiable **outcome** rather than an activity.
@@ -129,7 +133,7 @@ An open **suite**, not a finished benchmark. Three milestones, each gated on a v
 
 - [ ] **Generalize to as-supplied CAD**, beyond parametric families. The surface encoder already accepts arbitrary meshes - this is a data + validation problem, not an architecture one.
 - [ ] **Grow the corpus** past its air-dominated composition - substantially more liquid-cooled cases, working fluids, and regimes.
-- [ ] **Scaling laws for physical AI.** Extend the two-point [value-of-data](docs/RESULTS.md) ablation into measured curves: how OOD error scales with corpus size, model parameters, and - the question specific to physics - *geometry and physics diversity* versus raw case count.
+- [x] **Scaling laws for physical AI** - *measured* ([`docs/SCALING.md`](docs/SCALING.md)): OOD error vs **corpus size** (monotonically better) and **model parameters** (overfits at fixed data → data-limited). Remaining: the physics-specific axis - *geometry and physics diversity* versus raw case count.
 - [ ] **A graded distribution-shift protocol.** Replace single-axis holdouts with a shift taxonomy scored independently per axis, reported as degradation curves - with **(i)** measured shift magnitude (MMD / Wasserstein in a geometry-physics feature space), **(ii)** a leakage audit (nearest-neighbour over the corpus), and **(iii)** provenance-shift as the ceiling test (a *different* solver + mesher, ultimately experimental data - the only test that separates learned physics from learned numerics).
 
   | Axis | Weak shift | Strong shift |
